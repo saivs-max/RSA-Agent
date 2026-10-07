@@ -1,0 +1,303 @@
+store_name,address,store_number,store_id,pdf_page
+Dublin (Carts pulled),"7100 Hospital Dr Dublin, OHIO 43016",6,kroger-6,2
+Bothell Store QFC850,"22833 Bothell Everett Hwy Bothell, WASHING TON 98021",850,Kroger-4,2
+Madeira Store 402,"6950 Miami Ave Madeira, OH 45243",402,Kroger-1,2
+Tylersville Store 945,"7855 Tylersville Rd West Chester, OH 45069",945,Kroger-2,2
+Pickeringto n Store 538,"1045 Hill Rd N Pickeringto n, OHIO 43147",538,kroger-3,2
+Westerville Store 847,"7345 S.R. 3 Westerville , OHIO 43082",847,kroger-5,2
+Monroe Store 336,"3033 Heritage Green Dr Monroe, OH 45050",336,kroger-7,2
+HARPER'S POINT,"11390 Montgome ry Rd, Cincinnati, OH, 45249",8,kroger-8,2
+MASON MONTGO MERY,"5100 Terra Firma Dr, Mason, OH, 45040",9,kroger-9,3
+MARIEMO NT,"7385 Wooster Pike, Cincinnati, OH, 45227",12,kroger-12,3
+CROWN PLAZA,"2090 Crown Plaza Dr, Columbus, OH, 43235",10,kroger-10,3
+WORTHIN GTON MALL,"60 Worthingto n Mall, Worthingto n, OH, 43085",11,kroger-11,3
+MIAMI TOWNSHI P,"6388 Branch Hill Guinea Pike, Loveland, OH, 45140",13,prod-kroger-13,3
+POLARIS,"1177 Polaris Pkwy, Columbus, OH, 43240",14,prod-kroger-14,3
+PATASKAL A,"350 E Broad St, Pataskala, OH, 43062",15,prod-kroger-15,3
+Byram - Pulled on 4/4/24 Store 203,"90-80 Route 206 North Stanhope, NJ 07874",203,wakefern-2,4
+Sparta - Pulled on 4/4/24 Store 283,"18 North Village Boulevard Sparta, NJ 07871",283,wakefern-3,4
+Spotswood Store 106,"380 Summerhill Rd Spotswood, NJ 08884",106,wakefern-1,4
+Kips Bay Store 185,"550 2nd Avenue New York, NY 10016",185,wakefern-4,4
+Elmsford Store 199,15874 2,199,wakefern-5,4
+North Poughkeepsie Store 274,"10 Winslow Gate Road Poughkeepsie, NY 12601",274,wakefern-6,4
+Veterans Store 112,"3010 Veterans Rd West Staten Island, NY 10309",112,wakefern-7,4
+Brookdale Store 215 176,"1409 Broad St. Bloomfield, NJ 07003",176,wakefern-8,4
+Hoboken Store 118,"900 Madison St Hoboken, NJ 07030",118,wakefern-9,4
+Mullica Hill Store 546,"143 Bridgeton Pike Mullica Hill, NJ 08062",546,wakefern-10,4
+Brookhaven Store 452,"5075 Edgmont Ave Brookhaven, PA 19015",452,wakefern-12,5
+Grays Ferry Store 459,"3021 Grays Ferry Ave Philadelphia, PA 19146",459,wakefern-13,5
+Drexeline Store 464,"5000 State Rd Drexel Hill, PA 19026",464,wakefern-14,5
+Morrell Plaza Store 450,"9910 Frankford Ave Philadelphia, PA 19114",450,wakefern-15,5
+Harbison Store 446,"5597 Tulip St, Philadelphia, PA 19124",446,wakefern-16,5
+Croton Store 202,"460 S Riverside Ave, Croton-On- Hudson, NY 10520",202,wakefern-17,5
+Oakland Store 256,"14 Post Rd, Oakland, NJ 07436",256,wakefern-18,5
+Warwick Store 267,"153 State Route 94S, Warwick, NY 10990",267,wakefern-19,5
+Fairlawn Store 116,"22-00 Maple Ave, Fair Lawn, NJ 07410, United States",116,wakefern-20,5
+Wallington Store 136,"375 Paterson Ave, Wallington, NJ 07057",136,wakefern-21,5
+Wyckoff Store 140,"430 Greenwood Ave, Wyckoff, NJ 07481",140,wakefern-22,5
+Northvale Store 153,"246 Livingston St, Northvale, NJ 07647",153,wakefern-23,5
+New Milford Store 141,35689,141,,5
+Wayne Store 217,"30 Wayne Hills Mall, Wayne, NJ 07470",217,wakefern-25,6
+Yardley Store 407,"1603 Big Oak Rd, Yardley, PA 19067, United States",407,wakefern-26,6
+Brodheadsvill e Store 422,"107 Kinsley Dr, Brodheadsville, PA 18322, United States",422,wakefern-27,6
+"Milford, CT Store 327","935 Boston Post Rd, Milford, CT 06460, United States",327,wakefern-28,6
+Mt Kisco Store 198,333 N Bedford Rd Mount Kisco NY 10549,198,wakefern-29,6
+Matamoras Store 463,"111 Hulst Dr Suite 724, Matamoras, PA 18336",463,wakefern-30,6
+Clark Store 163,"76 Central Ave., Clark, NJ 07066",163,wakefern-31,6
+Lagrangeville Store 244,"1643 Route 82, Suite 1, Langrangeville, NY 12540",244,wakefern-32,6
+Cortlandt Store 278,"3140 E. Main Street, Suite 300, Mohegan Lake, NY 10547",278,wakefern-33,6
+Thornwood Store 276,"960 Broadway, Thornwood, NY 10594",276,wakefern-34,6
+Seekonk Store 358,"140 Taunton Ave, Seekonk, MA 02771",358,,6
+Bethlehem Store 449,"4701 Freemansburg Ave,",449,wakefern-36,6
+Marlton Store 523,"307 Rte 70 W, Marlton, NJ 08053",523,wakefern-37,7
+Inman Avenue 144,"510 Inman Ave, Colonia, NJ 07067",144,wakefern-38,7
+High Mountain Road 145,"1068 High Mountain Rd, North Haledon, NJ 07508",145,wakefern-39,7
+Prompton Ave 146,"597 Pompton Ave, Cedar Grove, NJ 07009",146,wakefern-40,7
+Pascack Road 147,"315 Pascack Rd, Township of Washington, NJ 07676",147,wakefern-41,7
+Greenwich 437,"1207 US-22, Phillipsburg, NJ 08865",437,wakefern-42,7
+Flemington 457,"272 Highway 202/31 North, Flemington, NJ 08822",457,wakefern-43,7
+Clinton 497,"50 Wal-Mart Plaza, Clinton, NJ 08809",497,wakefern-44,7
+Vails Gate 260,"384 Windsor Hwy, Vails Gate, NY 12584",260,wakefern-45,7
+Chester Plaza 242,"78 Brookside Ave Suite 122, Chester, NY 10918",242,wakefern-46,7
+Kingston 241,"801 Miron Ln, Kingston, NY 12401",241,wakefern-47,7
+W. Poughkeepsie 206,"1895 South Rd Suite 3B, Poughkeepsie, NY 12601",206,wakefern-48,7
+West Milford 257,"23 Marshall Hill Rd, West Milford, NJ 07480",257,wakefern-49,8
+Lyndhurst 113,"540 New York Ave, Lyndhurst, NJ 07071",113,wakefern-50,8
+Hillsdale 151,"372 Broadway, Hillsdale, NJ 07642",151,wakefern-51,8
+Elmwood Park 154,"180 Broadway, Elmwood Park, NJ 07407",154,wakefern-52,8
+Hudson Exchange II 152,"400 Marin Blvd, Jersey City, NJ 07302",152,wakefern-53,8
+Evergreen Plaza 172,"100 Greaves Ln, Staten Island, NY 10308",172,wakefern-54,8
+Canton 367,"110 Albany Turnpike, Canton, CT 06019",367,wakefern-55,8
+Fishkill 269,"738 US-9 Suite 2, Fishkill, NY 12524",269,wakefern-56,8
+Carmel 235,"184 NY-52, Carmel Hamlet, NY 10512",235,wakefern-57,8
+Scarsdale 290,"955 Central Park Ave, Scarsdale, NY 10583",290,wakefern-58,8
+Montgomery 239,"99 Hawkins Dr, Montgomery, NY 12549",239,wakefern-59,8
+Wallkill 211,"20 Lloyds Ln, Middletown, NY 10940",211,wakefern-60,8
+Hudson 277,"351 Fairview Ave, Hudson, NY 12534",277,wakefern-61,8
+Lodi 122,"175 Main St, Lodi, NJ 07644",122,wakefern-62,9
+Lincoln Park 297,"60 Beaverbrook Rd, Lincoln Park, NJ 07035",297,wakefern-63,9
+New Rochelle 293,"8 Palmer Ave, New Rochelle, NY 10801",293,wakefern-64,9
+Livingtston 247,"483 S Livingston Ave, Livingston, NJ 07039",247,wakefern-65,9
+Stirling 443,"1153 Valley Rd, Stirling, NJ 07980",443,wakefern-66,9
+Somers Point 612,"23 Bethel Rd, Somers Point, NJ 08244",612,wakefern-67,9
+Wharton 487,"314 NJ-15, Wharton, NJ 07885",487,wakefern-68,9
+Hackensack 134,"500 S River St, Hackensack, NJ 07601, United States",134,wakefern-69,9
+Evesham 529,"400 E Evesham Rd, Cherry Hill Township, NJ 08003, USA",529,wakefern-70,9
+Festival 549,"5 Bel Air S Pkwy, Bel Air, MD 21015",549,wakefern-71,9
+Forest Hill 545,"2101 Rock Spring Rd, Forest Hill, MD 21050, United States",545,wakefern-72,9
+Watchung 472,"1701 U.S. 22, Watchung, NJ 07069, USA",472,wakefern-73,9
+Pelham,"847 Pelham Pkwy, Pelham,",,,9
+Middletown,"125 Dolson Ave, Middletown, NY 10940, United States",75,wakefern-75,10
+Medford,"208 NJ-70, Medford, NJ 08055",76,wakefern-76,10
+Roxborough,"6901 Ridge Ave, Roxborough, PA 19128, United States",77,wakefern-77,10
+Aberdeen,"949 Beards Hill Rd, Aberdeen, MD 21001",78,wakefern-78,10
+Riverside,"1321 Riverside Pkwy, Belcamp, MD 21017",79,wakefern-79,10
+Cardiff,"1606 Dooley Rd, Cardiff, MD 21160",80,wakefern-80,10
+Main Street,"223 N Main Street, Bel Air, MD 21014",81,wakefern-81,10
+Jacksonville,"14330 Jarrettsville Pike, Jacksonville, MD 21131",82,wakefern-82,10
+Byram,"90-80 Route 206 North, Stanhope, NJ 07874",83,wakefern-83,10
+Sparta,"18 N Village Blvd, Sparta, NJ 07871",84,wakefern-84,10
+Sussex,"1 Wiebel Plaza, Sussex, NJ 07461",85,wakefern-85,10
+Newton,"127 Water St, Newton, NJ",,,10
+,07860,,,11
+Mansfield,"1965 Route 57 West & Allen St, Hackettstown, NJ 07840",87,wakefern-87,11
+Franklin,"270 NJ-23, Franklin, NJ 07416",88,wakefern-88,11
+Flanders,"90 Bartley Flanders Rd, Flanders, NJ 07836",89,wakefern-89,11
+Succasunna,"281 NJ-10, Roxbury Township, NJ 07876",90,wakefern-90,11
+Netcong,"75 US Hwy 46, Netcong, NJ 07857",91,wakefern-91,11
+Irvine Store 50,"700 Spectrum Center Dr Suite 50 Irvine, CA 92618",50,qvs-gfh-1,11
+Santa Monica Store 21,"3105 Wilshire Blvd Santa Monica, CA 90403",21,gfh-2,11
+Mulholland (Woodland Hills) Store 14,"23379 Mulholland Dr. Woodland Hills, CA 91364",14,gfh-3,11
+GFH Lab,"1165 E 230th St Carson , CA 90745",,,12
+Schnucks Twin Oaks Store 173,"1393 Big Bend Baldwin, MO 63021",173,prod-schnucks-1,12
+Lindenwood Store 176,"1900 First Capitol Dr St. Charles, MO 63301",176,prod-schnucks-2,12
+Cottleville Store 124,"6083 Mid Rivers Mall Dr St. Charles, MO 63394",124,prod-schnucks-3,12
+Arsenal Store 149,"5055 Arsenal St, St. Louis, MO 63139",149,prod-schnucks-4,12
+Richmond Center Store 272,"6600 Clayton Rd, Clayton, MO 63117",272,prod-schnucks-5,12
+Swansea Store 120,"2665 N Illinois St, Swansea, IL 62221",120,prod-schnucks-6,12
+Butler Hill Store 105,"4333 Butler Hill Rd, St. Louis, MO 63128",105,prod-schnucks-7,12
+"March 17, 2025","8660 Veterans Memorial Pkwy, O'Fallon, MO 63366",2025,prod-schnucks-8,13
+Agawam Store 2206,"830 Suffield Street Agawam, MA 01001",2206,prod-geisslers-1,13
+Granby Store 2204,"9J Bank Street Granby, CT 06035",2204,prod-geisslers-2,13
+Somers Store 2208,"95 South Road Somers, CT 06071",2208,prod-geisslers-3,13
+Bloomfield Store 2207,"40 Tunxis Avenue Bloomfield, CT 06002",2207,prod-geisslers-4,13
+East Windsor,"100 Bridge Street East Windsor, CT",5,prod-geisslers-5,13
+Store 2201,06088,2201,,14
+Windsor Store 2203,"318 Broad Street Windsor, CT 06095",2203,prod-geisslers-6,14
+South Windsor Store 2205,"965 Sullivan Avenue South Windsor, CT 06074",2205,prod-geisslers-7,14
+Oakville Store 777,11364,777,sobeys-1,14
+Toronto Store 4726,15285,4726,sobeys-2,14
+Aurora Store 743,"15500 Bayview Avenue Aurora, ON L4G 7J1",743,sobeys-3,14
+Milton Store 4719,18205,4719,sobeys-4,14
+Ancaster (Deprecated),11215,5,sobeys-5,15
+Brantford Store 709,14526,709,sobeys-6,15
+Oshawa Store 925,12626,925,sobeys-7,15
+Burlington Store 742,11250,742,sobeys-8,15
+Kitchener Store 852,13546,852,sobeys-9,15
+Etobicoke Store 7383,10050-10059,7383,sobeys-10,15
+Stellarton Store 31,11529 (staging),31,sobeys-qa-2,15
+London Store 4748,11050-11059,4748,sobeys-11,16
+Halifax Store 644,12050-12057,644,sobeys-12,16
+Market & Eatery 950,"840 NW Pryor Rd Leeʼs Summit, MO 64081",950,prod-mckeevers-1,16
+Price Chopper 900,"9107 MO-45 Parkville, MO 64152",900,prod-mckeevers-2,16
+Price Chopper 002,"1400 W Amity Rd Louisburg, KS 66053",002,prod-mckeevers-3,16
+Price Chopper 100,"4201 S Noland Road Independence, MO 64055",100,prod-mckeevers-4,16
+Price Chopper 200,"1645 Kearney Road Excelsior Springs, MO 64024",200,prod-mckeevers-5,16
+Price Chopper 300,"19601 W 101st Street Lenexa, KS 66220",300,prod-mckeevers-6,16
+Market & Eatery 350,"8800 Maurer Blvd Lenexa, KS 66219",350,prod-mckeevers-7,17
+Price Chopper 400,"16611 E 23rd Street Independence, MO 64055",400,prod-mckeevers-8,17
+Price Chopper 500,"13351 Mission Road Leawood, KS 66209",500,prod-mckeevers-9,17
+Price Chopper 600,"11700 W. 135th Street Overland Park, KS 66221",600,prod-mckeevers-10,17
+Price Chopper 650,"2301 S Sterling Avenue Independence, MO 64052",650,prod-mckeevers-11,17
+Price Chopper 700,"175 N Parker Olathe, KS 66061",700,prod-mckeevers-12,17
+Gelsons Calabasas,"22277 Mulholland Hwy, Calabasas, CA 91302",1,prod-gelsons-1,17
+Bowmanʼs Market Mon-Fri: 6am - 11pm Sat: 6am - 12pm Sun: Closed,"326 Main St, Kaysville, UT 84037, United States",,,18
+Davis Food & Drug 11932 Store Hours Mon-Sat: 6 AM to 11 PM Sunday: 7 AM to 10 PM,"750 E 200 N, Roosevelt, UT 84066, United States",1,davis-1,18
+Davis Food & Drug 11931 Store Hours,"575 W Main St, Vernal, UT 84078, United States",2,davis-2,18
+Davis Food & Drug 11934 Store Hours Mon-Sat: 6 AM to 11 PM Sunday: 7 AM to 10 PM,"495 N State St, La Verkin, UT 84745, United States",3,davis-3,19
+Soelbergs Market 10864 Mon-Sat: 7am - 10 PM Sun: Closed,"213 E Main St, Grantsville, UT 84029, United States",,,19
+Soelbergs Market 10884,"6727 UT- 36, Stansbury Park, UT 84074,",10884,,19
+Big Bunny Market Mon-Sat: 7am - 8 PM Sun: 7am - 6 PM,"942 Main St, Southbridg e, MA 01550 United States",,,20
+Stewarts Marketpla ce Roosevelt Mon-Sat: 6:30 am - 11 PM,"245 U.S. Hwy 40, Roosevelt, UT 84066, United States",,,20
+Stewarts Marketpla ce Castle Dale Mon-Sat: 8am - 9 PM,"621 E Main St, Castle Dale, UT 84513, United States",,,21
+Queen's Store 4,"8686 Antioch Road Overland Park, KS 66212",1,prod-queens-1,21
+Queen's Store 6,"7201 W 151st Street Overland Park, KS 66223",2,prod-queens-2,21
+Queen's Store 10,"501 S Commercial Drive Bonner Springs, KS 66012",10,,21
+Foodtow n,"31 East Prospect Avenue, Mt Vernon, NY 10050",,,22
+Marrazz o's,"1400 Parkway Ave, Ewing, NJ 08628",,,22
+Foodtow n,"370 Bloomfield Avenue, Caldwell, NJ 07006",,,22
+Foodtow n,"232 Fox Run Lane, Suite 102, East Strousburg, PA 18302",,,22
+Foodtow n,"87 Main Street, Hasting- On-Hudson, NY 10706",,,22
+Foodtow n,"362 Broad Street, Red Bank, NJ 07701",,,23
+Foodtow n,"1466 Route 23 North, Wayne, NJ 07470",,,23
+Foodtow n,"3 Bayshore Plaza, Atlantic Highlands, NJ 07716",,,23
+Freshtow n,"59 North Plank Road, Newburgh, NY 12550",,,23
+Foodtow n,"2204 State Highway 35, Sea Girt, NJ 08750",,,23
+Foodtow n,"76-10 37th Avenue, Jackson Heights, Queens, NY 11372",,,23
+Foodtow n,"5555 Broadway, Riverdale, NY 10463",,,23
+Brigido's,"900 Victory Highway, Slaterville, RI 02876",,,23
+Foodtow n,"173-09 Jamaica Avenue, Jamaica, Queens, NY 11432",,,23
+Green Way,"159 Maplewood Avenue, Maplewood, NJ 07040",,,23
+Brigido's,"25 Village Plaza Way, North Scituate, RI 02857",,,24
+Brigido's,"54 Sayles Avenue, Pascoag, RI 07758",,,24
+Latrobe,"1910 Dailey Avenue, Latrobe, PA, 15650",,,24
+Murrysville,"4536 William Penn Highway, Murrysville, PA, 15668",,,24
+Route 66,"990 North Main Street, Greensburg, PA, 15601",66,,24
+Pittsburgh St,"730 East Pittsburgh Street, Greensburg, PA, 15601",,,24
+Weirton,"273 Penco Road, Weirton, WV, 26062",,,24
+Buttermilk,"4647 Buttermilk Hollow Road, West Mifflin, PA, 15122",,,24
+Rostraver,"600 Willowbrook Plaza, Belle Vernon, PA, 15012",,,24
+Wilkins,"3335 William Penn Highway,",,,24
+Bethel Park,"5001 Library Road, Bethel Park, PA, 15102",,,25
+Imperial,"600 Market Place Drive, Oakdale, PA, 15071",,,25
+Canonsburg,"617 West Pike Street, Canonsburg, PA, 15317",,,25
+Washington,"125 W. Beau Street, Washington, PA, 15301",,,25
+Holiday Park,"2362 Route 286 Holiday Park Center, Pittsburgh, PA, 15239",,,25
+Brownsville,"1119 Brownsville Road, Pittsburgh, PA, 15210",,,25
+Saltsburg,"543 Salt Street, Saltsburg, PA, 15681",,,25
+Youngwood,"250 South Third Street Suite 1010, Youngwood, PA, 15697",,,25
+Walnut Hill,"150 Walnut Hill Road, Uniontown, PA, 15401",,,25
+Mt Washington,"125 Virginia Avenue, Pittsburgh, PA, 15211",,,25
+Grove City CM,"49 Pine Grove Square, Grove City, PA, 16127",,,25
+Shaler,"1620 Babcock Blvd, Pittsburgh, PA, 15209",,,25
+Cranberry,"1197 Freedom Road, Cranberry Twp., PA, 16066",,,25
+Castle Shannon,"799 Castle Shannon Blvd.,",,,25
+Pines Plaza,"1130 Perry Highway, Pittsburgh, PA, 15237",,,26
+Rochester Road,"184 Rochester Road, Pittsburgh, PA, 15229",,,26
+Glenshaw,"917 Butler Street, Pittsburgh, PA, 15223",,,26
+Century Square,"2381 Mountain View Drive, West Mifflin, PA, 15122",,,26
+Haymaker,"4548 Broadway Blvd, Monroeville, PA, 15146",,,26
+Fairchance,"58 West Church Street, Fairchance, PA, 15436",,,26
+Ambridge,"2910 Duss Avenue, Ambridge, PA, 15003",,,26
+Heidelberg,"2100 Washington Pike, Carnegie, PA, 15106",,,26
+Tusca Plaza,"4935 Tuscarawas Road, Beaver, PA, 15009",,,26
+East Rochester,"750 Ohio River Blvd., Rochester, PA, 15074",,,26
+Super 1 Food Manito (Pilot Store),"830 E 29th Ave, Spokane, WA 99203",,,27
+Rosauers Ridgefield,"101 S 47th Ave, Ridgefield, WA 98642",,,27
+Rosauers Bozeman,"3255 Technology Blvd W, Bozeman, MT 59718",,,27
+Rosauers Hood River,"1867 12th St, Hood River, OR 97031",,,27
+Rosauers Moscow,"411 N Main St, Moscow, ID 83843",,,27
+Rosauers 9 Mile Falls (Suncrest),"5912 WA-291, Nine Mile Falls, WA 99026",,,27
+Rosauers Missoula,"2350 S Reserve St, Missoula, MT 59801",,,27
+Rosauers 5 Mile,"1724 W Francis Ave, Spokane, WA 99205",,,27
+Rosauers Lewiston,"332 Thain Rd, Lewiston, ID 83501",,,27
+Rosauers Browne's Addition,"1808 W 3rd Ave, Spokane, WA 99201",,,27
+Rosauers Spokane Valley,"10618 E Sprague Ave, Spokane Valley, WA 99206",,,27
+Rosauers Kalispell,"2150 U.S. 93 S, Kalispell, MT 59901",,,27
+Rosauers Pullman,"1205 N Grand Ave, Pullman, WA 99163",,,27
+Rosauers Yakima,"410 S 72nd Ave, Yakima, WA 98908",,,28
+Super 1 Ellensburg,"200 E Mountain View Ave, Ellensburg, WA 98926",,,28
+Rosauers Libby,"703 9th St, Libby, MT 59923",,,28
+Super 1 Foods Walla Walla,"710 S 9th Ave, Walla Walla, WA 99362",,,28
+Rosauers 29th Ave,"2610 E 29th Ave, Spokane, WA 99223",,,28
+Super 1 Foods Colville,"1250 N Highway 395 Colville, WA 99114",,,28
+Rosauers Division Street,"9414 N Division St, Spokane, WA 99218",,,28
+Sprouts,85054,,,28
+Sprouts,23269 N. Scottsdale Rd.,1,prod-sprouts-1,28
+Sprouts,89121,2,prod-sprouts-2,28
+Sprouts,89103,3,prod-sprouts-3,28
+Sprouts,89052,4,prod-sprouts-4,29
+Sprouts,89014,5,prod-sprouts-5,29
+Sprouts,10000 W Sahara Ave,6,prod-sprouts-6,29
+Sprouts,89131,7,prod-sprouts-7,29
+Sprouts,89128,8,prod-sprouts-8,29
+Sprouts,89183,9,prod-sprouts-9,29
+Sprouts,89139,10,prod-sprouts-10,29
+Sprouts,89130,11,prod-sprouts-11,29
+Sprouts,89145,12,prod-sprouts-12,29
+Sprouts,89086,13,prod-sprouts-13,29
+Sprouts,89015,14,prod-sprouts-14,29
+Sprouts,20170,15,prod-sprouts-15,29
+Sprouts,21042,16,prod-sprouts-16,29
+Sprouts,21286,,,29
+Sprouts,21014,18,prod-sprouts-18,30
+Sprouts,21122,19,prod-sprouts-19,30
+Sprouts,21224,20,sprouts-20,30
+Sprouts,15793 Old Columbia Pike,21,prod-sprouts-21,30
+Save Mart River bank,"2237 Claribel Rd Riverbank, CA 95367 +1 209 863 1480",1,prod-savemart-1,30
+Save Mart Mode sto,"801 Oakdale Rd Modesto, CA 95355 +1 209 569 0240",,,30
+Lucky Pleas anton,"6155 W Las Positas Blvd Pleasanton, CA 94566",,,30
+Cardenas Markets IC ID: 1572,"5281 Holt Blvd, Montclair, CA, 91763 +1 909-451- 6339",1572,prod-hgg-1,31
+Tony's Fresh Market IC ID: 60,"1241 East Rand Road, Prospect Heights, IL, 60070 +1 847-394- 1000",60,prod-hgg-4,31
+Cardenas Markets IC ID: 1572,"25310 Madison Ave., Murrieta, CA, 92562 +1 951-387- 3125",1572,prod-hgg-2,31
+Tony's Fresh Market IC ID: 60,"8900 North Greenwood Avenue, Niles, IL, 60714 +1 847-999- 0132",60,prod-hgg-3,31
+Tony's Fresh Market IC ID: 60,"7580 S Barrington Rd, Hanover Park, IL, 60107 +1 630-246- 7359",60,prod-hgg-5,31
+Tonyʼs Fresh Market IC ID: 60,"7770 S. Cicero Ave, Burbank, IL, 60459 +1 708-733- 7337",60,prod-hgg-6,32
+Wegmans,"6789 E Genesee St, Fayetteville, NY 13066, United States",,,32
+Wegmans,"3325 West Genesee Street Syracuse, NY 13219",,,32
+Weis Markets Selinsgro ve,719 Route 522 Selinsgrove PA 17870 +1 570 374 8552,1,prod-weis-1,33
+Weis Markets Danville,140 Continental Boulevard Danville PA 17821 +1 570 275 0999,2,prod-weis-2,33
+Weis Markets Bloomsb urg,725 Columbia Blvd. Bloomsburg PA 17815 +1 570 387 6183,3,prod-weis-3,33
+Weis Markets Honesda le,"1199 Texas Palmyra Hwy, Honesdale, PA 18431 +1 570 253 9797",4,prod-weis-4,33
+Weis Markets Mountai n Top,"237 S Mountain Blvd, Mountain Top, PA 18707 +1 570 474 5903",5,prod-weis-5,33
+Weis Markets Macungi e,"3440 Grandview Dr, Macungie, PA 18062 +1 484 232 6072",6,prod-weis-6,33
+Weis Markets Fogelsvill e,"7801 Glenlivet Dr W, Fogelsville, PA 18051 +1 610 530 3114",7,prod-weis-7,33
+Weis Markets West Hazleton,"100 Weis Lane, Hazleton, PA 18202 +1 570 455 0612",8,prod-weis-8,33
+Weis Markets Pen Argyl,"1321 Blue Valley Dr, Pen Argyl, PA 18072 +1 610 863 6689",9,prod-weis-9,33
+Weis Markets Bethlehe m,"2425 Schoenersville Road, Bethelehem, PA 18017 +1 610 691 8260",10,prod-weis-10,33
+Weis Markets Carbond ale,"97 Brooklyn St, Carbondale, PA 18407 +1 570 281 3300",11,prod-weis-11,34
+Weis Markets Brodhea dsville,"924 Weir Lake Rd, Brodheadsville, PA 18322 +1 570 992 8009",12,prod-weis-12,34
+Weis Markets Dingman 's Ferry,"112 Atlantic Avenue, Dingmans Ferry, PA 18328 +1 570 832 0399",13,prod-weis-13,34
+Weis Markets Bellefont e,"170 Buckaroo Ln, Bellefonte, PA 16823 +1 814 355 1989",14,prod-weis-14,34
+Weis Markets Brunswic k,"1201 Dutchmans Creek Dr, Brunswick, MD 21716 +1 301 834 4800",15,prod-weis-15,34
+Weis Markets Perry Hall,"9400 Scott Moore Way, Perry Hall, MD 21128 +1 410 529 0378",16,prod-weis-16,34
+Weis Markets Westmin ster,"630 Baltimore Blvd, Westminster, MD 21157 +1 410 848 2717",17,prod-weis-17,34
+Weis Markets Nottingh am,"7927 Belair Rd, Nottingham, MD 21236 +1 410 661 0039",18,prod-weis-18,34
+Weis Markets Havre De Grace,"943 Pulaski Hwy, Havre de Grace, MD 21078 +1 410 939 4020",19,prod-weis-19,34
+Weis Markets Baltimor e,"4126 E Joppa Rd, Baltimore, MD 21236 +1 410 529 3048",20,prod-weis-20,34
+Weis Markets Emmaus,"1220 Chestnut St, Emmaus, PA 18049 +1 610 965 9298",21,prod-weis-21,35
+Weis Markets Bingham ton,"1290 Front St, Binghamton, NY 13901 +1 607 762 5404",22,prod-weis-22,35
+Weis Markets Whitehall,"3644 MacArthur Rd, Whitehall, PA 18052 +1 610 261 2500",23,prod-weis-23,35
+Weis Markets Perkasie,"431 Dublin Pike, Perkasie, PA 18944 +1 215 249 1440",24,prod-weis-24,35
+Weis Markets York,"1800 Roosevelt Ave., York, PA 17404 +1 717 767 2649",,,35
+Weis Markets Pottsville,"500 Pottsville Park Plaza, Pottsville, PA 17901 +1 570 622 8112",,,35
+Weis Markets Mifflinto wn,"4521 William Penn Highway, Mifflintown, PA 17059 +1 717 436 6048",,,35
+Weis Markets Muncy,"1272 E Penn St, Muncy, PA 17756 +1 570 546 5472",,,35
+Weis Markets Franklin,"140 State Route 23, Franklin, NJ 7416 +1 973 209 4498",,,35
+Weis Markets Wellsbor o,"11798 Route 6, Wellsboro, PA 16901 +1 570 724 6364",,,35
+Clarkʼs Market IC ID: 2168,"100 Verde Valley School Rd., Village of Oak Creek, AZ 86351 (928) 284- 1144",2168,prod-clarks-1,36
+Marrazzo's,"1400 Parkway Ave, Ewing, NJ, 08628",,,36
+St. Clair,"1167 S. Carney Drive St. Clair, MI 48079",1,prod-neimans-1,37
+Clarkston,"7121 Dixie Hwy Clarkston, MI 48346",2,prod-neimans-2,37
+Mayville,"315 East Main Street Mayville, MI 48744",3,prod-neimans-3,37
+Madison,"801 Cedar St., Madison, WI 53558",1,prod-maurers-1,37

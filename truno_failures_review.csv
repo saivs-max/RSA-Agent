@@ -1,0 +1,66 @@
+Classification,Store,Cart,Latest Visit Date,Test Results (H),Note (I)
+FAIL (auto-write),DAVIS- Dfd 11934,52,7/30/2026,,Failed. See form
+FAIL (auto-write),Davis 11931,32,9/8/2026,Failed,Hardware issue. Scott stated he will reschedule.
+FAIL (auto-write),Kroger #11,1,7/23/2026,,Cart 7 passed. Cart 1 did not.
+FAIL (auto-write),Kroger #8,9,7/14/2026,,Cart 9 failed.
+FAIL (auto-write),Kroger 421,4,7/14/2026,,Cart failed.
+FAIL (auto-write),Kroger 435,11A,9/29/2026,Failed,Ready for Revisit
+FAIL (auto-write),ShopRite 118,2,9/11/2026,Cart 2 failed,Cart 2 failed due to front wheel being worn.
+FAIL (auto-write),ShopRite 136,8A,9/14/2026,Failed,Requested scheduling 9/10
+FAIL (auto-write),ShopRite 217,5B,9/18/2026,,"Carts 5, 9 failed. Others passed."
+FAIL (auto-write),ShopRite 217,9A,9/18/2026,,"Carts 5, 9 failed. Others passed."
+FAIL (auto-write),ShopRite 242,6,8/12/2026,Failed,"Requested additional information from technician 8/19, 8/24."
+FAIL (auto-write),ShopRite 247,15B,9/14/2026,Failed,Requested scheduling 9/10
+FAIL (auto-write),ShopRite 297,17,9/25/2026,Failed,Failed due to fluctuating weight. Cart needs calibration.
+FAIL (auto-write),ShopRite 297,19,7/24/2026,,Cart 19 Failed - out of maintenance tolerance Cart 26 actually passed.
+FAIL (auto-write),ShopRite 449,30A,9/15/2026,Failed,Requested scheduling 9/10
+FAIL (auto-write),Sprouts 505,1,7/27/2026,,Cart 1 failed. Cart 7 passed.
+FAIL (auto-write),Sprouts 509,6,7/15/2026,out of tolerence,"2 passed, 6 did not."
+FAIL (auto-write),Wegmans 30,11,7/31/2026,,Cart 11 did not pass. Cart 30 is not charged and could not be tested.
+FAIL (auto-write),Weis 135,12,9/14/2026,,"Most passed. 5, 8, 9, 12, and 13 failed."
+FAIL (auto-write),Weis 135,13,9/14/2026,,"Most passed. 5, 8, 9, 12, and 13 failed."
+FAIL (auto-write),Weis 135,5,9/14/2026,,"Most passed. 5, 8, 9, 12, and 13 failed."
+FAIL (auto-write),Weis 135,8,9/14/2026,,"Most passed. 5, 8, 9, 12, and 13 failed."
+FAIL (auto-write),Weis 135,9,9/14/2026,,"Most passed. 5, 8, 9, 12, and 13 failed."
+FAIL (auto-write),Weis 188,10,8/28/2026,,"4, 8, 9, 11 - untested. Technician escalated. 10 - failed - see form"
+FAIL (auto-write),Weis 188,11,9/8/2026,,9 and 11 failed validation.
+FAIL (auto-write),Weis 188,9,9/8/2026,,9 and 11 failed validation.
+FAIL (auto-write),Weis 227,13,9/27/2026,,Cart 13 failed. All others passed.
+FAIL (auto-write),Weis 68,12,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+FAIL (auto-write),Weis 68,18,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+FAIL (auto-write),Weis 68,9,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+FAIL (auto-write),Weis 90,10,9/14/2026,,Cart 10 failed at 5lb
+AMBIGUOUS (highlight),ShopRite 497,23,7/15/2026,,Per Technician: Cart 47 wasn't able to recognize 80lbs. For cart 23 the cut off numbers are 25lbs/24.96 and 50lbs/49.92. I believe these are out of tolerance. Please advise.
+AMBIGUOUS (highlight),ShopRite 497,32,7/15/2026,,Per Technician: Cart 47 wasn't able to recognize 80lbs. For cart 23 the cut off numbers are 25lbs/24.96 and 50lbs/49.92. I believe these are out of tolerance. Please advise.
+AMBIGUOUS (highlight),ShopRite 497,47,7/15/2026,,Per Technician: Cart 47 wasn't able to recognize 80lbs. For cart 23 the cut off numbers are 25lbs/24.96 and 50lbs/49.92. I believe these are out of tolerance. Please advise.
+AMBIGUOUS (highlight),Sprouts 505,46029,7/24/2026,,Cart 1 failed
+AMBIGUOUS (highlight),Sprouts 509,46059,7/15/2026,,"2 passed, 6 did not."
+AMBIGUOUS (highlight),Sprouts 558,1,7/22/2026,out of tolerence,Reminded technician of tolerances and requested form be re-submitted. Technician has confirmed this was in error.
+AMBIGUOUS (highlight),Sprouts 558,10,7/22/2026,out of tolerence,Reminded technician of tolerances and requested form be re-submitted. Technician has confirmed this was in error.
+AMBIGUOUS (highlight),Sprouts 558,6,7/22/2026,out of tolerence,Reminded technician of tolerances and requested form be re-submitted. Technician has confirmed this was in error.
+AMBIGUOUS (highlight),Sprouts 558,9,7/22/2026,out of tolerence,Reminded technician of tolerances and requested form be re-submitted. Technician has confirmed this was in error.
+AMBIGUOUS (highlight),Wegmans 30,30,7/31/2026,,Cart 11 did not pass. Cart 30 is not charged and could not be tested.
+AMBIGUOUS (highlight),Weis 188,4,8/28/2026,,"4, 8, 9, 11 - untested. Technician escalated. 10 - failed - see form"
+AMBIGUOUS (highlight),Weis 188,8,8/28/2026,,"4, 8, 9, 11 - untested. Technician escalated. 10 - failed - see form"
+PASS (no action),Kroger #11,7,7/23/2026,,Cart 7 passed. Cart 1 did not.
+PASS (no action),ShopRite 297,26,7/24/2026,,Cart 19 Failed - out of maintenance tolerance Cart 26 actually passed.
+PASS (no action),Sprouts 505,7,7/27/2026,,Cart 1 failed. Cart 7 passed.
+PASS (no action),Sprouts 507,7,7/24/2026,,Passed
+PASS (no action),Sprouts 507,9,7/24/2026,,Passed
+PASS (no action),Sprouts 509,2,7/15/2026,out of tolerence,"2 passed, 6 did not."
+PASS (no action),Weis 68,1,9/16/2026,,1 passed. Others did not. See form.
+PASS (no action),Weis 68,10,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,11,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,13,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,14,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,15,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,16,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,17,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,19,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,2,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,20,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,3,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,5,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,6,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,7,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"
+PASS (no action),Weis 68,8,8/19/2026,See Note,"Carts passed: 2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 16, 17, 19, 20 Carts failed: 1, 9, 12, 18 - out of tolerence"

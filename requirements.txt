@@ -1,0 +1,11 @@
+openai>=1.30.0
+gspread>=6.0.0
+google-auth>=2.27.0
+google-api-python-client>=2.100.0
+pymupdf>=1.24.0
+slack-bolt>=1.18.0
+slack-sdk>=3.27.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+openpyxl>=3.1.0
+Pillow>=10.0.0

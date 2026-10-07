@@ -1,0 +1,36 @@
+# ─── Secrets / environment ───────────────────────────────────────────────────
+# Never commit the real .env (holds Slack tokens, API key, shared secret).
+.env
+.env.local
+.env.*.local
+
+# Google service-account key — never commit
+sa-key.json
+service-account*.json
+*-sa.json
+*.iam.gserviceaccount.com.json
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ─── Node ─────────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ─── OS / editor cruft ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# RSA↔Truno link map (runtime state)
+truno_map.json
+rsa_reminder_state.json

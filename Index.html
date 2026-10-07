@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSA Operations Hub</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: #f0f4f9; color: #1a1a1a; min-height: 100vh; overflow-x: hidden; }
+
+    /* ── App layout: sidebar + main ── */
+    .app-layout { display: flex; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 220px; flex-shrink: 0; background: #1a2744;
+      display: flex; flex-direction: column;
+      position: fixed; left: 0; top: 0; height: 100vh; z-index: 200;
+      overflow: hidden;
+    }
+    .sidebar-brand {
+      padding: 20px 18px 16px; display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .sidebar-brand .brand-icon {
+      width: 36px; height: 36px; background: #E8721C; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .sidebar-brand h1 { font-size: 14px; font-weight: 800; color: #fff; line-height: 1.2; }
+    .sidebar-brand p  { font-size: 10px; color: #7a9cc8; margin-top: 2px; }
+    .sidebar-nav { flex: 1; padding: 12px 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 11px;
+      padding: 11px 18px; cursor: pointer; color: #8ab4d4; font-size: 13px; font-weight: 600;
+      border-left: 3px solid transparent; transition: all .15s;
+      user-select: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.06); color: #fff; }
+    .nav-item.active { background: rgba(232,114,28,.15); color: #fff; border-left-color: #E8721C; }
+    .nav-item .nav-icon { font-size: 16px; flex-shrink: 0; width: 20px; text-align: center; }
+    .nav-divider { height: 1px; background: rgba(255,255,255,.08); margin: 8px 16px; }
+    .sidebar-footer {
+      padding: 14px 18px; border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 11px; color: #5a7898;
+    }
+    .conn-dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: #666; margin-right: 6px; vertical-align: middle;
+    }
+    .conn-dot.ok    { background: #4caf50; }
+    .conn-dot.error { background: #f44336; }
+
+    /* ── Main content ── */
+    /* min-width:0 is essential: without it this flex column grows to the widest table
+       and the whole page overflows the frame (right columns + pagination clipped, no
+       scrollbar). With it, the page stays frame-width and the table scrolls inside. */
+    .main-content { margin-left: 220px; flex: 1; min-width: 0; min-height: 100vh; display: flex; flex-direction: column; }
+    .content-pad, .tracker-toolbar, .tracker-table-wrap { min-width: 0; max-width: 100%; }
+
+    /* ── Top bar ── */
+    .top-bar {
+      background: #fff; border-bottom: 1px solid #e0e8f0;
+      padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .top-bar-left { display: flex; align-items: center; gap: 12px; }
+    .page-title { font-size: 18px; font-weight: 800; color: #1a2744; }
+    .page-sub { font-size: 12px; color: #888; margin-left: 4px; }
+    .top-bar-right { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #888; }
+    .refresh-time { font-size: 11px; color: #aaa; font-style: italic; }
+
+    /* ── Content padding ── */
+    .content-pad { padding: 24px 28px 60px; }
+
+    /* ── KPI tiles ── */
+    .kpi-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-bottom: 22px; }
+    .kpi-card {
+      background: #fff; border-radius: 12px; padding: 18px 16px;
+      border: 1px solid #e0e8f0; position: relative; overflow: hidden;
+    }
+    .kpi-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .kpi-total::before   { background: #1a2744; }
+    .kpi-pending::before { background: #E8721C; }
+    .kpi-sched::before   { background: #2e5fa3; }
+    .kpi-passed::before  { background: #276221; }
+    .kpi-action::before  { background: #c5221f; }
+    .kpi-num   { font-size: 30px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+    .kpi-label { font-size: 11px; color: #777; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+    .kpi-total   .kpi-num { color: #1a2744; }
+    .kpi-pending .kpi-num { color: #E8721C; }
+    .kpi-sched   .kpi-num { color: #2e5fa3; }
+    .kpi-passed  .kpi-num { color: #276221; }
+    .kpi-action  .kpi-num { color: #c5221f; }
+
+    /* ── Cards ── */
+    .card { background: #fff; border: 1px solid #e0e8f0; border-radius: 12px; padding: 22px; margin-bottom: 18px; }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #f0f4f9;
+    }
+    .card-title { font-size: 14px; font-weight: 700; color: #1a2744; display: flex; align-items: center; gap: 8px; }
+    .card-sub   { font-size: 12px; color: #888; margin-top: 2px; }
+    .step-badge {
+      background: #2e5fa3; color: #fff; border-radius: 50%; width: 22px; height: 22px;
+      font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px;
+      border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; border: none;
+      transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-primary { background: #2e5fa3; color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: #1f4a8a; }
+    .btn-orange  { background: #E8721C; color: #fff; }
+    .btn-orange:hover:not(:disabled)  { background: #c9601a; }
+    .btn-success { background: #276221; color: #fff; }
+    .btn-success:hover:not(:disabled) { background: #1a4a17; }
+    .btn-outline { background: #fff; color: #2e5fa3; border: 1.5px solid #2e5fa3; }
+    .btn-outline:hover:not(:disabled) { background: #eef4fb; }
+    .btn-danger  { background: #c5221f; color: #fff; }
+    .btn-danger:hover:not(:disabled)  { background: #9c0006; }
+    .btn-sm { padding: 5px 11px; font-size: 12px; }
+    .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+
+    /* ── Badges ── */
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .badge-pass      { background: #c6efce; color: #276221; }
+    .badge-fail      { background: #ffc7ce; color: #9c0006; }
+    .badge-pending   { background: #ffeb9c; color: #9c6500; }
+    .badge-scheduled { background: #dae8fc; color: #1558b0; }
+    .badge-action    { background: #fce5cd; color: #7f4a00; }
+    .badge-neutral   { background: #e8eef6; color: #555; }
+
+    /* ── Days chip ── */
+    .days-chip { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .days-ok      { background: #e8f5e9; color: #276221; }
+    .days-warn    { background: #fff3e0; color: #e65100; }
+    .days-alert   { background: #fce8e6; color: #c5221f; }
+    .days-neutral { background: #f0f4f9; color: #555; }
+
+    /* ── Spinner ── */
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+    .spinner-dark { border-color: rgba(30,60,100,.15); border-top-color: #2e5fa3; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Alerts ── */
+    .alert { border-radius: 8px; padding: 11px 15px; font-size: 13px; margin-top: 12px; display: none; }
+    .alert.error   { background: #ffc7ce; color: #9c0006; border: 1px solid #f4a5aa; }
+    .alert.warning { background: #ffeb9c; color: #9c6500; border: 1px solid #ffe082; }
+    .alert.success { background: #c6efce; color: #276221; border: 1px solid #a8d5aa; }
+    .alert.visible { display: block; }
+
+    /* ── Form fields ── */
+    .field-label { display: block; font-size: 12px; font-weight: 600; color: #1a2744; margin-bottom: 5px; }
+    .field-input {
+      width: 100%; padding: 9px 12px; border: 1.5px solid #c8d8ec;
+      border-radius: 7px; font-size: 13px; color: #1a1a1a; background: #fff;
+      transition: border-color .15s;
+    }
+    .field-input:focus { outline: none; border-color: #2e5fa3; box-shadow: 0 0 0 3px rgba(46,95,163,.1); }
+    select.field-input { cursor: pointer; }
+
+    /* ════════════════════════════════════════════════════
+       TRACKER / ARCHIVE SHARED TABLE STYLES
+    ════════════════════════════════════════════════════ */
+    .tracker-toolbar {
+      display: flex; align-items: center; gap: 9px; margin-bottom: 14px; flex-wrap: wrap;
+    }
+    .tracker-search {
+      flex: 1; min-width: 200px; padding: 8px 14px; border: 1.5px solid #c8d8ec;
+      border-radius: 7px; font-size: 13px; background: #fff;
+    }
+    .tracker-search:focus { outline: none; border-color: #2e5fa3; }
+    .tracker-filter {
+      padding: 8px 11px; border: 1.5px solid #c8d8ec; border-radius: 7px;
+      font-size: 13px; background: #fff; cursor: pointer;
+    }
+    .tracker-filter:focus { outline: none; border-color: #2e5fa3; }
+
+    .result-count { font-size: 12px; color: #888; margin-bottom: 8px; }
+
+    .tracker-table-wrap {
+      border: 1px solid #e0e8f0; border-radius: 10px; background: #fff;
+      overflow-x: auto;
+    }
+    .tracker-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 860px; }
+    .tracker-table thead th {
+      background: #1a2744; color: #fff; font-weight: 600; padding: 10px 12px;
+      text-align: left; white-space: nowrap; position: sticky; top: 0; z-index: 1;
+      cursor: pointer; user-select: none;
+    }
+    .tracker-table thead th:hover { background: #2e5fa3; }
+    .tracker-table thead th .sort-icon { margin-left: 4px; opacity: .5; font-size: 10px; }
+    .tracker-table thead th.sort-asc .sort-icon,
+    .tracker-table thead th.sort-desc .sort-icon { opacity: 1; }
+    .tracker-table tbody tr { cursor: pointer; transition: background .1s; }
+    .tracker-table tbody tr:nth-child(even) { background: #f7faff; }
+    .tracker-table tbody tr:hover { background: #dce8f8 !important; }
+    .tracker-table tbody tr.row-new { background: #fffde7 !important; border-left: 3px solid #E8721C; }
+    .tracker-table tbody tr.row-new:hover { background: #fff3b0 !important; }
+    .tracker-table tbody td {
+      padding: 8px 12px; border-bottom: 1px solid #eef2f8; vertical-align: middle;
+    }
+    .tracker-table tbody tr:last-child td { border-bottom: none; }
+    .notes-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #666; font-size: 11px; }
+    .cart-id { font-weight: 700; color: #1a2744; font-family: monospace; font-size: 12px; }
+    .new-badge {
+      display: inline-block; background: #E8721C; color: #fff;
+      border-radius: 3px; font-size: 9px; padding: 1px 4px; font-weight: 700;
+      margin-left: 5px; vertical-align: middle; letter-spacing: .3px;
+    }
+
+    .tracker-loading { text-align: center; padding: 48px; color: #2e5fa3; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .tracker-empty   { text-align: center; padding: 48px; color: #888; font-size: 13px; font-style: italic; }
+
+    /* ── Pagination ── */
+    .pagination-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 2px; flex-wrap: wrap; gap: 8px;
+    }
+    .pg-info { font-size: 12px; color: #888; }
+    .pg-controls { display: flex; align-items: center; gap: 8px; }
+    .pg-num { font-size: 12px; font-weight: 600; color: #444; min-width: 90px; text-align: center; }
+    .pg-size { padding: 5px 8px; border: 1.5px solid #c8d8ec; border-radius: 6px; font-size: 12px; background: #fff; cursor: pointer; }
+
+    /* ════════════════════════════════════════════════════
+       DASHBOARD CHARTS
+    ════════════════════════════════════════════════════ */
+    .dash-charts-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .chart-card { background: #fff; border: 1px solid #e0e8f0; border-radius: 12px; padding: 18px; }
+    .chart-card-title { font-size: 13px; font-weight: 700; color: #1a2744; margin-bottom: 12px; }
+    .chart-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .donut-wrap { display: flex; align-items: center; gap: 16px; }
+    .donut-legend { font-size: 11px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-label { color: #555; }
+    .legend-val { font-weight: 700; color: #1a2744; margin-left: auto; padding-left: 8px; }
+
+    .state-bars { width: 100%; }
+    .state-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; }
+    .state-bar-label { width: 36px; font-weight: 700; color: #1a2744; text-align: right; flex-shrink: 0; }
+    .state-bar-track { flex: 1; background: #f0f4f9; border-radius: 4px; height: 14px; overflow: hidden; }
+    .state-bar-fill  { height: 100%; border-radius: 4px; background: #2e5fa3; transition: width .4s; }
+    .state-bar-count { width: 28px; font-weight: 600; color: #555; text-align: right; flex-shrink: 0; }
+
+    /* ── DRI dashboard ── */
+    .dri-section { margin-bottom: 24px; }
+    .dri-header { display: flex; align-items: center; justify-content: space-between; background: #1a2744; border-radius: 10px 10px 0 0; padding: 12px 18px; }
+    .dri-header.winter    { background: #274e13; }
+    .dri-header.state-hdr { background: #4a3568; }
+    .dri-title { font-size: 14px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .dri-count { background: rgba(255,255,255,.2); color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+    .dri-stats { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; border-left: 1px solid #e0e8f0; border-right: 1px solid #e0e8f0; }
+    .dri-stat { padding: 12px 8px; text-align: center; border-right: 1px solid #eef2f8; border-bottom: 1px solid #e0e8f0; }
+    .dri-stat:last-child { border-right: none; }
+    .dri-stat-num { font-size: 24px; font-weight: 700; line-height: 1; }
+    .dri-stat-label { font-size: 10px; color: #888; margin-top: 3px; }
+    .dri-stat.s-total   { background: #f5f8ff; } .dri-stat.s-total   .dri-stat-num { color: #1a2744; }
+    .dri-stat.s-pending { background: #fffde7; } .dri-stat.s-pending .dri-stat-num { color: #9c6500; }
+    .dri-stat.s-sched   { background: #e8f0fe; } .dri-stat.s-sched   .dri-stat-num { color: #1558b0; }
+    .dri-stat.s-passed  { background: #e8f5e9; } .dri-stat.s-passed  .dri-stat-num { color: #276221; }
+    .dri-stat.s-action  { background: #fce8e6; } .dri-stat.s-action  .dri-stat-num { color: #c5221f; }
+    .dri-table-wrap { border: 1px solid #e0e8f0; border-top: none; border-radius: 0 0 10px 10px; overflow-x: auto; }
+    .dri-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .dri-table thead th { background: #eef4fb; color: #1a2744; font-weight: 700; padding: 8px 12px; text-align: left; white-space: nowrap; border-bottom: 2px solid #e0e8f0; }
+    .dri-table tbody tr:nth-child(even) { background: #f7faff; }
+    .dri-table tbody tr:hover { background: #dce8f8; }
+    .dri-table tbody td { padding: 7px 12px; border-bottom: 1px solid #eef2f8; vertical-align: middle; }
+    .dri-table tbody tr:last-child td { border-bottom: none; }
+    .dri-empty { padding: 24px; text-align: center; color: #888; font-size: 13px; border: 1px solid #e0e8f0; border-top: none; border-radius: 0 0 10px 10px; background: #fafafa; }
+    .dash-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+    .state-summary { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 10px; margin-bottom: 16px; }
+    .state-tile { background: #fff; border: 1px solid #e0e8f0; border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: box-shadow .15s,border-color .15s; }
+    .state-tile:hover { border-color: #2e5fa3; box-shadow: 0 2px 8px rgba(46,95,163,.12); }
+    .state-tile.active { border-color: #E8721C; background: #fff8f4; box-shadow: 0 0 0 2px #E8721C; }
+    .state-tile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .state-abbr { font-size: 18px; font-weight: 800; color: #1a2744; }
+    .state-name { font-size: 10px; color: #888; margin-bottom: 6px; }
+    .state-mini-stats { display: flex; gap: 4px; flex-wrap: wrap; }
+    .state-mini-stat { padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+
+    /* ════════════════════════════════════════════════════
+       EDIT MODAL
+    ════════════════════════════════════════════════════ */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 14px; width: 100%; max-width: 560px; box-shadow: 0 12px 48px rgba(0,0,0,.22); overflow: hidden; animation: modalIn .18s ease; }
+    @keyframes modalIn { from { transform: translateY(-16px); opacity: 0; } to { transform: none; opacity: 1; } }
+    .modal-header { background: #1a2744; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h3 { color: #fff; font-size: 15px; font-weight: 700; }
+    .modal-header-sub { color: #7ab0d4; font-size: 12px; margin-top: 2px; }
+    .modal-close { background: none; border: none; color: #7ab0d4; font-size: 20px; cursor: pointer; line-height: 1; padding: 4px; }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 22px; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-grid .full { grid-column: 1 / -1; }
+    .modal-source-tag { font-size: 11px; color: #888; font-style: italic; margin-bottom: 10px; }
+    .modal-footer { padding: 14px 22px; border-top: 1px solid #eef2f8; display: flex; justify-content: flex-end; gap: 10px; background: #f9fafb; }
+    .modal-results { background: #f7faff; border: 1px solid #d6e4f7; border-radius: 8px; padding: 10px 13px; font-size: 12px; color: #1a2744; margin-bottom: 4px; }
+    .modal-results a { color: #2e5fa3; font-weight: 600; }
+
+    /* ════════════════════════════════════════════════════
+       W&M IMPORTER
+    ════════════════════════════════════════════════════ */
+    .drop-zone { border: 2px dashed #c8d8ec; border-radius: 8px; padding: 32px 20px; text-align: center; cursor: pointer; transition: border-color .2s,background .2s; position: relative; }
+    .drop-zone:hover,.drop-zone.drag-over { border-color: #2e5fa3; background: #eef4fb; }
+    .drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .drop-icon  { font-size: 34px; margin-bottom: 10px; }
+    .drop-label { font-size: 14px; font-weight: 600; color: #1a2744; }
+    .drop-hint  { font-size: 12px; color: #888; margin-top: 4px; }
+    .file-info  { display: none; margin-top: 12px; background: #eef4fb; border: 1px solid #d6e4f7; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #2e5fa3; align-items: center; gap: 10px; }
+    .file-info.visible { display: flex; }
+    .file-info .fname { font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-clear { background: none; border: none; cursor: pointer; color: #888; font-size: 16px; flex-shrink: 0; line-height: 1; }
+    #preview-section { display: none; }
+    .preview-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .meta-chip { background: #eef4fb; border: 1px solid #d6e4f7; border-radius: 20px; padding: 4px 12px; font-size: 12px; color: #2e5fa3; font-weight: 600; }
+    .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid #e0e8f0; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { background: #1a2744; color: #fff; font-weight: 600; padding: 9px 12px; text-align: left; white-space: nowrap; }
+    tbody tr:nth-child(even) { background: #f7faff; }
+    tbody tr:hover { background: #dce8f8; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid #eef2f8; }
+    #results-section { display: none; }
+    .result-summary { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 12px; margin-bottom: 18px; }
+    .stat-card { border-radius: 8px; padding: 14px 16px; text-align: center; }
+    .stat-card .stat-num   { font-size: 28px; font-weight: 700; }
+    .stat-card .stat-label { font-size: 12px; margin-top: 3px; }
+    .stat-updated  { background: #c6efce; color: #276221; }
+    .stat-added    { background: #dce9fb; color: #1558b0; }
+    .stat-notfound { background: #ffc7ce; color: #9c0006; }
+    .stat-total    { background: #d6e4f7; color: #1a2744; }
+    .not-found-list { background: #fff8e1; border: 1px solid #ffe082; border-radius: 7px; padding: 12px 14px; margin-top: 12px; }
+    .not-found-list h4 { font-size: 13px; color: #9c6500; margin-bottom: 6px; }
+    .not-found-list li { font-size: 12px; color: #5a4000; padding: 2px 0; }
+    .result-log h4 { font-size: 13px; color: #555; margin-bottom: 8px; }
+    .log-item { display: flex; align-items: center; gap: 9px; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 12px; }
+    .log-item:last-child { border-bottom: none; }
+
+    /* Archive notice */
+    .archive-notice {
+      background: #fff8f4; border: 1px solid #fcdcc0; border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; font-size: 13px;
+    }
+    .archive-notice strong { color: #E8721C; }
+
+    .footer { text-align: center; font-size: 11px; color: #bbb; padding: 20px; margin-top: auto; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- ══════════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🛒</div>
+      <div>
+        <h1>RSA Ops Hub</h1>
+        <p>Instacart Hardware Ops</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active" id="nav-tracker"   onclick="switchTab('tracker')">
+        <span class="nav-icon">🔍</span> Tracker
+      </div>
+      <div class="nav-item"        id="nav-addcart"   onclick="switchTab('addcart')">
+        <span class="nav-icon">➕</span> Add Cart
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-item"        id="nav-dashboard" onclick="switchTab('dashboard')">
+        <span class="nav-icon">📊</span> DRI Dashboard
+      </div>
+      <div class="nav-item"        id="nav-archive"   onclick="switchTab('archive')">
+        <span class="nav-icon">📦</span> Archive
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-item"        id="nav-importer"  onclick="switchTab('importer')">
+        <span class="nav-icon">⚖️</span> W&amp;M Import
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <span class="conn-dot" id="sidebar-conn-dot"></span>
+      <span id="sidebar-conn-text">Connecting…</span>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <div class="page-title" id="page-title">Tracker</div>
+        <div class="page-sub" id="page-sub">All active RSA carts</div>
+      </div>
+      <div class="top-bar-right">
+        <span class="refresh-time" id="tr-refreshed"></span>
+      </div>
+    </div>
+
+    <div class="content-pad">
+
+      <!-- ════════════════════════════════════
+           TAB 1: TRACKER
+      ════════════════════════════════════ -->
+      <div id="tab-tracker">
+        <!-- KPI row -->
+        <div class="kpi-grid" id="tr-kpi" style="display:none">
+          <div class="kpi-card kpi-total">
+            <div class="kpi-num" id="k-total">—</div>
+            <div class="kpi-label">Total Carts</div>
+          </div>
+          <div class="kpi-card kpi-pending">
+            <div class="kpi-num" id="k-pending">—</div>
+            <div class="kpi-label">Pending RSA</div>
+          </div>
+          <div class="kpi-card kpi-sched">
+            <div class="kpi-num" id="k-sched">—</div>
+            <div class="kpi-label">Scheduled</div>
+          </div>
+          <div class="kpi-card kpi-passed">
+            <div class="kpi-num" id="k-passed">—</div>
+            <div class="kpi-label">Completed</div>
+          </div>
+          <div class="kpi-card kpi-action">
+            <div class="kpi-num" id="k-action">—</div>
+            <div class="kpi-label">Needs Action</div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="tracker-toolbar">
+          <input type="text" id="tr-search" class="tracker-search"
+                 placeholder="🔍  Search Cart ID, store, notes…" oninput="applyFilters()" />
+          <select id="tr-state" class="tracker-filter" onchange="applyFilters()">
+            <option value="">All States</option>
+            <option>AZ</option><option>CA</option><option>CT</option><option>DC</option>
+            <option>DE</option><option>GA</option><option>ID</option><option>IL</option>
+            <option>IN</option><option>MA</option><option>MD</option><option>MI</option>
+            <option>MO</option><option>NC</option><option>NJ</option><option>NV</option>
+            <option>NYC</option><option>NY</option><option>OH</option><option>OR</option>
+            <option>PA</option><option>UT</option><option>VA</option><option>WA</option>
+          </select>
+          <select id="tr-rsa-status" class="tracker-filter" onchange="applyFilters()">
+            <option value="">All RSA Status</option>
+            <option>Pending Truno Scheduled</option><option>Pending RSA</option><option>Scheduled RSA</option>
+            <option>Completed RSA</option><option>Failed RSA</option>
+          </select>
+          <select id="tr-dri" class="tracker-filter" onchange="applyFilters()">
+            <option value="">All DRI</option>
+            <option>Sai VS</option><option>Vishnu Kariyattu</option><option>Maitland Kelly</option>
+            <option>Andrew Cha</option><option>Reshmi Chowdhury</option><option>HW Ops</option>
+            <option>Ops Manager</option><option>CSM</option><option>Winter Scales</option>
+            <option>TRUNO</option><option>DUMAC</option><option>TBD</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="loadTracker()">🔄 Refresh</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV('tracker')">⬇️ CSV</button>
+        </div>
+
+        <div class="result-count" id="tr-count"></div>
+        <div class="tracker-table-wrap" id="tr-table-wrap">
+          <div class="tracker-loading"><span class="spinner spinner-dark"></span> Loading tracker…</div>
+        </div>
+        <div class="pagination-bar" id="tr-pagination" style="display:none"></div>
+      </div><!-- /tab-tracker -->
+
+
+      <!-- ════════════════════════════════════
+           TAB 2: ADD CART
+      ════════════════════════════════════ -->
+      <div id="tab-addcart" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">➕ Add New Cart to Tracker</div>
+              <div class="card-sub">Fields marked * are required. Changes save directly to the RSA Tracker sheet.</div>
+            </div>
+          </div>
+          <div id="addcart-error"   class="alert error"></div>
+          <div id="addcart-success" class="alert success"></div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px">
+            <div>
+              <label class="field-label">Cart ID *</label>
+              <input type="text" id="ac-cartid" class="field-input" placeholder="e.g. P_WF_SHOPRITE_72_M3_001" />
+            </div>
+            <div>
+              <label class="field-label">Store / Location *</label>
+              <input type="text" id="ac-store"  class="field-input" placeholder="e.g. ShopRite of Forest Hill - WF 72" />
+            </div>
+            <div>
+              <label class="field-label">Store Address</label>
+              <input type="text" id="ac-address" class="field-input" placeholder="e.g. 123 Main St, Wallington, NJ 07057" />
+            </div>
+            <div>
+              <label class="field-label">State *</label>
+              <select id="ac-state" class="field-input" onchange="onAddCartStateChange();onAddCartVendorChange()">
+                <option value="">— Select State —</option>
+                <option value="AZ">AZ — Arizona</option><option value="CA">CA — California</option>
+                <option value="CT">CT — Connecticut</option><option value="DC">DC — Washington D.C.</option>
+                <option value="DE">DE — Delaware</option><option value="GA">GA — Georgia</option>
+                <option value="ID">ID — Idaho</option><option value="IL">IL — Illinois</option>
+                <option value="IN">IN — Indiana</option><option value="MA">MA — Massachusetts</option>
+                <option value="MD">MD — Maryland</option><option value="MI">MI — Michigan</option>
+                <option value="MO">MO — Missouri</option><option value="NC">NC — North Carolina</option>
+                <option value="NJ">NJ — New Jersey</option><option value="NV">NV — Nevada</option>
+                <option value="NYC">NYC — New York City / Long Island</option>
+                <option value="NY">NY — New York State</option><option value="OH">OH — Ohio</option>
+                <option value="OR">OR — Oregon</option><option value="PA">PA — Pennsylvania</option>
+                <option value="UT">UT — Utah</option><option value="VA">VA — Virginia</option>
+                <option value="WA">WA — Washington</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Service Trigger</label>
+              <select id="ac-trigger" class="field-input" onchange="onAddCartStateChange()">
+                <option value="">— Select Trigger —</option>
+                <option>Launches</option><option>Cart replacement</option>
+                <option>Top unit replacement</option><option>Load cell recal</option>
+                <option>W&M Failed</option><option>W&M Inspection</option>
+                <option>Scale Drift</option><option>Bent Frame</option>
+              </select>
+              <div id="ac-rsa-hint" style="margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:none"></div>
+            </div>
+            <div>
+              <label class="field-label">RSA Vendor</label>
+              <select id="ac-vendor" class="field-input" onchange="onAddCartVendorChange()">
+                <option value="">— Select Vendor —</option>
+                <option>Winter Scales</option><option>TRUNO</option><option>DUMAC</option><option>TBD</option>
+              </select>
+              <div id="ac-vendor-hint" style="margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:none"></div>
+            </div>
+            <div>
+              <label class="field-label">RSA Status</label>
+              <select id="ac-rsastatus" class="field-input">
+                <option>Pending Truno Scheduled</option><option>Pending RSA</option><option>Scheduled RSA</option>
+                <option>Completed RSA</option><option>Failed RSA</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">W&amp;M Status</label>
+              <select id="ac-wmstatus" class="field-input">
+                <option>Pending W&M</option><option>Scheduled W&M</option>
+                <option>Passed W&M</option><option>Failed W&M</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Overall / Return-to-Service Status</label>
+              <select id="ac-overall" class="field-input">
+                <option>Pending RSA</option><option>Pending W&M</option>
+                <option>Passed</option><option>Failed</option>
+                <option>Redispatch Needed</option><option>Needs Verification</option>
+              </select>
+            </div>
+            <div style="grid-column:1 / -1">
+              <label class="field-label">DRI</label>
+              <select id="ac-dri" class="field-input">
+                <option>HW Ops</option><option>Ops Manager</option>
+                <option>Sai VS</option><option>Vishnu Kariyattu</option>
+                <option>Maitland Kelly</option><option>Andrew Cha</option>
+                <option>Reshmi Chowdhury</option><option>CSM</option>
+                <option>Winter Scales</option><option>TRUNO</option><option>DUMAC</option><option>TBD</option>
+              </select>
+            </div>
+            <div style="grid-column:1 / -1">
+              <label class="field-label">Notes</label>
+              <textarea id="ac-notes" class="field-input" rows="2" placeholder="Optional notes…" style="resize:vertical"></textarea>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-success" id="btn-addcart">➕ Add Cart to Tracker</button>
+            <button class="btn btn-outline" id="btn-addcart-reset">↩ Clear Form</button>
+          </div>
+        </div>
+
+        <div class="card" id="addcart-log-section" style="display:none">
+          <div class="card-title">✅ Recently Added This Session</div>
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>#</th><th>Cart ID</th><th>Store</th><th>State</th><th>RSA Status</th><th>W&amp;M</th><th>DRI</th><th>Truno Row</th><th>Link</th></tr></thead>
+              <tbody id="addcart-log-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div><!-- /tab-addcart -->
+
+
+      <!-- ════════════════════════════════════
+           TAB 3: DRI DASHBOARD
+      ════════════════════════════════════ -->
+      <div id="tab-dashboard" style="display:none">
+        <div class="dash-toolbar">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#1a2744">DRI Status Dashboard</div>
+            <div style="font-size:12px;color:#888;font-style:italic" id="dash-refreshed">Loading…</div>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btn-refresh-dash" onclick="loadDashboard()">🔄 Refresh</button>
+        </div>
+
+        <!-- Charts row -->
+        <div class="dash-charts-row" id="dash-charts-row" style="display:none">
+          <div class="chart-card">
+            <div class="chart-card-title">📊 Completion Rate</div>
+            <div class="chart-center" id="gauge-container"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">🍩 Status Breakdown</div>
+            <div id="donut-container"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">🗺️ Top States by Volume</div>
+            <div class="state-bars" id="state-bars-container"></div>
+          </div>
+        </div>
+
+        <div id="state-summary-bar" style="display:none">
+          <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:8px">Click a state to filter</div>
+          <div class="state-summary" id="state-tiles"></div>
+        </div>
+        <input type="hidden" id="state-filter" value="" />
+
+        <div id="dash-body">
+          <div class="tracker-loading"><span class="spinner spinner-dark"></span> Loading cart data…</div>
+        </div>
+      </div><!-- /tab-dashboard -->
+
+
+      <!-- ════════════════════════════════════
+           TAB 4: ARCHIVE
+      ════════════════════════════════════ -->
+      <div id="tab-archive" style="display:none">
+        <div class="archive-notice">
+          <span style="font-size:24px">📦</span>
+          <div>
+            <div style="font-weight:700;color:#1a2744;margin-bottom:3px">Cart Archive</div>
+            <div style="color:#666">Carts moved here after 20+ days in status. Editable — changes write back to the Archive sheet.</div>
+          </div>
+          <button class="btn btn-orange btn-sm" id="btn-run-archive" onclick="runArchiveOldCarts()" style="margin-left:auto;flex-shrink:0">
+            📦 Archive 20+ Day Carts
+          </button>
+        </div>
+
+        <div class="tracker-toolbar">
+          <input type="text" id="arch-search" class="tracker-search"
+                 placeholder="🔍  Search archive…" oninput="applyArchiveFilters()" />
+          <select id="arch-state" class="tracker-filter" onchange="applyArchiveFilters()">
+            <option value="">All States</option>
+            <option>AZ</option><option>CA</option><option>CT</option><option>DC</option>
+            <option>DE</option><option>GA</option><option>ID</option><option>IL</option>
+            <option>IN</option><option>MA</option><option>MD</option><option>NJ</option>
+            <option>NV</option><option>NYC</option><option>NY</option><option>OH</option>
+            <option>OR</option><option>PA</option><option>UT</option><option>VA</option><option>WA</option>
+          </select>
+          <select id="arch-rsa-status" class="tracker-filter" onchange="applyArchiveFilters()">
+            <option value="">All RSA Status</option>
+            <option>Pending Truno Scheduled</option><option>Pending RSA</option><option>Scheduled RSA</option>
+            <option>Completed RSA</option><option>Failed RSA</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="loadArchive(true)">🔄 Refresh</button>
+          <button class="btn btn-outline btn-sm" onclick="exportCSV('archive')">⬇️ CSV</button>
+        </div>
+
+        <div class="result-count" id="arch-count"></div>
+        <div class="tracker-table-wrap" id="arch-table-wrap">
+          <div class="tracker-loading" id="arch-loading"><span class="spinner spinner-dark"></span> Loading archive…</div>
+        </div>
+        <div class="pagination-bar" id="arch-pagination" style="display:none"></div>
+        <div style="font-size:11px;color:#aaa;margin-top:8px;text-align:right" id="arch-refreshed"></div>
+      </div><!-- /tab-archive -->
+
+
+      <!-- ════════════════════════════════════
+           TAB 5: W&M IMPORTER
+      ════════════════════════════════════ -->
+      <div id="tab-importer" style="display:none">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:4px"><span class="step-badge">1</span> Upload W&amp;M Checklist</div>
+          <div class="card-sub" style="margin-bottom:16px">Drop the Excel checklist (.xlsx) below.</div>
+          <div class="drop-zone" id="drop-zone">
+            <input type="file" id="file-input" accept=".xlsx,.xls" />
+            <div class="drop-icon">📂</div>
+            <div class="drop-label">Drop your checklist here, or click to browse</div>
+            <div class="drop-hint">.xlsx files only</div>
+          </div>
+          <div class="file-info" id="file-info">
+            <span>📄</span>
+            <span class="fname" id="file-name"></span>
+            <button class="file-clear" id="file-clear">✕</button>
+          </div>
+          <div id="parse-error" class="alert error"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" id="btn-parse" disabled>Parse Checklist</button>
+          </div>
+        </div>
+        <div class="card" id="preview-section">
+          <div class="card-title" style="margin-bottom:4px"><span class="step-badge">2</span> Review Parsed Results</div>
+          <div class="preview-meta" id="preview-meta"></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Cart No</th><th>Store</th><th>Test Date</th><th>Calib Req</th><th>5 lbs</th><th>25 lbs</th><th>80 lbs</th><th>W&amp;M Result</th></tr></thead>
+              <tbody id="preview-body"></tbody>
+            </table>
+          </div>
+          <div id="preview-warning" class="alert warning"></div>
+          <div class="btn-row">
+            <button class="btn btn-success" id="btn-update" disabled>✅ Update RSA Tracker</button>
+            <button class="btn btn-outline" id="btn-reset">↩ Start Over</button>
+          </div>
+        </div>
+        <div class="card" id="results-section">
+          <div class="card-title" style="margin-bottom:4px"><span class="step-badge">3</span> Import Complete</div>
+          <div class="card-sub" id="results-timestamp"></div>
+          <div class="result-summary" id="result-summary"></div>
+          <div id="not-found-section" class="not-found-list" style="display:none">
+            <h4>⚠️ Carts not matched in RSA Tracker</h4>
+            <ul id="not-found-list"></ul>
+          </div>
+          <div class="result-log" style="margin-top:14px">
+            <h4>Import log</h4>
+            <div id="result-log-items"></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-success" id="btn-view-tracker" href="#" target="_blank" style="display:none;text-decoration:none">📊 View in Tracker</a>
+            <button class="btn btn-outline" id="btn-import-another">↩ Import Another</button>
+          </div>
+        </div>
+      </div><!-- /tab-importer -->
+
+    </div><!-- /content-pad -->
+    <div class="footer">RSA Operations Hub · Instacart Hardware Ops</div>
+  </main>
+</div>
+
+<!-- ══════════════════════════════════════════
+     EDIT MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h3 id="modal-cart-title">Edit Cart</h3>
+        <div class="modal-header-sub" id="modal-cart-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-error" class="alert error" style="margin-bottom:12px"></div>
+      <div class="modal-source-tag" id="modal-source-tag"></div>
+      <div class="modal-results" id="modal-results" style="display:none"></div>
+      <div class="modal-grid">
+        <div>
+          <label class="field-label">RSA Vendor</label>
+          <select id="m-vendor" class="field-input">
+            <option value="">— None —</option>
+            <option>Winter Scales</option><option>TRUNO</option><option>DUMAC</option><option>TBD</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">RSA Status</label>
+          <select id="m-rsa" class="field-input" onchange="onRsaStatusChange()">
+            <option value="">— None —</option>
+            <option>Pending Truno Scheduled</option><option>Pending RSA</option><option>Scheduled RSA</option>
+            <option>Completed RSA</option><option>Failed RSA</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">W&amp;M Status</label>
+          <select id="m-wm" class="field-input">
+            <option value="">— None —</option>
+            <option>Pending W&M</option><option>Scheduled W&M</option>
+            <option>Passed W&M</option><option>Failed W&M</option><option>Completed W&M</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Overall / RTS Status</label>
+          <select id="m-overall" class="field-input">
+            <option value="">— None —</option>
+            <option>Pending RSA</option><option>Pending W&M</option>
+            <option>Passed</option><option>Failed</option>
+            <option>Redispatch Needed</option><option>Needs Verification</option>
+          </select>
+        </div>
+        <div class="full">
+          <label class="field-label">DRI</label>
+          <select id="m-dri" class="field-input">
+            <option value="">— None —</option>
+            <option>Sai VS</option><option>Vishnu Kariyattu</option><option>Maitland Kelly</option>
+            <option>Andrew Cha</option><option>Reshmi Chowdhury</option><option>HW Ops</option>
+            <option>Ops Manager</option><option>CSM</option>
+            <option>Winter Scales</option><option>TRUNO</option><option>DUMAC</option><option>TBD</option>
+          </select>
+        </div>
+        <div class="full">
+          <label class="field-label">Notes</label>
+          <textarea id="m-notes" class="field-input" rows="3" style="resize:vertical"></textarea>
+        </div>
+        <div class="full">
+          <label class="field-label">Tech Results <span style="font-weight:400;color:#888">— calibration readings (Ops can fill in if blank)</span></label>
+          <textarea id="m-tech-results" class="field-input" rows="2" style="resize:vertical" placeholder="e.g. Load: 5->5, 25->25, 80->80.01 · Shift: BL 25 · Cal done: Y"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="btn-modal-delete" onclick="deleteCartRecord()" style="margin-right:auto" title="Permanently remove this record">🗑️ Delete</button>
+      <button class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+      <button class="btn btn-success" id="btn-modal-save" onclick="saveCartEdit()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════════
+// GLOBALS
+// ══════════════════════════════════════════════════════════════════════════════
+let _trackerData  = [], _filteredData = [];
+let _trackerPage  = 1,  _trackerPageSize = 25;
+let _bulkSel      = new Set();   // cart IDs selected for bulk status editing
+let _archiveData  = [], _archiveFiltered = [];
+let _archivePage  = 1,  _archivePageSize = 25;
+let _editCartId   = null, _editSourceSheet = 'RSA Tracker';
+let _sortCol      = null, _sortDir = 'asc';
+let _dashData     = null;
+let dashLoaded    = false, trackerLoaded = false, archiveLoaded = false;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function statusBadge(val) {
+  if (!val) return '<span style="color:#bbb">—</span>';
+  const v = val.toLowerCase();
+  if (v.includes('passed') || v === 'passed')           return `<span class="badge badge-pass">${val}</span>`;
+  if (v.includes('completed'))                          return `<span class="badge badge-pass">${val}</span>`;
+  if (v.includes('failed'))                             return `<span class="badge badge-fail">${val}</span>`;
+  if (v.includes('redispatch') || v.includes('action')) return `<span class="badge badge-action">${val}</span>`;
+  if (v.includes('scheduled'))                          return `<span class="badge badge-scheduled">${val}</span>`;
+  if (v.includes('pending'))                            return `<span class="badge badge-pending">${val}</span>`;
+  if (v.includes('verification'))                       return `<span class="badge badge-action">${val}</span>`;
+  return `<span class="badge badge-neutral">${val}</span>`;
+}
+
+function daysBadge(val) {
+  if (val === '' || val === null || val === undefined) return '<span style="color:#bbb">—</span>';
+  const n = parseInt(val, 10);
+  if (isNaN(n)) return `<span class="days-chip days-neutral">${val}</span>`;
+  const cls = n <= 5 ? 'days-ok' : n <= 10 ? 'days-warn' : 'days-alert';
+  return `<span class="days-chip ${cls}">${val}d</span>`;
+}
+
+// RSA Test Results cell — shows the Pass/Fail text (color-coded) plus a clickable
+// link to the report. Clicking the link does NOT open the row's edit modal.
+function resultsCell(r) {
+  const txt  = r.rsaTestResults || '';
+  const link = r.reportLink || '';
+  if (!txt && !link) return '<span style="color:#bbb">—</span>';
+  let badge = '';
+  if (txt) {
+    const low = txt.toLowerCase();
+    const cls = low.startsWith('pass') ? 'badge-pass'
+              : low.startsWith('fail') ? 'badge-fail' : 'badge-neutral';
+    const short = txt.length > 24 ? txt.slice(0, 24) + '…' : txt;
+    badge = `<span class="badge ${cls}" title="${txt.replace(/"/g, '&quot;')}">${short}</span>`;
+  }
+  const linkHtml = link
+    ? ` <a href="${link}" target="_blank" onclick="event.stopPropagation()" title="Open report" style="text-decoration:none">📄</a>`
+    : '';
+  return (badge + linkHtml) || '<span style="color:#bbb">—</span>';
+}
+
+// A real calibration reading contains markers like "Load:" / "Shift:" / "->". A cart
+// serial or ID-list (e.g. "P_WF_SHOPRITE_136_M3_005,…") is NOT a tech result — treat it
+// as no-result so it never shows up as a random file/value.
+function isJunkTech(v) {
+  v = (v || '').trim();
+  if (!v) return false;
+  if (/load:|shift:|cal\s|->|passed:/i.test(v)) return false;   // looks like a genuine reading
+  return /_M3[_-]?\d/i.test(v);                                  // looks like a cart serial / ID list
+}
+// Cleaned tech-results text: blank unless it's a genuine reading.
+function cleanTech(v) {
+  v = (v || '').trim();
+  return isJunkTech(v) ? '' : v;
+}
+
+// Tech Results cell — shows the calibration readings (neutral badge, full text on hover)
+// plus a link to the source checklist. If there's no genuine result, it's left BLANK
+// with a subtle prompt for the Ops team to add one (clicking the row opens the editor).
+function techResultsCell(r) {
+  const txt  = cleanTech(r.techResults);
+  const rawLink = r.techResultsLink || '';
+  const link = /^https?:\/\//i.test(rawLink) ? rawLink : '';   // only real URLs, never junk
+  if (!txt && !link) {
+    return '<span style="color:#c0792c;font-size:11px" title="No tech result yet — click the row to add one (Ops)">＋ add</span>';
+  }
+  let badge = '';
+  if (txt) {
+    const short = txt.length > 28 ? txt.slice(0, 28) + '…' : txt;
+    badge = `<span class="badge badge-neutral" title="${txt.replace(/"/g, '&quot;')}">${short}</span>`;
+  }
+  const linkHtml = link
+    ? ` <a href="${link}" target="_blank" onclick="event.stopPropagation()" title="Open calibration file" style="text-decoration:none">🔧</a>`
+    : '';
+  return (badge + linkHtml) || '<span style="color:#bbb">—</span>';
+}
+
+function selVal(id, val) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.value = Array.from(el.options).find(o => o.value === val) ? val : '';
+}
+
+function isRecentRecord(lastUpdated) {
+  if (!lastUpdated) return false;
+  const d = new Date(lastUpdated);
+  if (isNaN(d.getTime())) return false;
+  return (Date.now() - d.getTime()) / 86400000 <= 10;
+}
+
+// ── Tab Switching ─────────────────────────────────────────────────────────────
+const TAB_META = {
+  tracker:   { title: 'Tracker',       sub: 'All active RSA carts' },
+  addcart:   { title: 'Add Cart',      sub: 'Add a new cart to the tracker' },
+  dashboard: { title: 'DRI Dashboard', sub: 'Status breakdown by DRI and state' },
+  archive:   { title: 'Archive',       sub: 'Carts moved after 20+ days in status' },
+  importer:  { title: 'W&M Importer',  sub: 'Upload and process W&M checklists' },
+};
+
+function switchTab(tab) {
+  ['tracker','addcart','dashboard','archive','importer'].forEach(t => {
+    document.getElementById('tab-'    + t).style.display = (t === tab) ? '' : 'none';
+    document.getElementById('nav-'    + t).classList.toggle('active', t === tab);
+  });
+  const m = TAB_META[tab] || {};
+  document.getElementById('page-title').textContent = m.title || tab;
+  document.getElementById('page-sub').textContent   = m.sub   || '';
+  if (tab !== 'tracker') document.getElementById('tr-refreshed').textContent = '';
+  if (tab === 'tracker'   && !trackerLoaded) loadTracker();
+  if (tab === 'dashboard' && !dashLoaded)    loadDashboard();
+  if (tab === 'archive'   && !archiveLoaded) loadArchive(false);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TRACKER
+// ══════════════════════════════════════════════════════════════════════════════
+function loadTracker() {
+  trackerLoaded = true;
+  _trackerData = []; _filteredData = []; _trackerPage = 1;
+  document.getElementById('tr-table-wrap').innerHTML =
+    '<div class="tracker-loading"><span class="spinner spinner-dark"></span> Loading tracker…</div>';
+  document.getElementById('tr-kpi').style.display = 'none';
+  document.getElementById('tr-count').textContent  = '';
+  document.getElementById('tr-pagination').style.display = 'none';
+  document.getElementById('tr-refreshed').textContent = '';
+
+  google.script.run
+    .withSuccessHandler(data => {
+      if (!data || data.error) {
+        document.getElementById('tr-table-wrap').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${(data && data.error) || 'getTrackerData returned nothing — open Apps Script → Executions to see the server error.'}</div>`;
+        return;
+      }
+      _trackerData = data.rows || [];
+      document.getElementById('tr-refreshed').textContent = `Refreshed: ${data.refreshedAt}`;
+      applyFilters();
+    })
+    .withFailureHandler(err => {
+      document.getElementById('tr-table-wrap').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${err.message}</div>`;
+    })
+    .getTrackerData();
+}
+
+function applyFilters() {
+  const q     = (document.getElementById('tr-search').value || '').toLowerCase();
+  const state = document.getElementById('tr-state').value;
+  const rsaSt = document.getElementById('tr-rsa-status').value;
+  const dri   = document.getElementById('tr-dri').value;
+
+  _filteredData = _trackerData.filter(r => {
+    if (state && r.state     !== state) return false;
+    if (rsaSt && r.rsaStatus !== rsaSt) return false;
+    if (dri   && r.dri       !== dri)   return false;
+    if (q) {
+      const hay = [r.cartId, r.store, r.notes, r.dri, r.state].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  _trackerPage = 1;
+  if (_sortCol) { sortData(_sortCol, true); } else { renderTrackerTable(_filteredData); }
+  updateKPI(_filteredData);
+}
+
+function sortData(col, skipToggle) {
+  if (!skipToggle) {
+    if (_sortCol === col) _sortDir = _sortDir === 'asc' ? 'desc' : 'asc';
+    else { _sortCol = col; _sortDir = 'asc'; }
+  }
+  _filteredData.sort((a, b) => {
+    if (col === 'days') {
+      return _sortDir === 'asc' ? (parseFloat(a[col])||0) - (parseFloat(b[col])||0)
+                                : (parseFloat(b[col])||0) - (parseFloat(a[col])||0);
+    }
+    const av = String(a[col]||'').toLowerCase(), bv = String(b[col]||'').toLowerCase();
+    return _sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+  renderTrackerTable(_filteredData);
+}
+
+function renderTrackerTable(rows) {
+  const total = rows.length;
+  const totalPages = Math.max(1, Math.ceil(total / _trackerPageSize));
+  if (_trackerPage > totalPages) _trackerPage = totalPages;
+  const start = (_trackerPage - 1) * _trackerPageSize;
+  const pageRows = rows.slice(start, start + _trackerPageSize);
+
+  const countEl = document.getElementById('tr-count');
+  countEl.textContent = total === _trackerData.length
+    ? `${total} cart${total !== 1 ? 's' : ''}`
+    : `${total} of ${_trackerData.length} carts`;
+
+  if (total === 0) {
+    document.getElementById('tr-table-wrap').innerHTML = '<div class="tracker-empty">No carts match the current filters.</div>';
+    document.getElementById('tr-pagination').style.display = 'none';
+    return;
+  }
+
+  const cols = [
+    {key:'cartId',label:'Cart ID'},{key:'store',label:'Store'},{key:'state',label:'State'},
+    {key:'trigger',label:'Trigger'},{key:'rsaVendor',label:'Vendor'},
+    {key:'rsaStatus',label:'RSA Status'},{key:'rsaSchedDate',label:'RSA Sched Date'},{key:'rsaTestResults',label:'RSA Test Results'},{key:'techResults',label:'Tech Results'},
+    {key:'overallStatus',label:'Overall'},{key:'days',label:'Days'},
+    {key:'dri',label:'DRI'},{key:'lastUpdated',label:'Updated'},{key:'notes',label:'Notes'},
+  ];
+
+  const thHtml = `<th style="width:26px;text-align:center">
+      <input type="checkbox" onclick="bulkToggleAll(this)" title="Select all on this page">
+    </th>` + cols.map(c => {
+    const sorted = _sortCol === c.key;
+    const icon = sorted ? (_sortDir === 'asc' ? '▲' : '▼') : '⇅';
+    return `<th class="${sorted ? 'sort-'+_sortDir : ''}" onclick="sortData('${c.key}',false)">
+      ${c.label} <span class="sort-icon">${icon}</span></th>`;
+  }).join('');
+
+  const tbodyHtml = pageRows.map(r => {
+    const isNew = isRecentRecord(r.lastUpdated);
+    const rowCls = isNew ? ' class="row-new"' : '';
+    const rowData = encodeURIComponent(JSON.stringify(r));
+    const newBadge = isNew ? '<span class="new-badge">NEW</span>' : '';
+    return `<tr${rowCls} onclick='openEditModal(JSON.parse(decodeURIComponent("${rowData}")), "RSA Tracker")' title="Click to edit">
+      <td style="text-align:center" onclick="event.stopPropagation()"><input type="checkbox" class="bulk-cb" value="${r.cartId}" onclick="bulkToggle(this)" ${_bulkSel.has(r.cartId) ? 'checked' : ''}></td>
+      <td><span class="cart-id">${r.cartId}</span>${newBadge}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.store||'—'}</td>
+      <td><span class="badge badge-neutral" style="font-size:11px">${r.state||'—'}</span></td>
+      <td style="font-size:11px;color:#666;white-space:nowrap">${r.trigger||'—'}</td>
+      <td style="font-size:11px;color:#555">${r.rsaVendor||'—'}</td>
+      <td>${statusBadge(r.rsaStatus)}</td>
+      <td style="font-size:11px;color:#555;white-space:nowrap">${r.rsaSchedDate||'—'}</td>
+      <td>${resultsCell(r)}</td>
+      <td>${techResultsCell(r)}</td>
+      <td>${statusBadge(r.overallStatus)}</td>
+      <td style="text-align:center">${daysBadge(r.days)}</td>
+      <td style="font-size:11px;color:#444">${r.dri||'—'}</td>
+      <td style="font-size:11px;color:#888;white-space:nowrap">${r.lastUpdated||'—'}</td>
+      <td class="notes-cell" title="${(r.notes||'').replace(/"/g,'&quot;')}">${r.notes||'<span style="color:#ccc">—</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('tr-table-wrap').innerHTML = `
+    <div id="bulk-bar" style="display:none;align-items:center;gap:8px;flex-wrap:wrap;
+        padding:8px 12px;margin-bottom:8px;background:#eef4ff;border:1px solid #c9dbff;border-radius:8px"></div>
+    <table class="tracker-table">
+      <thead><tr>${thHtml}</tr></thead>
+      <tbody>${tbodyHtml}</tbody>
+    </table>`;
+
+  renderBulkBar();
+  renderPagination('tr-pagination', _trackerPage, totalPages, total, _trackerPageSize,
+    'trackerGoPage', 'setTrackerPageSize');
+}
+
+// ── Bulk status editing ──────────────────────────────────────────────────────
+const _BULK_OPTIONS = {
+  rsaStatus:     ['Pending Truno Scheduled','Pending RSA','Scheduled RSA','Completed RSA','Failed RSA'],
+  overallStatus: ['Pending RSA','Passed','Failed','Redispatch Needed','Needs Verification'],
+  dri:           ['HW Ops','CSM','Sai VS','Vishnu Kariyattu','Maitland Kelly','Andrew Cha','Reshmi Chowdhury'],
+};
+const _BULK_LABEL = { rsaStatus:'RSA Status', overallStatus:'Overall Status', dri:'DRI' };
+
+function _bulkValueOptions(field) {
+  return (_BULK_OPTIONS[field] || []).map(v => `<option value="${v}">${v}</option>`).join('');
+}
+function _bulkFieldChanged() {
+  document.getElementById('bulk-value').innerHTML =
+    _bulkValueOptions(document.getElementById('bulk-field').value);
+}
+function bulkToggle(cb) {
+  if (cb.checked) _bulkSel.add(cb.value); else _bulkSel.delete(cb.value);
+  renderBulkBar();
+}
+function bulkToggleAll(cb) {
+  document.querySelectorAll('.bulk-cb').forEach(x => {
+    x.checked = cb.checked;
+    if (cb.checked) _bulkSel.add(x.value); else _bulkSel.delete(x.value);
+  });
+  renderBulkBar();
+}
+function bulkClear() { _bulkSel.clear(); applyFilters(); }
+function renderBulkBar() {
+  const bar = document.getElementById('bulk-bar');
+  if (!bar) return;
+  const n = _bulkSel.size;
+  if (!n) { bar.style.display = 'none'; bar.innerHTML = ''; return; }
+  const field = 'rsaStatus';
+  bar.style.display = 'flex';
+  bar.innerHTML =
+    `<strong>${n} selected</strong> · Set
+     <select id="bulk-field" onchange="_bulkFieldChanged()">
+       ${Object.keys(_BULK_LABEL).map(k => `<option value="${k}">${_BULK_LABEL[k]}</option>`).join('')}
+     </select>
+     to <select id="bulk-value">${_bulkValueOptions(field)}</select>
+     <button class="btn btn-primary btn-sm" onclick="applyBulkEdit()">Apply</button>
+     <button class="btn btn-outline btn-sm" onclick="bulkClear()">Clear</button>`;
+}
+function applyBulkEdit() {
+  const field = document.getElementById('bulk-field').value;
+  const value = document.getElementById('bulk-value').value;
+  const ids   = Array.from(_bulkSel);
+  if (!ids.length) return;
+  const bar = document.getElementById('bulk-bar');
+  bar.innerHTML = `<span class="spinner"></span> Applying ${_BULK_LABEL[field]} = "${value}" to ${ids.length} cart(s)…`;
+  const fields = {}; fields[field] = value;
+  google.script.run
+    .withSuccessHandler(res => {
+      if (res && res.error) { alert('Bulk update failed: ' + res.error); renderBulkBar(); return; }
+      const today = new Date().toLocaleDateString('en-US');
+      ids.forEach(id => {
+        const row = _trackerData.find(r => r.cartId === id);
+        if (row) { row[field] = value; row.lastUpdated = today; }
+      });
+      _bulkSel.clear();
+      applyFilters();
+      if (res && res.missing && res.missing.length)
+        alert('Updated ' + res.updated + '. Not found: ' + res.missing.join(', '));
+    })
+    .withFailureHandler(err => { alert('Server error: ' + err.message); renderBulkBar(); })
+    .bulkUpdateCarts({ cartIds: ids, fields: fields });
+}
+
+function renderPagination(elId, page, totalPages, total, pageSize, goFn, sizeFn) {
+  const el = document.getElementById(elId);
+  if (total <= pageSize) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  const s = (page-1)*pageSize + 1, e = Math.min(page*pageSize, total);
+  el.innerHTML = `
+    <span class="pg-info">Showing ${s}–${e} of ${total}</span>
+    <div class="pg-controls">
+      <button class="btn btn-outline btn-sm" onclick="${goFn}(-1)" ${page<=1?'disabled':''}>◀ Prev</button>
+      <span class="pg-num">Page ${page} of ${totalPages}</span>
+      <button class="btn btn-outline btn-sm" onclick="${goFn}(1)" ${page>=totalPages?'disabled':''}>Next ▶</button>
+      <select class="pg-size" onchange="${sizeFn}(+this.value)">
+        <option value="25" ${pageSize===25?'selected':''}>25/page</option>
+        <option value="50" ${pageSize===50?'selected':''}>50/page</option>
+        <option value="100" ${pageSize===100?'selected':''}>100/page</option>
+      </select>
+    </div>`;
+}
+
+function trackerGoPage(d) { _trackerPage += d; renderTrackerTable(_filteredData); }
+function setTrackerPageSize(n) { _trackerPageSize = n; _trackerPage = 1; renderTrackerTable(_filteredData); }
+
+function updateKPI(rows) {
+  const el = document.getElementById('tr-kpi');
+  if (_trackerData.length === 0) { el.style.display = 'none'; return; }
+  el.style.display = 'grid';
+  document.getElementById('k-total').textContent   = rows.length;
+  document.getElementById('k-pending').textContent = rows.filter(r => r.rsaStatus === 'Pending RSA' || r.rsaStatus === 'Pending Truno Scheduled').length;
+  document.getElementById('k-sched').textContent   = rows.filter(r => r.rsaStatus === 'Scheduled RSA').length;
+  document.getElementById('k-passed').textContent  = rows.filter(r => r.overallStatus === 'Passed' || r.rsaStatus === 'Completed RSA').length;
+  document.getElementById('k-action').textContent  = rows.filter(r =>
+    r.rsaStatus === 'Failed RSA' ||
+    r.overallStatus === 'Redispatch Needed' || r.overallStatus === 'Needs Verification').length;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// EDIT MODAL
+// ══════════════════════════════════════════════════════════════════════════════
+function openEditModal(r, sourceSheet) {
+  _editCartId     = r.cartId;
+  _editSourceSheet = sourceSheet || 'RSA Tracker';
+  document.getElementById('modal-cart-title').textContent = 'Edit · ' + r.cartId;
+  document.getElementById('modal-cart-sub').textContent   = (r.store||'') + (r.state ? '  ·  ' + r.state : '');
+  document.getElementById('modal-source-tag').textContent = 'Editing in: ' + _editSourceSheet;
+  document.getElementById('modal-error').classList.remove('visible');
+
+  // RSA Test Results + Tech Results read-only summary (with file links, if present)
+  const mr = document.getElementById('modal-results');
+  const rtxt = r.rsaTestResults || '', rlink = r.reportLink || '';
+  const ttxt = cleanTech(r.techResults), tlink = /^https?:\/\//i.test(r.techResultsLink || '') ? r.techResultsLink : '';
+  const summaryLines = [];
+  if (rtxt || rlink) {
+    summaryLines.push('🧪 <strong>RSA Test Results:</strong> ' +
+      (rtxt ? rtxt.replace(/</g,'&lt;') : '—') +
+      (rlink ? ` &nbsp;·&nbsp; <a href="${rlink}" target="_blank">📄 Open report</a>` : ''));
+  }
+  if (ttxt || tlink) {
+    summaryLines.push('🔧 <strong>Tech Results:</strong> ' +
+      (ttxt ? ttxt.replace(/</g,'&lt;') : '—') +
+      (tlink ? ` &nbsp;·&nbsp; <a href="${tlink}" target="_blank">📄 Open calibration file</a>` : ''));
+  }
+  if (summaryLines.length) {
+    mr.style.display = 'block';
+    mr.innerHTML = summaryLines.join('<br>');
+  } else {
+    mr.style.display = 'none';
+    mr.innerHTML = '';
+  }
+
+  selVal('m-vendor',  r.rsaVendor     || '');
+  selVal('m-rsa',     r.rsaStatus     || '');
+  selVal('m-wm',      r.wmStatus      || '');
+  selVal('m-overall', r.overallStatus || '');
+  selVal('m-dri',     r.dri           || '');
+  document.getElementById('m-notes').value = r.notes || '';
+  // Show the cleaned tech result (blank if it was junk/serial) so Ops starts clean.
+  document.getElementById('m-tech-results').value = cleanTech(r.techResults);
+
+  document.getElementById('edit-modal').classList.add('open');
+  const btn = document.getElementById('btn-modal-save');
+  btn.disabled = false;
+  btn.innerHTML = '💾 Save Changes';
+  const del = document.getElementById('btn-modal-delete');
+  if (del) { del.disabled = false; del.innerHTML = '🗑️ Delete'; }
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+  _editCartId = null;
+}
+
+document.getElementById('edit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+// When RSA Status is set to Completed RSA, auto-set Overall to Passed in the modal (the
+// save also enforces this, but this gives immediate feedback in the dropdown).
+function onRsaStatusChange() {
+  if (document.getElementById('m-rsa').value === 'Completed RSA')
+    document.getElementById('m-overall').value = 'Passed';
+}
+
+function saveCartEdit() {
+  if (!_editCartId) return;
+  const btn = document.getElementById('btn-modal-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Saving…';
+  document.getElementById('modal-error').classList.remove('visible');
+
+  const params = {
+    cartId:       _editCartId,
+    sourceSheet:  _editSourceSheet,
+    rsaVendor:    document.getElementById('m-vendor').value,
+    rsaStatus:    document.getElementById('m-rsa').value,
+    wmStatus:     document.getElementById('m-wm').value,
+    overallStatus:document.getElementById('m-overall').value,
+    dri:          document.getElementById('m-dri').value,
+    notes:        document.getElementById('m-notes').value,
+  };
+  // Rule: a Completed RSA cart is fully done (W&M out of scope) → Overall = Passed.
+  // Enforced here so it persists on save regardless of the dropdown.
+  if (params.rsaStatus === 'Completed RSA') params.overallStatus = 'Passed';
+
+  // Tech Results is written separately (its own server function) so it works without
+  // any change to your Code.gs updateCartRow. Only write it when Ops actually changed it.
+  const techVal = document.getElementById('m-tech-results').value.trim();
+  const techOrig = cleanTech((arrFor(_editSourceSheet).find(r => r.cartId === _editCartId) || {}).techResults);
+  const techChanged = techVal !== techOrig;
+
+  const finish = () => {
+    const arr = arrFor(_editSourceSheet);
+    const idx = arr.findIndex(r => r.cartId === _editCartId);
+    if (idx !== -1) Object.assign(arr[idx], {
+      rsaVendor: params.rsaVendor, rsaStatus: params.rsaStatus,
+      wmStatus: params.wmStatus, overallStatus: params.overallStatus,
+      dri: params.dri, notes: params.notes,
+      techResults: techVal,
+      lastUpdated: new Date().toLocaleDateString('en-US'),
+    });
+    closeEditModal();
+    if (_editSourceSheet === 'Archive') { applyArchiveFilters(); } else { applyFilters(); }
+  };
+
+  const showErr = msg => {
+    clearTimeout(_saveGuard);
+    btn.disabled = false; btn.innerHTML = '💾 Save Changes';
+    const e = document.getElementById('modal-error');
+    e.innerHTML = '❌ ' + msg; e.classList.add('visible');
+  };
+
+  // Never spin forever: if the server hasn't answered in 20s, stop the spinner and tell
+  // the user how to verify. A hang here means the Apps Script project isn't loading
+  // (usually a compile/deploy error), so the call gets no response at all.
+  const _saveGuard = setTimeout(() => {
+    btn.disabled = false; btn.innerHTML = '💾 Save Changes';
+    const e = document.getElementById('modal-error');
+    e.innerHTML = '⚠️ No response from the server after 20s. The change may not have saved. '
+      + 'Open the RSA Tracker to check the row, and look at Apps Script → Executions — if there\'s '
+      + 'no <b>updateCartRow</b> run, the project isn\'t deploying (check the editor for errors and '
+      + 'redeploy a New version).';
+    e.classList.add('visible');
+  }, 20000);
+
+  google.script.run
+    .withSuccessHandler(res => {
+      clearTimeout(_saveGuard);
+      if (res && res.error) { showErr(res.error); return; }
+      if (!techChanged) { btn.disabled = false; btn.innerHTML = '💾 Save Changes'; finish(); return; }
+      // Persist the Tech Results edit (write or clear col V).
+      google.script.run
+        .withSuccessHandler(tr => {
+          btn.disabled = false; btn.innerHTML = '💾 Save Changes';
+          if (tr && tr.error) { showErr(tr.error); return; }
+          finish();
+        })
+        .withFailureHandler(err => showErr('Server error (tech results): ' + err.message))
+        .setTechResultManual({ cartId: _editCartId, sourceSheet: _editSourceSheet, techResults: techVal });
+    })
+    .withFailureHandler(err => showErr('Server error: ' + err.message))
+    .updateCartRow(params);
+}
+
+// Local cache for the active sheet (tracker vs archive).
+function arrFor(sheet) { return sheet === 'Archive' ? _archiveData : _trackerData; }
+
+// Delete an incorrectly-added record. Confirms first (this is destructive and permanent),
+// then removes the row server-side and drops it from the local cache + refreshes the view.
+function deleteCartRecord() {
+  if (!_editCartId) return;
+  const where = _editSourceSheet ? ' from ' + _editSourceSheet : '';
+  if (!confirm(`Delete cart "${_editCartId}"${where}?\n\nThis permanently removes the record from the sheet and cannot be undone.`)) return;
+
+  const del  = document.getElementById('btn-modal-delete');
+  const save = document.getElementById('btn-modal-save');
+  del.disabled = true; save.disabled = true;
+  del.innerHTML = '<span class="spinner"></span> Deleting…';
+  document.getElementById('modal-error').classList.remove('visible');
+
+  google.script.run
+    .withSuccessHandler(res => {
+      del.disabled = false; save.disabled = false; del.innerHTML = '🗑️ Delete';
+      if (res && res.error) {
+        const e = document.getElementById('modal-error');
+        e.textContent = '❌ ' + res.error; e.classList.add('visible'); return;
+      }
+      // Drop from the local cache so the row disappears without a full reload.
+      const arr = _editSourceSheet === 'Archive' ? _archiveData : _trackerData;
+      const idx = arr.findIndex(r => r.cartId === _editCartId);
+      if (idx !== -1) arr.splice(idx, 1);
+      closeEditModal();
+      if (_editSourceSheet === 'Archive') { applyArchiveFilters(); } else { applyFilters(); }
+    })
+    .withFailureHandler(err => {
+      del.disabled = false; save.disabled = false; del.innerHTML = '🗑️ Delete';
+      const e = document.getElementById('modal-error');
+      e.textContent = '❌ Server error: ' + err.message; e.classList.add('visible');
+    })
+    .deleteCartRow({ cartId: _editCartId, sourceSheet: _editSourceSheet });
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ARCHIVE
+// ══════════════════════════════════════════════════════════════════════════════
+function loadArchive(force) {
+  if (archiveLoaded && !force) return;
+  archiveLoaded = true;
+  _archiveData = []; _archiveFiltered = []; _archivePage = 1;
+  document.getElementById('arch-table-wrap').innerHTML =
+    '<div class="tracker-loading"><span class="spinner spinner-dark"></span> Loading archive…</div>';
+  document.getElementById('arch-count').textContent = '';
+  document.getElementById('arch-pagination').style.display = 'none';
+
+  google.script.run
+    .withSuccessHandler(data => {
+      if (!data || data.error) {
+        document.getElementById('arch-table-wrap').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${(data && data.error) || 'getArchiveData returned nothing — check Apps Script → Executions.'}</div>`;
+        return;
+      }
+      _archiveData = data.rows || [];
+      document.getElementById('arch-refreshed').textContent = `Refreshed: ${data.refreshedAt}`;
+      applyArchiveFilters();
+    })
+    .withFailureHandler(err => {
+      document.getElementById('arch-table-wrap').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${err.message}</div>`;
+    })
+    .getArchiveData();
+}
+
+function applyArchiveFilters() {
+  const q     = (document.getElementById('arch-search').value || '').toLowerCase();
+  const state = document.getElementById('arch-state').value;
+  const rsaSt = document.getElementById('arch-rsa-status').value;
+
+  _archiveFiltered = _archiveData.filter(r => {
+    if (state && r.state     !== state) return false;
+    if (rsaSt && r.rsaStatus !== rsaSt) return false;
+    if (q) {
+      const hay = [r.cartId, r.store, r.notes, r.state].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  _archivePage = 1;
+  renderArchiveTable(_archiveFiltered);
+}
+
+function renderArchiveTable(rows) {
+  const total = rows.length;
+  document.getElementById('arch-count').textContent = total === _archiveData.length
+    ? `${total} archived cart${total !== 1 ? 's' : ''}`
+    : `${total} of ${_archiveData.length} archived carts`;
+
+  if (total === 0) {
+    document.getElementById('arch-table-wrap').innerHTML = '<div class="tracker-empty">No archived carts match the current filters.</div>';
+    document.getElementById('arch-pagination').style.display = 'none';
+    return;
+  }
+
+  const totalPages = Math.max(1, Math.ceil(total / _archivePageSize));
+  if (_archivePage > totalPages) _archivePage = totalPages;
+  const start = (_archivePage - 1) * _archivePageSize;
+  const pageRows = rows.slice(start, start + _archivePageSize);
+
+  const cols = [
+    {key:'cartId',label:'Cart ID'},{key:'store',label:'Store'},{key:'state',label:'State'},
+    {key:'trigger',label:'Trigger'},{key:'rsaVendor',label:'Vendor'},
+    {key:'rsaStatus',label:'RSA Status'},{key:'rsaSchedDate',label:'RSA Sched Date'},{key:'rsaTestResults',label:'RSA Test Results'},{key:'techResults',label:'Tech Results'},
+    {key:'overallStatus',label:'Overall'},{key:'days',label:'Days'},
+    {key:'dri',label:'DRI'},{key:'lastUpdated',label:'Archived'},{key:'notes',label:'Notes'},
+  ];
+
+  const thHtml = cols.map(c => `<th>${c.label}</th>`).join('');
+
+  const tbodyHtml = pageRows.map(r => {
+    const rowData = encodeURIComponent(JSON.stringify(r));
+    return `<tr onclick='openEditModal(JSON.parse(decodeURIComponent("${rowData}")), "Archive")' title="Click to edit" style="cursor:pointer">
+      <td><span class="cart-id">${r.cartId}</span></td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.store||'—'}</td>
+      <td><span class="badge badge-neutral" style="font-size:11px">${r.state||'—'}</span></td>
+      <td style="font-size:11px;color:#666">${r.trigger||'—'}</td>
+      <td style="font-size:11px;color:#555">${r.rsaVendor||'—'}</td>
+      <td>${statusBadge(r.rsaStatus)}</td>
+      <td style="font-size:11px;color:#555;white-space:nowrap">${r.rsaSchedDate||'—'}</td>
+      <td>${resultsCell(r)}</td>
+      <td>${techResultsCell(r)}</td>
+      <td>${statusBadge(r.overallStatus)}</td>
+      <td style="text-align:center">${daysBadge(r.days)}</td>
+      <td style="font-size:11px;color:#444">${r.dri||'—'}</td>
+      <td style="font-size:11px;color:#888;white-space:nowrap">${r.lastUpdated||'—'}</td>
+      <td class="notes-cell" title="${(r.notes||'').replace(/"/g,'&quot;')}">${r.notes||'<span style="color:#ccc">—</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('arch-table-wrap').innerHTML = `
+    <table class="tracker-table">
+      <thead><tr>${thHtml}</tr></thead>
+      <tbody>${tbodyHtml}</tbody>
+    </table>`;
+
+  renderPagination('arch-pagination', _archivePage, totalPages, total, _archivePageSize,
+    'archiveGoPage', 'setArchivePageSize');
+}
+
+function archiveGoPage(d) { _archivePage += d; renderArchiveTable(_archiveFiltered); }
+function setArchivePageSize(n) { _archivePageSize = n; _archivePage = 1; renderArchiveTable(_archiveFiltered); }
+
+function runArchiveOldCarts() {
+  const btn = document.getElementById('btn-run-archive');
+  if (!confirm('Move all carts with 20+ days in status to the Archive tab?\n\nThis will remove them from the active Tracker.')) return;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Archiving…';
+
+  google.script.run
+    .withSuccessHandler(res => {
+      btn.disabled = false; btn.innerHTML = '📦 Archive 20+ Day Carts';
+      if (res.error) { alert('Error: ' + res.error); return; }
+      if (res.count === 0) { alert('No carts with 20+ days found.'); return; }
+      alert(`✅ Archived ${res.count} cart(s): ${(res.cartIds||[]).join(', ')}`);
+      trackerLoaded = false;
+      loadTracker();
+      loadArchive(true);
+    })
+    .withFailureHandler(err => {
+      btn.disabled = false; btn.innerHTML = '📦 Archive 20+ Day Carts';
+      alert('Server error: ' + err.message);
+    })
+    .archiveOldCarts();
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// CSV EXPORT
+// ══════════════════════════════════════════════════════════════════════════════
+function exportCSV(type) {
+  const data = type === 'archive'
+    ? (_archiveFiltered.length > 0 ? _archiveFiltered : _archiveData)
+    : (_filteredData.length > 0    ? _filteredData    : _trackerData);
+  if (!data.length) { alert('No data to export.'); return; }
+
+  const headers = ['Cart ID','Store','State','Trigger','Service Date','RSA Required',
+    'RSA Vendor','RSA Status','RSA Scheduled Date','RSA Test Results','Report Link','Tech Results','Tech Results Link',
+    'Overall Status','Days','DRI','Last Updated','Notes'];
+  const rows = data.map(r => [
+    r.cartId, r.store, r.state, r.trigger, r.serviceDate, r.rsaRequired,
+    r.rsaVendor, r.rsaStatus, r.rsaSchedDate, r.rsaTestResults, r.reportLink, r.techResults, r.techResultsLink,
+    r.overallStatus,
+    r.days, r.dri, r.lastUpdated, r.notes,
+  ].map(v => {
+    const s = String(v || '');
+    return (s.includes(',') || s.includes('"') || s.includes('\n'))
+      ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }));
+
+  const csv  = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = `RSA_${type === 'archive' ? 'Archive' : 'Tracker'}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// DRI DASHBOARD + CHARTS
+// ══════════════════════════════════════════════════════════════════════════════
+const STATE_META = {
+  AZ:{name:'Arizona',flag:'🌵'},CA:{name:'California',flag:'🌴'},
+  CT:{name:'Connecticut',flag:'⚓'},DC:{name:'Washington D.C.',flag:'🏛️'},
+  DE:{name:'Delaware',flag:'🦅'},GA:{name:'Georgia',flag:'🍑'},
+  ID:{name:'Idaho',flag:'🥔'},IL:{name:'Illinois',flag:'🌆'},
+  IN:{name:'Indiana',flag:'🏎️'},MA:{name:'Massachusetts',flag:'🦞'},
+  MD:{name:'Maryland',flag:'🦀'},MI:{name:'Michigan',flag:'🚗'},
+  MO:{name:'Missouri',flag:'🌉'},NC:{name:'North Carolina',flag:'🌲'},
+  NJ:{name:'New Jersey',flag:'🏙️'},NV:{name:'Nevada',flag:'🎰'},
+  NYC:{name:'New York City / LI',flag:'🗽'},NY:{name:'New York State',flag:'🍎'},
+  OH:{name:'Ohio',flag:'🌻'},OR:{name:'Oregon',flag:'🌲'},
+  PA:{name:'Pennsylvania',flag:'🔔'},UT:{name:'Utah',flag:'⛰️'},
+  VA:{name:'Virginia',flag:'🏛️'},WA:{name:'Washington',flag:'☕'},
+};
+
+function loadDashboard() {
+  dashLoaded = true; _dashData = null;
+  document.getElementById('dash-charts-row').style.display = 'none';
+  document.getElementById('dash-body').innerHTML = '<div class="tracker-loading"><span class="spinner spinner-dark"></span> Loading…</div>';
+  document.getElementById('dash-refreshed').textContent = 'Loading…';
+  document.getElementById('btn-refresh-dash').disabled = true;
+
+  google.script.run
+    .withSuccessHandler(data => {
+      document.getElementById('btn-refresh-dash').disabled = false;
+      if (!data || data.error) { document.getElementById('dash-body').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${(data && data.error) || 'No data returned — check Apps Script → Executions.'}</div>`; return; }
+      _dashData = data;
+      document.getElementById('dash-refreshed').textContent = `Refreshed: ${data.refreshedAt}`;
+      const allRows = [...(data.csm||[]),...(data.winterScales||[])];
+      renderDashboardCharts(allRows);
+      renderDashboard();
+    })
+    .withFailureHandler(err => {
+      document.getElementById('btn-refresh-dash').disabled = false;
+      document.getElementById('dash-body').innerHTML = `<div style="padding:24px;color:#9c0006">❌ ${err.message}</div>`;
+    })
+    .getDRIDashboardData();
+}
+
+function renderDashboardCharts(allRows) {
+  const total = allRows.length;
+  if (total === 0) return;
+  document.getElementById('dash-charts-row').style.display = 'grid';
+
+  const completed = allRows.filter(r => r.overallStatus === 'Passed' || r.rsaStatus === 'Completed RSA').length;
+  const pending   = allRows.filter(r => (r.rsaStatus||'').includes('Pending')).length;
+  const scheduled = allRows.filter(r => (r.rsaStatus||'').includes('Scheduled')).length;
+  const failed    = allRows.filter(r => r.rsaStatus === 'Failed RSA').length;
+  const needsAct  = allRows.filter(r => r.overallStatus === 'Redispatch Needed' || r.overallStatus === 'Needs Verification').length;
+  const pct = total > 0 ? completed / total : 0;
+
+  // Gauge
+  document.getElementById('gauge-container').innerHTML = makeGaugeSVG(pct, 'Completion Rate');
+
+  // Donut
+  const segments = [
+    { label: 'Completed',   value: completed, color: '#4caf50' },
+    { label: 'Scheduled',   value: scheduled, color: '#2e5fa3' },
+    { label: 'Pending RSA', value: pending,   color: '#E8721C' },
+    { label: 'Failed',      value: failed,    color: '#f44336' },
+    { label: 'Action Req.', value: needsAct,  color: '#ff9800' },
+  ].filter(s => s.value > 0);
+  document.getElementById('donut-container').innerHTML = makeDonutHTML(segments, total);
+
+  // State bars
+  const stateCounts = {};
+  allRows.forEach(r => { if (r.state) stateCounts[r.state] = (stateCounts[r.state]||0) + 1; });
+  const top8 = Object.entries(stateCounts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxV = top8[0]?.[1] || 1;
+  document.getElementById('state-bars-container').innerHTML =
+    '<div class="state-bars">' + top8.map(([st, cnt]) =>
+      `<div class="state-bar-row">
+        <div class="state-bar-label">${st}</div>
+        <div class="state-bar-track"><div class="state-bar-fill" style="width:${(cnt/maxV*100).toFixed(0)}%"></div></div>
+        <div class="state-bar-count">${cnt}</div>
+      </div>`
+    ).join('') + '</div>';
+}
+
+function makeGaugeSVG(pct, label) {
+  pct = Math.max(0, Math.min(1, pct));
+  const cx=100, cy=96, r=70;
+  const angle = Math.PI * pct;
+  const nx = cx + r * Math.cos(Math.PI - angle);
+  const ny = cy - r * Math.sin(Math.PI - angle);
+  const largeArc = pct > 0.5 ? 1 : 0;
+  const color = pct < 0.33 ? '#f44336' : pct < 0.67 ? '#ff9800' : '#4caf50';
+  const pctText = Math.round(pct * 100) + '%';
+  return `<svg width="200" height="120" viewBox="0 0 200 120">
+    <defs>
+      <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#f44336"/>
+        <stop offset="40%"  stop-color="#ff9800"/>
+        <stop offset="100%" stop-color="#4caf50"/>
+      </linearGradient>
+    </defs>
+    <path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}"
+      fill="none" stroke="#eef2f8" stroke-width="18" stroke-linecap="round"/>
+    <path d="M ${cx-r} ${cy} A ${r} ${r} 0 0 1 ${cx+r} ${cy}"
+      fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round" opacity="0.25"/>
+    ${pct > 0.01 ? `<path d="M ${cx-r} ${cy} A ${r} ${r} 0 ${largeArc} 1 ${nx.toFixed(2)} ${ny.toFixed(2)}"
+      fill="none" stroke="${color}" stroke-width="18" stroke-linecap="round"/>` : ''}
+    <line x1="${cx}" y1="${cy}" x2="${nx.toFixed(2)}" y2="${ny.toFixed(2)}"
+      stroke="#1a2744" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="6" fill="#1a2744"/>
+    <text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="22" font-weight="800"
+      fill="${color}" font-family="Arial,sans-serif">${pctText}</text>
+    <text x="${cx}" y="${cy+32}" text-anchor="middle" font-size="10" fill="#999"
+      font-family="Arial,sans-serif">${label}</text>
+  </svg>`;
+}
+
+function makeDonutHTML(segments, total) {
+  const cx=70, cy=70, r=50, sw=20;
+  const circ = 2 * Math.PI * r;
+  let offset = -circ/4;
+  let circles = segments.map(seg => {
+    const dash = (seg.value / total) * circ;
+    const circle = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none"
+      stroke="${seg.color}" stroke-width="${sw}"
+      stroke-dasharray="${dash.toFixed(2)} ${(circ - dash).toFixed(2)}"
+      stroke-dashoffset="${(-offset).toFixed(2)}"
+      transform="rotate(0 ${cx} ${cy})"/>`;
+    offset -= dash;
+    return circle;
+  }).join('');
+  const legend = segments.map(s =>
+    `<div class="legend-item">
+      <div class="legend-dot" style="background:${s.color}"></div>
+      <span class="legend-label">${s.label}</span>
+      <span class="legend-val">${s.value}</span>
+    </div>`
+  ).join('');
+  return `<div class="donut-wrap">
+    <svg width="140" height="140" viewBox="0 0 140 140">
+      ${circles}
+      <text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="20" font-weight="800"
+        fill="#1a2744" font-family="Arial,sans-serif">${total}</text>
+      <text x="${cx}" y="${cy+14}" text-anchor="middle" font-size="10" fill="#888"
+        font-family="Arial,sans-serif">Total</text>
+    </svg>
+    <div class="donut-legend">${legend}</div>
+  </div>`;
+}
+
+function buildStats(rows) {
+  return {
+    total: rows.length,
+    pending:     rows.filter(r => r.rsaStatus.includes('Pending')).length,
+    sched:       rows.filter(r => r.rsaStatus.includes('Scheduled')).length,
+    passed:      rows.filter(r => r.overallStatus==='Passed'||r.rsaStatus==='Completed RSA').length,
+    needsAction: rows.filter(r => r.rsaStatus==='Failed RSA'||r.overallStatus==='Redispatch Needed'||r.overallStatus==='Needs Verification').length,
+  };
+}
+
+function renderSection(label, headerClass, rows) {
+  const s = buildStats(rows);
+  const statsHtml = `<div class="dri-stats">
+    <div class="dri-stat s-total"><div class="dri-stat-num">${s.total}</div><div class="dri-stat-label">Total</div></div>
+    <div class="dri-stat s-pending"><div class="dri-stat-num">${s.pending}</div><div class="dri-stat-label">Pending</div></div>
+    <div class="dri-stat s-sched"><div class="dri-stat-num">${s.sched}</div><div class="dri-stat-label">Scheduled</div></div>
+    <div class="dri-stat s-passed"><div class="dri-stat-num">${s.passed}</div><div class="dri-stat-label">Completed</div></div>
+    <div class="dri-stat s-action"><div class="dri-stat-num">${s.needsAction}</div><div class="dri-stat-label">Action</div></div>
+  </div>`;
+  let tableHtml;
+  if (!rows.length) {
+    tableHtml = `<div class="dri-empty">✅ No carts currently assigned.</div>`;
+  } else {
+    const rowsHtml = rows.map(r => `<tr>
+      <td><span class="cart-id">${r.cartId}</span></td>
+      <td>${r.store||'—'}</td>
+      <td><span class="badge badge-neutral" style="font-size:11px">${r.state||'—'}</span></td>
+      <td>${statusBadge(r.rsaStatus)}</td>
+      <td>${statusBadge(r.overallStatus)}</td>
+      <td style="text-align:center">${daysBadge(r.days)}</td>
+      <td style="color:#888;font-size:11px">${r.lastUpdated||'—'}</td>
+    </tr>`).join('');
+    tableHtml = `<div class="dri-table-wrap"><table class="dri-table">
+      <thead><tr><th>Cart ID</th><th>Store</th><th>State</th><th>RSA Status</th><th>Overall</th><th>Days</th><th>Updated</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table></div>`;
+  }
+  return `<div class="dri-section">
+    <div class="dri-header ${headerClass}">
+      <div class="dri-title">${label}<span class="dri-count">${rows.length} cart${rows.length!==1?'s':''}</span></div>
+    </div>
+    ${statsHtml}${tableHtml}
+  </div>`;
+}
+
+function buildStateTiles(allRows) {
+  const states = [...new Set(allRows.map(r=>r.state).filter(Boolean))].sort();
+  if (!states.length) return;
+  const tilesEl = document.getElementById('state-tiles');
+  const barEl   = document.getElementById('state-summary-bar');
+  tilesEl.innerHTML = '';
+  barEl.style.display = 'block';
+  const sf = document.getElementById('state-filter').value;
+
+  const allTile = document.createElement('div');
+  allTile.className = 'state-tile' + (!sf?' active':'');
+  allTile.dataset.state = '';
+  allTile.innerHTML = `<div class="state-tile-header"><span>🌐</span><span class="state-abbr" style="font-size:14px">ALL</span></div>
+    <div class="state-name">All States</div>
+    <div class="state-mini-stats"><span class="state-mini-stat" style="background:#d6e4f7;color:#1a2744">${allRows.length}</span></div>`;
+  allTile.addEventListener('click', () => setStateFilter(''));
+  tilesEl.appendChild(allTile);
+
+  states.forEach(state => {
+    const srows = allRows.filter(r=>r.state===state);
+    const meta = STATE_META[state]||{name:state,flag:'📍'};
+    const passed = srows.filter(r=>r.overallStatus==='Passed'||r.rsaStatus==='Completed RSA').length;
+    const action = srows.filter(r=>r.rsaStatus==='Failed RSA'||r.overallStatus==='Redispatch Needed').length;
+    const pend   = srows.filter(r=>(r.rsaStatus||'').includes('Pending')).length;
+    const tile = document.createElement('div');
+    tile.className = 'state-tile'+(sf===state?' active':'');
+    tile.dataset.state = state;
+    tile.innerHTML = `<div class="state-tile-header"><span>${meta.flag}</span><span class="state-abbr">${state}</span></div>
+      <div class="state-name">${meta.name}</div>
+      <div class="state-mini-stats">
+        <span class="state-mini-stat" style="background:#d6e4f7;color:#1a2744">${srows.length}</span>
+        ${pend  ?`<span class="state-mini-stat" style="background:#ffeb9c;color:#9c6500">${pend}p</span>`:''}
+        ${passed?`<span class="state-mini-stat" style="background:#c6efce;color:#276221">${passed}✓</span>`:''}
+        ${action?`<span class="state-mini-stat" style="background:#ffc7ce;color:#9c0006">${action}!</span>`:''}
+      </div>`;
+    tile.addEventListener('click', () => setStateFilter(sf===state ? '' : state));
+    tilesEl.appendChild(tile);
+  });
+}
+
+function setStateFilter(state) {
+  document.getElementById('state-filter').value = state;
+  document.querySelectorAll('.state-tile').forEach(t => t.classList.toggle('active', t.dataset.state === state));
+  renderDashboard();
+}
+
+function renderDashboard() {
+  if (!_dashData) return;
+  const sf = document.getElementById('state-filter').value;
+  const allRows = [...(_dashData.csm||[]),...(_dashData.winterScales||[])];
+  buildStateTiles(allRows);
+  const filt = arr => sf ? arr.filter(r=>r.state===sf) : arr;
+  let html = '';
+  if (sf) {
+    const tot = filt(_dashData.csm).length + filt(_dashData.winterScales).length;
+    const meta = STATE_META[sf]||{name:sf,flag:'📍'};
+    html += `<div style="margin-bottom:14px;padding:10px 14px;background:#fff8f4;border:1px solid #fcdcc0;border-radius:8px;font-size:13px;color:#1a2744;font-weight:600">
+      ${meta.flag} ${sf} — ${meta.name} · ${tot} cart${tot!==1?'s':''}
+      <span onclick="setStateFilter('')" style="cursor:pointer;color:#E8721C;font-size:12px;font-weight:400;margin-left:10px">✕ Clear</span>
+    </div>`;
+    html += renderSection('👤  CSM Carts', '', filt(_dashData.csm));
+    html += renderSection('⚖️  Winter Scales Carts', 'winter', filt(_dashData.winterScales));
+  } else {
+    html += renderSection('👤  CSM Carts', '', _dashData.csm);
+    html += renderSection('⚖️  Winter Scales Carts', 'winter', _dashData.winterScales);
+    const states = [...new Set(allRows.map(r=>r.state).filter(Boolean))].sort();
+    if (states.length) {
+      html += `<div style="margin:20px 0 12px;font-size:15px;font-weight:700;color:#1a2744">🗺️ Breakdown by State</div>`;
+      states.forEach(state => {
+        const meta = STATE_META[state]||{name:state,flag:'📍'};
+        html += renderSection(`${meta.flag}  ${state} — ${meta.name}`, 'state-hdr', allRows.filter(r=>r.state===state));
+      });
+    }
+  }
+  document.getElementById('dash-body').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// W&M IMPORTER (unchanged logic)
+// ══════════════════════════════════════════════════════════════════════════════
+let parsedCarts = [], uploadedFileName = '';
+const TOL = { 5:0.01, 25:0.02, 80:0.05 };
+function inTol(val, exp) { return typeof val==='number' && Math.abs(val-exp)<=(TOL[exp]||0.02); }
+
+function determineResult(row) {
+  const sc = String(row.statusCol||'').trim().toLowerCase();
+  if (sc && sc!=='none') return sc.includes('pass') ? 'Passed' : 'Failed';
+  const cr = String(row.calibReq||'').trim().toUpperCase();
+  if (cr==='N') return 'Passed';
+  if (cr==='Y') return String(row.calibCompleted||'').trim().toUpperCase()==='Y' ? 'Passed' : 'Failed';
+  return [inTol(row.load5,5),inTol(row.load25a,25),inTol(row.load80,80),inTol(row.load25b,25),
+          inTol(row.shiftBL,25),inTol(row.shiftBR,25),inTol(row.shiftTR,25),inTol(row.shiftTL,25)]
+         .every(Boolean) ? 'Passed' : 'Failed';
+}
+
+function parseWMFile(file) {
+  return new Promise((resolve,reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const wb = XLSX.read(e.target.result,{type:'array',cellDates:true});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:false});
+        let hi=-1;
+        for(let i=0;i<rows.length;i++){if(rows[i].some(v=>String(v||'').trim()==='Cart No')){hi=i;break;}}
+        if(hi===-1) throw new Error('Could not find "Cart No" column.');
+        const headers=rows[hi],ds=hi+2;
+        const ci=name=>headers.findIndex(h=>String(h||'').includes(name));
+        const C={testDate:ci('Test Date'),retailer:ci('Retailer Name'),cartNo:ci('Cart No'),
+          calibReq:ci('Calibration required'),calibCompleted:ci('Calibration completed'),
+          statusCol:ci('Status'),load5:6,load25a:7,load80:8,load25b:9,shiftBL:10,shiftBR:11,shiftTR:12,shiftTL:13};
+        const carts=[];
+        for(let i=ds;i<rows.length;i++){
+          const r=rows[i],cn=r[C.cartNo];
+          if(cn===null||cn===''||cn==='Cart No') continue;
+          const n=parseFloat(cn); if(isNaN(n)) continue;
+          const raw={cartNo:String(Math.round(n)),retailer:String(r[C.retailer]||'').trim(),
+            testDate:r[C.testDate]||'',calibReq:String(r[C.calibReq]||'').trim(),
+            calibCompleted:String(r[C.calibCompleted]||'').trim(),statusCol:String(r[C.statusCol]||'').trim(),
+            load5:parseFloat(r[C.load5])||null,load25a:parseFloat(r[C.load25a])||null,
+            load80:parseFloat(r[C.load80])||null,load25b:parseFloat(r[C.load25b])||null,
+            shiftBL:parseFloat(r[C.shiftBL])||null,shiftBR:parseFloat(r[C.shiftBR])||null,
+            shiftTR:parseFloat(r[C.shiftTR])||null,shiftTL:parseFloat(r[C.shiftTL])||null};
+          if(raw.testDate && typeof raw.testDate==='object' && raw.testDate.toLocaleDateString)
+            raw.testDate=raw.testDate.toLocaleDateString('en-US');
+          else if(raw.testDate) raw.testDate=String(raw.testDate);
+          raw.wmResult=determineResult(raw);
+          carts.push(raw);
+        }
+        if(!carts.length) throw new Error('No cart data rows found.');
+        resolve(carts);
+      } catch(err){reject(err);}
+    };
+    reader.onerror=()=>reject(new Error('Could not read file.'));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+function renderPreview(carts) {
+  const store=carts[0]?.retailer||'—',date=carts[0]?.testDate||'—';
+  const passed=carts.filter(c=>c.wmResult&&c.wmResult.toLowerCase().startsWith('p')).length;
+  const failed=carts.length-passed;
+  document.getElementById('preview-meta').innerHTML=`
+    <div class="meta-chip">🏪 ${store}</div><div class="meta-chip">📅 ${date}</div>
+    <div class="meta-chip">🛒 ${carts.length}</div>
+    <div class="meta-chip" style="background:#c6efce;color:#276221">✅ ${passed} Passed</div>
+    ${failed?`<div class="meta-chip" style="background:#ffc7ce;color:#9c0006">❌ ${failed} Failed</div>`:''}`;
+  const tbody=document.getElementById('preview-body');
+  tbody.innerHTML='';
+  carts.forEach((c,i)=>{
+    const bc=(c.wmResult&&c.wmResult.toLowerCase().startsWith('p'))?'badge-pass':'badge-fail';
+    const w5=c.load5!==null&&!inTol(c.load5,5)?' style="color:#9c0006;font-weight:700"':'';
+    const w25=c.load25a!==null&&!inTol(c.load25a,25)?' style="color:#9c0006;font-weight:700"':'';
+    const w80=c.load80!==null&&!inTol(c.load80,80)?' style="color:#9c0006;font-weight:700"':'';
+    tbody.innerHTML+=`<tr><td style="color:#888">${i+1}</td><td><strong>${c.cartNo}</strong></td><td>${c.retailer}</td>
+      <td>${c.testDate}</td><td style="text-align:center">${c.calibReq||'—'}</td>
+      <td${w5}>${c.load5!=null?c.load5.toFixed(2):'—'}</td>
+      <td${w25}>${c.load25a!=null?c.load25a.toFixed(2):'—'}</td>
+      <td${w80}>${c.load80!=null?c.load80.toFixed(2):'—'}</td>
+      <td><span class="badge ${bc}">${c.wmResult}</span></td></tr>`;
+  });
+  const warn=document.getElementById('preview-warning');
+  if(failed>0){warn.textContent=`⚠️ ${failed} cart(s) will be marked Failed.`;warn.classList.add('visible');}
+  else warn.classList.remove('visible');
+}
+
+function renderResults(res) {
+  document.getElementById('results-timestamp').textContent=`Completed at ${res.timestamp}`;
+  const tb=document.getElementById('btn-view-tracker');
+  if(res.trackerUrl){tb.href=res.trackerUrl;tb.style.display='';}else tb.style.display='none';
+  const total=(res.log||[]).length;
+  document.getElementById('result-summary').innerHTML=`
+    <div class="stat-card stat-total"><div class="stat-num">${total}</div><div class="stat-label">Processed</div></div>
+    <div class="stat-card stat-updated"><div class="stat-num">${res.updated||0}</div><div class="stat-label">Updated</div></div>
+    <div class="stat-card stat-added"><div class="stat-num">${res.added||0}</div><div class="stat-label">Added</div></div>
+    <div class="stat-card stat-notfound"><div class="stat-num">${(res.notFound||[]).length}</div><div class="stat-label">Not Matched</div></div>`;
+  const nf=document.getElementById('not-found-section');
+  if(res.notFound&&res.notFound.length){
+    document.getElementById('not-found-list').innerHTML=res.notFound.map(s=>`<li>• ${s}</li>`).join('');
+    nf.style.display='block';
+  }else nf.style.display='none';
+  document.getElementById('result-log-items').innerHTML=(res.log||[]).map(item=>{
+    const icon=item.status==='updated'?'✅':item.status==='added'?'➕':'⚠️';
+    const label=item.status==='updated'?'Updated':item.status==='added'?'New row added':'Not found';
+    const lc=item.status==='added'?'#1558b0':item.status==='not_found'?'#9c0006':'#888';
+    const rb=!item.result?'':(item.result.toLowerCase().startsWith('p')?'<span class="badge badge-pass">Passed</span>':'<span class="badge badge-fail">Failed</span>');
+    return `<div class="log-item"><span>${icon}</span><span style="font-weight:600;min-width:60px">Cart ${item.cartNo}</span><span style="flex:1;color:#555">${item.store}</span>${rb}<span style="color:${lc};font-size:11px;font-weight:600">${label}</span></div>`;
+  }).join('');
+}
+
+function showError(msg){const el=document.getElementById('parse-error');el.textContent='❌ '+msg;el.classList.add('visible');}
+function clearError(){const el=document.getElementById('parse-error');el.textContent='';el.classList.remove('visible');}
+function setDropZoneFile(f){
+  document.getElementById('file-name').textContent=f.name;
+  document.getElementById('file-info').classList.add('visible');
+  document.getElementById('drop-zone').classList.add('has-file');
+  document.getElementById('btn-parse').disabled=false;
+  uploadedFileName=f.name;clearError();
+}
+function resetAll(){
+  parsedCarts=[];uploadedFileName='';
+  document.getElementById('file-input').value='';
+  document.getElementById('file-info').classList.remove('visible');
+  document.getElementById('btn-parse').disabled=true;
+  document.getElementById('preview-section').style.display='none';
+  document.getElementById('results-section').style.display='none';
+  clearError();
+}
+
+const dropZone=document.getElementById('drop-zone'),fileInput=document.getElementById('file-input');
+dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag-over');});
+dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('drag-over');const f=e.dataTransfer.files[0];if(f){setDropZoneFile(f);fileInput.files=e.dataTransfer.files;}});
+fileInput.addEventListener('change',()=>{if(fileInput.files[0])setDropZoneFile(fileInput.files[0]);});
+document.getElementById('file-clear').addEventListener('click',e=>{e.stopPropagation();resetAll();});
+
+document.getElementById('btn-parse').addEventListener('click',async()=>{
+  const file=fileInput.files[0];if(!file)return;
+  const btn=document.getElementById('btn-parse');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Parsing…';clearError();
+  try{
+    parsedCarts=await parseWMFile(file);
+    renderPreview(parsedCarts);
+    document.getElementById('preview-section').style.display='block';
+    document.getElementById('btn-update').disabled=false;
+  }catch(err){showError(err.message);}
+  finally{btn.disabled=false;btn.innerHTML='Parse Checklist';}
+});
+
+document.getElementById('btn-update').addEventListener('click',()=>{
+  if(!parsedCarts.length)return;
+  const btn=document.getElementById('btn-update');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Updating…';
+  google.script.run
+    .withSuccessHandler(res=>{
+      btn.innerHTML='✅ Update RSA Tracker';
+      if(res.error){showError(res.error);btn.disabled=false;return;}
+      renderResults(res);
+      document.getElementById('results-section').style.display='block';
+      trackerLoaded=false;
+    })
+    .withFailureHandler(err=>{showError('Server error: '+err.message);btn.disabled=false;btn.innerHTML='✅ Update RSA Tracker';})
+    .processWMData(parsedCarts,uploadedFileName);
+});
+
+document.getElementById('btn-reset').addEventListener('click',resetAll);
+document.getElementById('btn-import-another').addEventListener('click',resetAll);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// ADD CART
+// ══════════════════════════════════════════════════════════════════════════════
+const STATE_RSA_RULES_UI = {
+  AZ:{repairs:true,launches:false},CA:{repairs:true,launches:false},CT:{repairs:false,launches:false},
+  DC:{repairs:null,launches:null},DE:{repairs:false,launches:false},GA:{repairs:true,launches:true},
+  ID:{repairs:false,launches:false},IL:{repairs:null,launches:null},IN:{repairs:false,launches:false},
+  MA:{repairs:null,launches:null},MD:{repairs:true,launches:true},MI:{repairs:null,launches:null},
+  MO:{repairs:false,launches:false},NC:{repairs:true,launches:false},NJ:{repairs:true,launches:false},
+  NV:{repairs:true,launches:false},NYC:{repairs:true,launches:false},NY:{repairs:null,launches:null},
+  OH:{repairs:false,launches:false},OR:{repairs:false,launches:false},PA:{repairs:true,launches:true},
+  UT:{repairs:true,launches:false},VA:{repairs:true,launches:true},WA:{repairs:true,launches:true},
+};
+
+function onAddCartStateChange() {
+  const state=document.getElementById('ac-state').value;
+  const trigger=document.getElementById('ac-trigger').value;
+  const hint=document.getElementById('ac-rsa-hint');
+  if(!state||!trigger){hint.style.display='none';return;}
+  const rules=STATE_RSA_RULES_UI[state];
+  if(!rules){hint.style.display='none';return;}
+  const req=trigger.toLowerCase().includes('launch')?rules.launches:rules.repairs;
+  if(req===null){
+    hint.style.cssText='margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:block;background:#f5f5f5;color:#555;border:1px solid #ccc';
+    hint.innerHTML='⚫ <strong>Government / W&M Only</strong>';
+  }else if(req){
+    hint.style.cssText='margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:block;background:#fce8e8;color:#7a1a1a;border:1px solid #f5c6c6';
+    hint.innerHTML='🔴 <strong>RSA Required</strong> — licensed RSA vendor needed.';
+  }else{
+    hint.style.cssText='margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:block;background:#e8f5e9;color:#1a5c1a;border:1px solid #c6efce';
+    hint.innerHTML='🟢 <strong>RSA Not Required</strong> for this state + trigger.';
+  }
+}
+
+// Winter Scales contacts (NJ alternative to TRUNO). Keep in sync with the bot /
+// GAS WINTERSCALES_EMAILS list.
+const WINTERSCALES_EMAILS_UI=['service@winterscale.com','john.winter@winterscale.com','rich.ianniello@winterscale.com'];
+
+// NJ rule: never auto-assign TRUNO. Guide the vendor choice and, for Winter Scales,
+// make the "you must contact them" requirement explicit (an email also goes out on add).
+function onAddCartVendorChange(){
+  const state=document.getElementById('ac-state').value;
+  const vendor=document.getElementById('ac-vendor').value;
+  const vhint=document.getElementById('ac-vendor-hint');
+  const statusSel=document.getElementById('ac-rsastatus');
+  const amber='margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:block;background:#fff4e5;color:#8a4b00;border:1px solid #f0c890';
+  const blue ='margin-top:5px;padding:6px 10px;border-radius:6px;font-size:12px;display:block;background:#eef3fb;color:#1a3a6b;border:1px solid #c2d4ee';
+  if(vendor==='Winter Scales'){
+    vhint.style.cssText=amber;
+    vhint.innerHTML='⚖️ <strong>Winter Scales</strong> isn\'t auto-scheduled. Adding the cart emails '
+      +WINTERSCALES_EMAILS_UI.join(', ')+' to request scheduling — you must then follow up with them directly.';
+    // Winter Scales carts aren't TRUNO-scheduled → default the RSA status accordingly.
+    if(statusSel && statusSel.value==='Pending Truno Scheduled') statusSel.value='Pending RSA';
+  }else if(vendor==='TRUNO'){
+    vhint.style.cssText=blue;
+    vhint.innerHTML='📋 <strong>TRUNO</strong> — added to the TRUNO tracker; Nicole is emailed to schedule (the usual flow).';
+  }else if(state==='NJ'){
+    vhint.style.cssText=amber;
+    vhint.innerHTML='🟠 <strong>NJ store</strong> — choose <strong>TRUNO</strong> or <strong>Winter Scales</strong>. NJ carts are not auto-assigned to TRUNO.';
+  }else{
+    vhint.style.display='none';
+  }
+}
+
+let addedCarts=[];
+document.getElementById('btn-addcart').addEventListener('click',()=>{
+  const cartId=document.getElementById('ac-cartid').value.trim();
+  const store=document.getElementById('ac-store').value.trim();
+  const address=document.getElementById('ac-address').value.trim();
+  const state=document.getElementById('ac-state').value;
+  const trigger=document.getElementById('ac-trigger').value;
+  const rsaVendor=document.getElementById('ac-vendor').value;
+  const rsaStatus=document.getElementById('ac-rsastatus').value;
+  const wmStatus=document.getElementById('ac-wmstatus').value;
+  const overallStatus=document.getElementById('ac-overall').value;   // was collected but never sent
+  const dri=document.getElementById('ac-dri').value||'HW Ops';        // was collected but never sent
+  const aErr=document.getElementById('addcart-error');
+  const aOk=document.getElementById('addcart-success');
+  aErr.classList.remove('visible'); aOk.classList.remove('visible');
+  if(!cartId){aErr.textContent='❌ Cart ID required.';aErr.classList.add('visible');return;}
+  if(!store) {aErr.textContent='❌ Store required.';aErr.classList.add('visible');return;}
+  if(!state) {aErr.textContent='❌ State required.';aErr.classList.add('visible');return;}
+  // NJ rule: don't auto-assign TRUNO — require an explicit TRUNO / Winter Scales pick.
+  if(state==='NJ' && (!rsaVendor || rsaVendor==='TBD')){
+    aErr.textContent='❌ NJ store — choose TRUNO or Winter Scales as the RSA vendor (NJ carts aren\'t auto-assigned to TRUNO).';
+    aErr.classList.add('visible');return;
+  }
+  const isWS = rsaVendor==='Winter Scales';
+  // Winter Scales: the email IS the scheduling request, so it must carry the address.
+  if(isWS && !address){
+    aErr.textContent='❌ Store address required to email Winter Scales (it goes in the request).';
+    aErr.classList.add('visible');return;
+  }
+  const btn=document.getElementById('btn-addcart');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Adding…';
+  google.script.run
+    .withSuccessHandler(res=>{
+      btn.disabled=false;btn.innerHTML='➕ Add Cart to Tracker';
+      if(res.error){aErr.textContent='❌ '+res.error;aErr.classList.add('visible');return;}
+      addedCarts.push({cartId,store,state,rsaStatus,wmStatus});
+      const tbody=document.getElementById('addcart-log-body');
+      const tr=document.createElement('tr');
+      const vendorCell = isWS ? '⚖️ Winter Scales' : (res.trunoRow?`Row ${res.trunoRow.row}`:'—');
+      tr.innerHTML=`<td style="color:#888">${addedCarts.length}</td><td><strong>${cartId}</strong></td><td>${store}</td>
+        <td><span class="badge badge-neutral">${state}</span></td>
+        <td>${rsaStatus}</td><td>${wmStatus}</td><td>${dri}</td>
+        <td>${vendorCell}</td>
+        <td><a href="${res.trackerUrl||'#'}" target="_blank" class="btn btn-outline btn-sm" style="text-decoration:none">View →</a></td>`;
+      tbody.appendChild(tr);
+      document.getElementById('addcart-log-section').style.display='block';
+      document.getElementById('ac-cartid').value='';
+      document.getElementById('ac-store').value='';
+      trackerLoaded=false;
+      if(isWS){
+        // Winter Scales: not auto-scheduled. Email the WS contacts, then tell ops to follow up.
+        aOk.textContent=`✅ Cart ${cartId} added (vendor: Winter Scales, ${rsaStatus}). Emailing Winter Scales…`;
+        aOk.classList.add('visible');
+        const notesEl=document.getElementById('ac-notes');
+        google.script.run
+          .withSuccessHandler(wres=>{
+            if(wres && wres.emailSent){
+              aOk.textContent=`✅ Cart ${cartId} added (Winter Scales). Emailed ${((wres.emailTo)||WINTERSCALES_EMAILS_UI).join(', ')} — please follow up with Winter Scales directly to schedule.`;
+            }else{
+              aOk.textContent=`✅ Cart ${cartId} added (Winter Scales). ⚠️ Couldn't auto-email Winter Scales (${(wres&&wres.error)||'check GAS config'}). Contact them directly: ${WINTERSCALES_EMAILS_UI.join(', ')}.`;
+            }
+          })
+          .withFailureHandler(werr=>{
+            aOk.textContent=`✅ Cart ${cartId} added (Winter Scales). ⚠️ Email failed (${werr.message}). Contact them directly: ${WINTERSCALES_EMAILS_UI.join(', ')}.`;
+          })
+          .webappScheduleWinterScales({cartId,store,state,address,trigger,notes:(notesEl?notesEl.value:''),submittedBy:'Webapp'});
+      }else{
+        aOk.textContent=`✅ Cart ${cartId} added to tracker (row ${res.row}).${res.trunoRow?' Also added to Truno tracker.':''}`;
+        aOk.classList.add('visible');
+      }
+    })
+    .withFailureHandler(err=>{btn.disabled=false;btn.innerHTML='➕ Add Cart to Tracker';aErr.textContent='❌ Server error: '+err.message;aErr.classList.add('visible');})
+    .addCartManual({cartId,store,state,address,trigger,rsaVendor,rsaStatus,wmStatus,overallStatus,dri});
+});
+
+document.getElementById('btn-addcart-reset').addEventListener('click',()=>{
+  ['ac-cartid','ac-store','ac-address','ac-notes'].forEach(id=>document.getElementById(id).value='');
+  ['ac-state','ac-trigger','ac-vendor','ac-rsastatus','ac-wmstatus','ac-overall','ac-dri'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.selectedIndex=0;
+  });
+  document.getElementById('ac-rsa-hint').style.display='none';
+  document.getElementById('ac-vendor-hint').style.display='none';
+  document.getElementById('addcart-error').classList.remove('visible');
+  document.getElementById('addcart-success').classList.remove('visible');
+});
+
+// ══════════════════════════════════════════════════════════════════════════════
+// INIT — connection check + load tracker on open
+// ══════════════════════════════════════════════════════════════════════════════
+google.script.run
+  .withSuccessHandler(info=>{
+    const dot=document.getElementById('sidebar-conn-dot');
+    const txt=document.getElementById('sidebar-conn-text');
+    if(info.error||!info.ok){
+      dot.className='conn-dot error';
+      txt.textContent='Connection error';
+    }else{
+      dot.className='conn-dot ok';
+      txt.textContent='Connected';
+    }
+  })
+  .withFailureHandler(()=>{
+    document.getElementById('sidebar-conn-dot').className='conn-dot error';
+    document.getElementById('sidebar-conn-text').textContent='Not connected';
+  })
+  .getSpreadsheetInfo();
+
+loadTracker();
+
+// ── Deep link ────────────────────────────────────────────────────────────────
+// Opened as .../exec?cart=<id> (e.g. from an RSA Agent Slack/email button): land on
+// the Tracker tab pre-filtered to that cart so the user finds it directly.
+try {
+  google.script.url.getLocation(function (loc) {
+    let cart = loc && loc.parameter && loc.parameter.cart;
+    if (Array.isArray(cart)) cart = cart[0];
+    if (!cart) return;
+    switchTab('tracker');
+    const box = document.getElementById('tr-search');
+    if (box) box.value = cart;
+    // If the tracker data is already in, filter now; otherwise loadTracker's
+    // success handler runs applyFilters() and will pick up the value we just set.
+    if (typeof trackerLoaded !== 'undefined' && trackerLoaded && _trackerData.length) applyFilters();
+  });
+} catch (e) { /* not running inside the Apps Script web app — ignore */ }
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "rsa-agent",
+  "version": "1.0.0",
+  "description": "RSA Operations Agent — Slack bot + GAS automation for RSA W&M cart tracking",
+  "main": "rsa_agent.js",
+  "scripts": {
+    "start": "node rsa_agent.js",
+    "dev": "nodemon rsa_agent.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@slack/bolt": "^3.19.0",
+    "dotenv": "^16.4.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

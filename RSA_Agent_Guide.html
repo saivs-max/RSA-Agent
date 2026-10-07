@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RSA Agent — User Guide & Automation Manual</title>
+</head>
+<body>
+
+<h1>RSA Agent — User Guide &amp; Automation Manual</h1>
+<p><em>Operations automation for RSA Weights &amp; Measures (W&amp;M) cart tracking. Ops managers talk to the agent in plain English from Slack; the agent updates the trackers, requests TRUNO inspections, parses field results, and hands carts off for W&amp;M — and runs a set of background automations on its own.</em></p>
+<p><strong>Document covers two things:</strong> Part 1 is a first-time user guide for the people who talk to the agent. Part 2 is the reference manual for every scheduled task and trigger the agent runs today.</p>
+
+<hr>
+
+<h1>Part 1 — First-Time User Guide</h1>
+
+<h2>1.1 What the RSA Agent does</h2>
+<p>The RSA Agent turns a plain-English request into a fully tracked workflow. You message it in Slack — &ldquo;onboard these carts,&rdquo; &ldquo;what&rsquo;s the status of cart 42,&rdquo; or by dropping in an inspection form — and it does the bookkeeping across two Google Sheets, emails the TRUNO scheduler, posts the right reminders, and reads results back out of field paperwork. There is no rigid menu: the agent reasons about your message and calls the right actions in sequence.</p>
+<p>Behind the scenes it connects four things: <strong>Slack</strong> (where you talk to it), a <strong>Python agent</strong> (the brain), a <strong>Google Apps Script web app</strong> (which writes to the sheets and sends email), and the <strong>RSA Tracker</strong> and <strong>TRUNO RSA Tracker</strong> Google Sheets. A web dashboard (<code>Index.html</code>) gives a read view of the same data.</p>
+
+<h2>1.2 Getting started</h2>
+<p>You don&rsquo;t install anything. To use the agent you need: access to the Slack workspace where it lives, and the bot present in your channel. If it isn&rsquo;t there yet, an admin invites it with <code>/invite @RSA Agent</code> in your W&amp;M channel. You can also just direct-message the bot.</p>
+<p>There are two ways to reach it:</p>
+<p><strong>Direct message (DM)</strong> — open a DM with <strong>RSA Agent</strong> and type normally. No need to tag it.</p>
+<p><strong>@mention in a channel</strong> — type <code>@RSA Agent</code> followed by your request in any channel it&rsquo;s been added to. Use this when you want the rest of the team to see the exchange.</p>
+<p>Say <code>hi</code> or <code>what can you do?</code> any time and the agent replies with its current capability list.</p>
+
+<h2>1.3 The cart lifecycle</h2>
+<p>Every cart moves through a predictable set of states. Knowing them makes the agent&rsquo;s replies easy to read:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead>
+<tr><th>Stage</th><th>RSA Status</th><th>What it means</th></tr>
+</thead>
+<tbody>
+<tr><td>1. Onboarded</td><td><strong>Pending Truno Scheduled</strong></td><td>Cart is in the tracker and submitted to TRUNO. No inspection date yet — waiting on TRUNO to schedule.</td></tr>
+<tr><td>2. TRUNO schedules</td><td><strong>Scheduled RSA</strong></td><td>TRUNO confirmed a visit date. The agent writes that real date back, sets the ETS reminder, and posts a Coffee Break reminder.</td></tr>
+<tr><td>3a. Inspection passes</td><td><strong>Completed RSA</strong> → next step <em>Pending W&amp;M</em></td><td>Field form parsed as a pass. The CSM team is tagged to schedule the W&amp;M test.</td></tr>
+<tr><td>3b. Inspection fails</td><td><strong>Failed RSA</strong></td><td>Field form parsed as a fail. Report link attached for follow-up.</td></tr>
+<tr><td>4. W&amp;M done</td><td>W&amp;M status <strong>Passed W&amp;M</strong></td><td>Weights &amp; Measures inspection complete. Cart is finished.</td></tr>
+<tr><td>(side) TRUNO cancels</td><td>resets to <strong>Pending RSA</strong></td><td>If TRUNO cancels, the agent rolls the cart back and alerts the DRI.</td></tr>
+</tbody>
+</table>
+<p>A separate, informational <strong>Tech Result</strong> (calibration readings) is captured before the W&amp;M test. It does not change the RSA or W&amp;M status — the goal is simply that every cart ends up with both a Tech Result (calibration) and a Test Result (W&amp;M pass/fail).</p>
+
+<h2>1.4 What you can ask the agent to do</h2>
+
+<h3>Onboard new carts</h3>
+<p>Give the cart numbers, the store, and the state. Example:</p>
+<p><code>onboard carts 1 and 2 at DEMO MART, Newark NJ</code></p>
+<p>The agent will ask for the <strong>service trigger</strong> (Launches, Cart replacement, Load cell recal, W&amp;M Failed, &hellip;) with clickable buttons — this is <strong>mandatory</strong>; nothing is added until you pick one. You can also state it inline to skip the prompt: <code>&hellip; — trigger Cart replacement</code>. On confirmation the agent generates the cart serials, adds rows to the RSA Tracker as <em>Pending Truno Scheduled</em> (with <strong>no invented date</strong>), creates the TRUNO request row, and emails TRUNO to schedule.</p>
+
+<h3>Check a cart&rsquo;s status</h3>
+<p><code>status of cart 1 at DEMO MART</code> &nbsp;·&nbsp; <code>what&rsquo;s the status of P_WF_SHOPRITE_72_M3_001?</code></p>
+<p>Returns a status card: RSA status, W&amp;M status, overall status, DRI, and last-updated date.</p>
+
+<h3>Update status and add notes</h3>
+<p><code>cart 1 at DEMO MART — set W&amp;M to Scheduled W&amp;M, note: booked for Tue</code></p>
+<p>The agent updates the field(s) and <strong>appends</strong> your note (existing notes are preserved), and stamps Last Updated to today.</p>
+
+<h3>Get filtered lists</h3>
+<p><code>show pending RSA carts in NJ</code> &nbsp;·&nbsp; <code>stale carts</code> &nbsp;·&nbsp; <code>carts for &lt;DRI name&gt;</code></p>
+
+<h3>See a summary dashboard</h3>
+<p><code>give me a summary</code> — overall counts (pending / scheduled / completed RSA, pending / passed W&amp;M, needs-action, stale) plus a breakdown by state.</p>
+
+<h3>Look up compliance requirements</h3>
+<p><code>what&rsquo;s required for ShopRite, Newark NJ?</code> — returns only the pre-launch and post-launch directives for that store/state, plus any flags (e.g. &ldquo;Confirm Locally,&rdquo; NY county exceptions). If the store isn&rsquo;t in the guide by name, it falls back to a state-only match and says so.</p>
+
+<h3>Upload a W&amp;M test (Scale Test) form</h3>
+<p>Drag a form (PDF/scan) into the bot DM with a note like &ldquo;results attached.&rdquo; The agent reads it, writes each cart&rsquo;s Pass/Fail to the <strong>RSA Test Results</strong> column, attaches the report link, and sets <em>Completed RSA</em> (pass, tagging the CSM) or <em>Failed RSA</em> (fail).</p>
+
+<h3>Upload a tech calibration sheet</h3>
+<p>Upload the &ldquo;Weight check checklist&rdquo; spreadsheet. Any spreadsheet is automatically routed to <strong>Tech Results</strong>. For a photographed calibration sheet, add the word <code>tech</code> or <code>calibration</code> to your message so it isn&rsquo;t mistaken for a W&amp;M form. To force the destination, say <code>rsa</code>/<code>test</code>/<code>w&amp;m</code> (W&amp;M form) or <code>tech</code>/<code>calibration</code> (Tech Results) — the explicit keyword always wins.</p>
+
+<h3>Find gaps</h3>
+<p><code>which carts are missing tech results?</code> &nbsp;·&nbsp; <code>carts missing test results</code> &nbsp;·&nbsp; <code>what&rsquo;s missing both?</code></p>
+
+<h2>1.5 The dashboard</h2>
+<p>The web app (<code>Index.html</code>) shows the tracker and archive in a browser, including the <strong>RSA Test Results</strong> and <strong>Tech Results</strong> columns (full text on hover, with links to the source files), a cart edit modal, and a CSV export. It&rsquo;s a convenient read/spot-edit view of the same Google Sheet the agent writes to.</p>
+
+<h2>1.6 Guardrails — what the agent will and won&rsquo;t do</h2>
+<p>These behaviors are deliberate and worth knowing:</p>
+<p>It <strong>never invents a date.</strong> A cart stays <em>Pending Truno Scheduled</em> until TRUNO supplies a real visit date, which is then written back automatically. The service trigger is <strong>mandatory</strong> on onboarding — the agent will not add a cart without one. Notes are <strong>appended,</strong> never overwritten. Compliance answers return <strong>only</strong> pre/post-launch requirements, matched by store and address — never a raw data dump. When the agent can&rsquo;t confidently match a record, it <strong>flags it for a human</strong> rather than guessing. And automated result-writing is <strong>idempotent</strong> — re-processing the same file writes nothing new.</p>
+
+<h2>1.7 Command cheat sheet</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>You want to&hellip;</th><th>Say something like</th></tr></thead>
+<tbody>
+<tr><td>See capabilities</td><td><code>hi</code> / <code>what can you do?</code></td></tr>
+<tr><td>Onboard carts</td><td><code>onboard carts 1, 2 at &lt;store&gt;, &lt;city ST&gt; — trigger &lt;trigger&gt;</code></td></tr>
+<tr><td>Check status</td><td><code>status of cart &lt;n&gt; at &lt;store&gt;</code></td></tr>
+<tr><td>Update a field / note</td><td><code>cart &lt;n&gt; at &lt;store&gt; — set RSA to Scheduled RSA, note: &hellip;</code></td></tr>
+<tr><td>Filtered list</td><td><code>show pending RSA carts in NJ</code> / <code>stale carts</code></td></tr>
+<tr><td>Summary</td><td><code>give me a summary</code></td></tr>
+<tr><td>Compliance</td><td><code>what&rsquo;s required for &lt;store&gt;, &lt;ST&gt;?</code></td></tr>
+<tr><td>Record a W&amp;M result</td><td>upload the test form + &ldquo;results attached&rdquo;</td></tr>
+<tr><td>Record calibration</td><td>upload the checklist (say <code>tech</code> for a photo)</td></tr>
+<tr><td>Find gaps</td><td><code>which carts are missing tech results?</code></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h1>Part 2 — Scheduled Tasks &amp; Triggers Manual</h1>
+<p>This is the authoritative reference for every automated behavior the agent runs today. There are three independent layers, each with its own runtime and cadence:</p>
+<p><strong>A. Google Apps Script (GAS) time-based triggers</strong> — run on Google&rsquo;s servers on a clock, as the script owner (so they can send Gmail). <strong>B. Python background monitors</strong> — start when <code>rsa_agent.py</code> launches and poll Drive folders on a short interval. <strong>C. Real-time Slack events</strong> — fire the instant a user messages or uploads. A fourth section documents the <strong>Truno status state machine</strong> the monitor acts on, and a fifth the <strong>request-driven web API actions</strong>.</p>
+
+<h2>2.1 Layer A — Google Apps Script time-based triggers</h2>
+<p>Installed by running <code>createAutomationTriggers()</code> once in the Apps Script editor; removed by <code>removeAutomationTriggers()</code>. The four managed triggers are:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>Trigger function</th><th>Cadence</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>masterDailyRun</code></td><td><strong>Daily at 9:00 AM</strong></td><td>Umbrella job — runs the alert/archive sweep and all three other automations in sequence.</td></tr>
+<tr><td><code>monitorTrunoTracker</code></td><td><strong>Every 2 hours</strong></td><td>Syncs the TRUNO sheet&rsquo;s Status column back to the RSA Tracker (catches same-day scheduling).</td></tr>
+<tr><td><code>ingestInspectionFiles</code></td><td><strong>Every 4 hours</strong></td><td>Ingests Excel/CSV inspection files dropped in the Drive inspection folder.</td></tr>
+<tr><td><code>emailNicoleForNewTrunoRows</code></td><td><strong>Every 15 minutes</strong></td><td>Emails the TRUNO scheduler for new agent-created visit rows (the agent itself can&rsquo;t send mail).</td></tr>
+</tbody>
+</table>
+
+<h3>masterDailyRun — daily at 9:00 AM</h3>
+<p>The umbrella job. It calls, in order and each wrapped so one failure doesn&rsquo;t stop the rest: <code>checkAndSendAlerts()</code> (the existing alert/archive/progression sweep), then <code>monitorTrunoTracker()</code>, then <code>checkCompletedVisits()</code>, then <code>ingestInspectionFiles()</code>. Note that <code>monitorTrunoTracker</code> and <code>ingestInspectionFiles</code> <em>also</em> run on their own faster cadences (every 2h and 4h); the daily run is a guaranteed catch-all.</p>
+
+<h3>monitorTrunoTracker — every 2 hours (and inside the daily run)</h3>
+<p>Reads the TRUNO spreadsheet and acts on transitions in its Status column, writing changes back to the RSA Tracker. It is idempotent: each (row + status) is acted on at most once, keyed on <code>trunoStore | icStore | cart | status</code> in Script Properties (<code>trunoProcessed</code>). On its very first run it <em>baselines</em> all existing rows as already-handled (<code>trunoBaselineV2</code>) so it doesn&rsquo;t re-fire emails/Slack for visits that were already scheduled or complete. The transitions it acts on are documented in <a href="#statemachine">Section 2.4</a>.</p>
+
+<h3>ingestInspectionFiles — every 4 hours (and inside the daily run)</h3>
+<p>Scans the Drive inspection folder (<code>INSPECTION_FOLDER_ID</code>) for files it hasn&rsquo;t seen. It processes only <code>.xlsx</code>, <code>.xls</code>, and <code>.csv</code> files; everything else is ignored. For each new file it parses the rows, adds/updates the matching rows in the RSA Tracker, writes a <strong>Tech Upload Link (col T)</strong> pointing at the source file, and archives a copy of the data as a timestamped sheet tab. Processed files are tracked by Drive file ID in Script Properties (<code>ingestedFiles</code>), so each file is ingested exactly once.</p>
+<p><em>Note:</em> this is the spreadsheet-based ingestion path. The vision-based Pass/Fail parsing of W&amp;M Scale Test Forms is a separate, faster Python monitor (see Layer B) — don&rsquo;t confuse the two.</p>
+
+<h3>checkCompletedVisits — runs daily inside masterDailyRun</h3>
+<p>This is not its own trigger; it executes once a day as part of <code>masterDailyRun</code>. It finds carts where <strong>RSA status = Completed RSA</strong> but W&amp;M is <strong>not</strong> yet Passed/Completed, and where the last update was <strong>3 or more days ago</strong>. For each such store it posts a &ldquo;W&amp;M Scheduling Needed&rdquo; message to the CSM Slack channel and emails the CSM team. To avoid nagging, it re-alerts a given cart at most once every 3 days (tracked in Script Properties <code>csmAlerts</code>).</p>
+
+<h3>emailNicoleForNewTrunoRows — every 15 minutes</h3>
+<p>The Python agent writes TRUNO request rows directly via the Sheets API but runs as a service account and cannot send email. This trigger runs as the script owner (so <code>GmailApp</code> works) and emails the TRUNO scheduler for new agent-created rows. Its per-cart cadence is deliberate and self-limiting:</p>
+<p>Keyed on <code>store | cart</code> (not the date, so it survives re-schedules), it sends exactly <strong>one</strong> initial request email when it first sees an agent-created row, then goes silent for <strong>3 days</strong> (<code>TRUNO_FOLLOWUP_DAYS</code>). If after 3 days the row still shows <strong>no progress</strong> (no status change and no visit date), it sends exactly <strong>one</strong> follow-up nudge and then stops permanently. <strong>Any progress</strong> — a status change or a date appearing — stops emailing immediately. It skips rows that are completed/cancelled and any cart whose number contains &ldquo;test.&rdquo; On first run it baselines pre-existing rows so it never emails for visits that predate the trigger. State lives in Script Properties (<code>trunoEmailed</code>, <code>trunoEmailBaseline</code>).</p>
+<p><strong>Demo note:</strong> disable this trigger in Apps Script &rarr; Triggers before a demo so a test onboarding doesn&rsquo;t email TRUNO; re-enable afterward.</p>
+
+<h2>2.2 Layer B — Python background monitors</h2>
+<p>Both monitors start automatically as daemon threads when <code>rsa_agent.py</code> launches; if a folder isn&rsquo;t shared or set up, that monitor simply doesn&rsquo;t start and Slack uploads still work. Both write monitor activity to the Slack channel set in <code>RSA_MONITOR_CHANNEL</code>.</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>Monitor</th><th>Cadence (default)</th><th>Watches</th><th>Writes</th></tr></thead>
+<tbody>
+<tr><td><code>drive_monitor</code></td><td>Every <strong>300 s (5 min)</strong> — <code>RSA_FOLDER_POLL_SECONDS</code></td><td>W&amp;M Scale Test Forms Drive folder</td><td>RSA Test Results (col U) + report link (col T); sets Completed/Failed RSA</td></tr>
+<tr><td><code>tech_monitor</code></td><td>Every <strong>300 s (5 min)</strong> — <code>RSA_TECH_POLL_SECONDS</code></td><td>Tech-results (calibration) Drive folder (<code>TECH_RESULTS_FOLDER_ID</code>)</td><td>Tech Results (col V) + source link (col W). Does not change RSA/W&amp;M status.</td></tr>
+<tr><td><code>tech_monitor</code> gap report</td><td>Every <strong>86,400 s (daily)</strong> — <code>RSA_GAP_REPORT_SECONDS</code> (set 0 to disable)</td><td>—</td><td>Posts a results-completeness report to <code>RSA_MONITOR_CHANNEL</code></td></tr>
+</tbody>
+</table>
+
+<h3>drive_monitor — W&amp;M Scale Test Forms (every 5 min)</h3>
+<p>Polls the W&amp;M test-form folder, vision-parses each new form (mixed scans/PDFs) into per-cart Pass/Fail, matches each result to a tracker cart by <strong>store number + cart number</strong>, and writes the result to <strong>col U (RSA Test Results)</strong> with the report link in <strong>col T</strong>. A <strong>Pass</strong> sets <em>Completed RSA</em> with next step <em>Pending W&amp;M</em> and tags the CSM; a <strong>Fail</strong> sets <em>Failed RSA</em>. It only processes stores marked <strong>Forms sent = Yes</strong> in the TRUNO tracker, processes only new files, and is idempotent (re-running writes nothing). A self-trigger for testing is documented in 2.6.</p>
+
+<h3>tech_monitor — tech calibration readings (every 5 min) + daily gap report</h3>
+<p>Polls the calibration folder and parses the &ldquo;Weight check checklist&rdquo; spreadsheets <strong>directly</strong> (openpyxl — exact readings, no vision), handling <code>.xlsx</code>, <code>.csv</code>, native Google Sheets, and PDF/photo (vision fallback). It matches each row to a cart by <strong>store + cart number</strong> and writes a compact readings summary to <strong>col V (Tech Results)</strong> with the source link in <strong>col W</strong>. Writing a tech result is informational and does <strong>not</strong> change RSA/W&amp;M status. It is self-healing (a sheet that lands before its cart exists is picked up on a later pass) and idempotent. Carts whose store+number aren&rsquo;t in the tracker yet are reported as unmatched rather than dropped. Separately, on the <code>RSA_GAP_REPORT_SECONDS</code> cadence (daily by default) it posts a completeness report showing which carts are missing a Tech Result, a Test Result, or both.</p>
+
+<h2>2.3 Layer C — Real-time Slack event triggers</h2>
+<p>These fire instantly over Socket Mode (no schedule). Registered in <code>rsa_agent.py</code>:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>Event</th><th>Fires when</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td><code>app_mention</code></td><td>The bot is @mentioned in a channel</td><td>Routes the message text to the agent (<code>handle_message</code>).</td></tr>
+<tr><td><code>message</code> (IM/DM)</td><td>A user DMs the bot</td><td>If files are attached &rarr; <code>handle_files</code> (W&amp;M form or calibration upload); otherwise &rarr; <code>handle_message</code>. Ignores the bot&rsquo;s own messages and message subtypes.</td></tr>
+<tr><td>Onboard button action</td><td>A user clicks a service-trigger button on an onboard prompt</td><td>Decodes the picked trigger and runs the onboard for all the staged store groups, updating the prompt message in place.</td></tr>
+</tbody>
+</table>
+
+<h2 id="statemachine">2.4 The TRUNO status state machine (acted on by monitorTrunoTracker)</h2>
+<p>The live TRUNO sheet uses free-form status words, which are normalized to four canonical outcomes. Anything else (Pending Forms, Pending Customer, Duplicate, blank, &hellip;) is ignored.</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>TRUNO status</th><th>What the monitor does</th></tr></thead>
+<tbody>
+<tr><td><strong>Pending</strong></td><td>No action — visit not yet confirmed by TRUNO.</td></tr>
+<tr><td><strong>Scheduled</strong></td><td>Writes RSA Vendor = TRUNO (col G), the confirmed visit date (col H), RSA Status = <em>Scheduled RSA</em> (col J), and an ETS Reminder date = visit date &minus; 1 day (col I); stamps Last Updated (col R). Then posts an <strong>ETS Coffee Break reminder</strong> to the ETS Slack channel (put cart ON Coffee Break the day before, OFF on inspection day).</td></tr>
+<tr><td><strong>Completed</strong></td><td><strong>Skipped here</strong> — completion is owned by the Python <code>drive_monitor</code>, which reads the actual Scale Test Form so it can tell Pass from Fail and attach the report. GAS only marks the row processed so it doesn&rsquo;t double-write.</td></tr>
+<tr><td><strong>Cancelled</strong></td><td>Resets the cart&rsquo;s RSA status back to <em>Pending RSA</em> and alerts the DRI.</td></tr>
+<tr><td>Ambiguous match</td><td>If the monitor can&rsquo;t confidently map a TRUNO row to a single cart, it flags it for a human instead of guessing. Unmatched rows aren&rsquo;t marked processed, so they&rsquo;re retried on later runs (e.g., once the cart is onboarded).</td></tr>
+</tbody>
+</table>
+
+<h2>2.5 Request-driven web API actions (not scheduled)</h2>
+<p>For completeness: the agent talks to the sheets through a Google Apps Script web app (<code>doPost</code> in <code>GAS_BotEndpoints.gs</code>), authenticated with a shared <code>AGENT_SECRET</code>. These are invoked on demand by the agent (not on a clock), one per user intent:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>Action</th><th>Used for</th></tr></thead>
+<tbody>
+<tr><td><code>fullOnboardCart</code></td><td>The full onboard workflow (tracker + TRUNO row + email).</td></tr>
+<tr><td><code>addCart</code></td><td>Add a cart row.</td></tr>
+<tr><td><code>updateCart</code></td><td>Update status fields / append notes.</td></tr>
+<tr><td><code>queryCart</code></td><td>Look up a single cart&rsquo;s status.</td></tr>
+<tr><td><code>listCarts</code></td><td>Filtered lists.</td></tr>
+<tr><td><code>getSummary</code></td><td>Summary dashboard counts.</td></tr>
+<tr><td><code>scheduleTruno</code></td><td>Create / update a TRUNO request row.</td></tr>
+<tr><td><code>scheduleWinterScales</code></td><td>Winter-scales scheduling variant.</td></tr>
+<tr><td><code>complianceCheck</code></td><td>Pre/post-launch compliance lookup.</td></tr>
+</tbody>
+</table>
+
+<h2>2.6 Manual runs &amp; testing</h2>
+<p>Every automation can be triggered by hand for testing or a one-off catch-up:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>To run now&hellip;</th><th>Do this</th></tr></thead>
+<tbody>
+<tr><td>Any GAS trigger</td><td>In the Apps Script editor, select the function (e.g. <code>monitorTrunoTracker</code>) and click <strong>Run</strong>.</td></tr>
+<tr><td>W&amp;M form scan</td><td><code>python3 -c "import drive_monitor as d; d.process_confirmed_forms(notify=print)"</code></td></tr>
+<tr><td>Tech folder pass</td><td><code>python3 tech_monitor.py</code> (one self-healing pass)</td></tr>
+<tr><td>Re-apply every tech file</td><td><code>python3 tech_monitor.py --backfill</code> (ignores the processed cache)</td></tr>
+<tr><td>Print the gap report</td><td><code>python3 tech_monitor.py --gaps</code></td></tr>
+</tbody>
+</table>
+
+<h2>2.7 Configuration reference</h2>
+<p>The knobs that control cadence, routing, and access:</p>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>Setting</th><th>Where</th><th>Default / note</th></tr></thead>
+<tbody>
+<tr><td><code>RSA_FOLDER_POLL_SECONDS</code></td><td>.env (Python)</td><td>300 — W&amp;M form poll interval</td></tr>
+<tr><td><code>RSA_TECH_POLL_SECONDS</code></td><td>.env (Python)</td><td>300 — tech folder poll interval</td></tr>
+<tr><td><code>RSA_GAP_REPORT_SECONDS</code></td><td>.env (Python)</td><td>86400 (daily); 0 disables the gap report</td></tr>
+<tr><td><code>RSA_MONITOR_CHANNEL</code></td><td>.env (Python)</td><td>Slack channel for monitor posts + gap report</td></tr>
+<tr><td><code>TECH_RESULTS_FOLDER_ID</code></td><td>.env (Python)</td><td>Calibration Drive folder (defaults to the live folder)</td></tr>
+<tr><td><code>CSM_MENTION</code> / CSM channel / email</td><td>.env (Python) / GAS</td><td>Where W&amp;M-needed and pass notifications go</td></tr>
+<tr><td><code>AGENT_SECRET</code></td><td>.env + <code>GAS_BotEndpoints.gs</code></td><td>Must match on both sides; authenticates the web app</td></tr>
+<tr><td><code>INSPECTION_FOLDER_ID</code></td><td><code>GAS_Automation.gs</code></td><td>Folder ingested by <code>ingestInspectionFiles</code></td></tr>
+<tr><td><code>ETS_SLACK_CHANNEL_ID</code> / <code>ETS_USERGROUP_HANDLE</code></td><td><code>GAS_Automation.gs</code></td><td>Where the Coffee Break reminder posts</td></tr>
+<tr><td><code>NICOLE_EMAIL</code> / <code>NICOLE_SLACK_ID</code></td><td><code>GAS_BotEndpoints.gs</code></td><td>TRUNO scheduler contact</td></tr>
+<tr><td><code>TRUNO_FOLLOWUP_DAYS</code></td><td><code>GAS_Automation.gs</code></td><td>3 — quiet window before the single follow-up nudge</td></tr>
+</tbody>
+</table>
+
+<h2>2.8 At-a-glance cadence summary</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+<thead><tr><th>How often</th><th>What runs</th></tr></thead>
+<tbody>
+<tr><td>Real-time</td><td>Slack DM / @mention / file upload / onboard button</td></tr>
+<tr><td>Every 5 min</td><td>drive_monitor (W&amp;M forms), tech_monitor (calibration)</td></tr>
+<tr><td>Every 15 min</td><td>emailNicoleForNewTrunoRows</td></tr>
+<tr><td>Every 2 hours</td><td>monitorTrunoTracker</td></tr>
+<tr><td>Every 4 hours</td><td>ingestInspectionFiles</td></tr>
+<tr><td>Daily (9 AM)</td><td>masterDailyRun → checkAndSendAlerts + monitorTrunoTracker + checkCompletedVisits + ingestInspectionFiles</td></tr>
+<tr><td>Daily (rolling 24h)</td><td>tech_monitor gap report</td></tr>
+</tbody>
+</table>
+
+<hr>
+<p><em>Generated from the RSA Agent codebase (rsa_agent.py, drive_monitor.py, tech_monitor.py, GAS_Automation.gs, GAS_BotEndpoints.gs) and project docs. Cadences and behaviors reflect the agent logic as configured today.</em></p>
+
+</body>
+</html>

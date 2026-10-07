@@ -1,0 +1,6 @@
+Partner,PARTNER_ID_FK,Retailer,RETAILER_ID_FK,Store,STORE_NICKNAME,STORE_ID_FK,External Store ID,Street,City,Zip,State,Phone
+shoprite,1,shoprite,1,prod-wakefern-113,ShopRite #113 Wallington,9001,113,12 Main St,Wallington,07057,NJ,201-555-0113
+kroger,2,kroger,2,prod-kroger-250,Kroger #250 Atlanta,9002,250,100 Peachtree St,Atlanta,30303,GA,404-555-0250
+sprouts,3,sprouts,3,prod-sprouts-15,Sprouts 15,9003,15,100 Elden St,Herndon,20170,VA,703-555-0015
+sprouts,3,sprouts,3,prod-sprouts-20,Sprouts 20,9004,20,200 Boston St,Baltimore,21224,MD,410-555-0020
+mystery,4,mystery,4,prod-mystery-77,Mystery Mart 77,9005,77,,,,,

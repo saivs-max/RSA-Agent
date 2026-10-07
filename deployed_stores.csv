@@ -1,0 +1,415 @@
+"Partner","PARTNER_ID_FK","Retailer","RETAILER_ID_FK","Store","STORE_NICKNAME","STORE_ID_FK","External Store ID","IC WH","IC WHL","Available Carts","Deployed Carts","Launch Date","Months Live","Store Maturity","live app versions","Charger","Street","City","Zip","State","Phone","Internal Store #","POS Provider","POS Reseller","Loyalty Provider","Middleware Provider","Coupon Provider"
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-5","Price Chopper 200",983116,"200","275","11076",10,10,2024-09-19 00:00:00.000,21.533333333333335,"mature",,"fixed","1645 Kearney Road","Excelsior Springs","64024","MO","816-630-1900",5,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-4","Price Chopper 100",983115,"100","275","11078",15,15,2024-09-18 00:00:00.000,21.566666666666666,"mature","[
+  ""26.6.1-v02""
+]","fixed","4201 S Noland Road","Independence","64055","MO","816-912-1163",4,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-8","Price Chopper 400",983229,"400","275","11079",14,16,2024-09-17 00:00:00.000,21.6,"mature","[
+  ""26.6.1-v02""
+]","fixed","16611 E 23rd Street","Independence","64055","MO","816-833-0784",8,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-11","Price Chopper 650",983117,"650","275","11080",7,10,2024-09-19 00:00:00.000,21.533333333333335,"mature",,"fixed","2301 S Sterling Ave","Independence","64052","MO","816-912-1163",11,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-2","Price Chopper 900",631620,"900","275","11087",11,15,2024-06-20 00:00:00.000,24.566666666666666,"mature",,"fixed","9107 N.W. 45 Highway","Parkville","64152","MO","816-584-1111",2,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-3","Price Chopper 002",983114,"002","275","11105",9,10,2024-09-25 00:00:00.000,21.333333333333332,"mature",,"fixed","400 W Amity Rd","Louisburg","66053","KS","913-557-5666",3,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"queens",983882,"queens",983883,"prod-queens-3","Store #10 Bonner Springs",983886,"010","275","11110",8,10,2024-11-07 00:00:00.000,19.9,"mature","[
+  ""26.6.1-v02""
+]","fixed","501 S Commercial Drive","Bonner Springs","66012","KS","(913) 441-6988",3,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-9","Price Chopper 500",983230,"500","275","11114",14,15,2024-09-26 00:00:00.000,21.3,"mature","[
+  ""26.6.1-v02""
+]","fixed","13351 Mission Road","Leawood","66209","KS","913-906-9208",9,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-6","Price Chopper 300",983228,"300","275","11115",15,15,2024-09-24 00:00:00.000,21.366666666666667,"mature","[
+  ""26.6.1-v02""
+]","fixed","19601 W 101st Street","Lenexa","66220","KS","913-764-9005",6,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-12","Price Chopper 700",983232,"700","275","11119",9,10,2024-09-24 00:00:00.000,21.366666666666667,"mature","[
+  ""26.6.1-v02""
+]","fixed","175 N Parker","Olathe","66061","KS","913-685-8666",12,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"queens",983882,"queens",983883,"prod-queens-1","Store #4 Antioch",983884,"004","275","11127",10,10,2024-11-05 00:00:00.000,19.966666666666665,"mature",,"fixed","8686 Antioch Road","Overland Park","66212","KS","(913) 383-2563",1,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"queens",983882,"queens",983883,"prod-queens-2","Store #6 Stanley",983885,"006","275","11130",10,10,2024-11-06 00:00:00.000,19.933333333333334,"mature","[
+  ""26.6.1-v02""
+]","fixed","7201 W 151st Street","Overland Park","66223","KS","(913) 897-4600",2,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"wakefern",41255,"shoprite",2,"qvs-wakefern-6","Poughkeepsie",18333,"274","205","137024",19,21,2023-11-17 00:00:00.000,31.766666666666666,"mature","[
+  ""26.4.1-v06""
+]","fixed","18 Winslow Gate Rd","Poughkeepsie","12601","NY","(845) 218-6086",6,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-25","Wayne",906876,"217","205","137430",30,31,2024-09-09 00:00:00.000,21.866666666666667,"mature","[
+  ""26.4.1-v06""
+]","mobile","30 Wayne Hills Mall","Wayne","07470","NJ","+19735950079",25,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-30","Matamoras",3000005,"463","205","137953",20,20,2025-02-04 00:00:00.000,16.933333333333334,"mature","[
+  ""26.4.1-v06""
+]","fixed","111 Hulst Dr Suite 724","Matamoras","18336","PA","1111111111",30,"Toshiba","N/A","Home-grown","QVS",
+"AFS",3000007,"Clarks Market",3000026,"prod-clarks-1","Sedona",3000151,"clarks_sedona_az","2168","143689",19,20,2026-03-03 00:00:00.000,3.8666666666666667,"mature","[
+  ""26.5.2-v01""
+]","fixed","100 Verde Valley School Rd","Village of Oak Creek","86351","AZ","(928) 284-1144",1,"RORC V7",,"BRData",,
+"wakefern",41255,"shoprite",2,"prod-wakefern-74","Pelham",3000152,"190","205","145833",27,30,2025-12-17 00:00:00.000,6.4,"mature","[
+  ""26.4.1-v06""
+]","fixed","847 Pelham Parkway","Pelham","10803","NY","718-569-4544",74,"Toshiba","N/A","Home-grown","QVS",
+"weis",3000010,"weis",3000025,"prod-weis-1","Weis 226",3000113,"00226","2437","151587",19,20,2026-05-27 00:00:00.000,1.0333333333333334,"ramping","[
+  ""26.2.2-r07+weis""
+]","fixed","719 Route 522","Selinsgrove","17870","PA","+1 570 374 8552",1,"Toshiba Ace (8.3.1 M188.2)","N/A","AMS 6.4","QVS","Inmar"
+"soelbergs",983684,"soelbergs-market",983685,"prod-soelbergs-1","Grantsville",983686,"10864","2461","153730",19,20,2024-11-01 00:00:00.000,20.1,"mature","[
+  ""26.5.2-v01""
+]","fixed","213 E Main St","Grantsville","84029","UT","(435) 884-5531",1,,,,,
+"soelbergs",983684,"soelbergs-market",983685,"prod-soelbergs-2","Stansbury Park",983687,"soelbergs_market_stansbury_park","2461","153731",19,20,2024-11-06 00:00:00.000,19.933333333333334,"mature",,"fixed","6727 UT-36","Stansbury Park","84074","UT","(435) 843-1702",2,,,,,
+"wakefern",41255,"shoprite",2,"qvs-wakefern-5","Elmsford",18332,"199","205","158742",18,20,2023-11-29 00:00:00.000,31.366666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","320 Saw Mill River Rd","Elmsford","10523","NY","(914) 504-8910",5,"Toshiba","N/A","Home-grown","QVS",
+"bowmans",983681,"bowmans",983682,"prod-bowmans-1","Bowman's",983683,"bowmans_market","2668","162639",7,10,2024-10-25 00:00:00.000,20.333333333333332,"mature","[
+  ""26.5.2-v01""
+]","fixed","326 Main St","Kaysville","84037","UT","(801) 544-4215",1,"RORC V7 (upgrading from V6)","DUMAC","BRData","N/A",
+"wakefern",41255,"shoprite",2,"prod-wakefern-20","Fairlawn",824161,"116","205","163144",11,20,2024-07-31 00:00:00.000,23.2,"mature","[
+  ""26.4.1-v06""
+]","mobile","22-00 Maple Ave","Fair Lawn","07410","NJ","+12014753750",20,"Toshiba","N/A","Home-grown","QVS",
+"davis",962470,"davis",962471,"prod-davis-2","Vernal",983679,"11931","2697","164170",57,70,2024-11-13 00:00:00.000,19.7,"mature","[
+  ""26.5.2-v01""
+]","fixed","575 W Main St","Vernal","84078","UT","(435) 789-2001",2,"RORC V7",,"BRData",,
+"davis",962470,"davis",962471,"prod-davis-3","La Verkin",983680,"11934","2697","164171",18,22,2024-12-17 00:00:00.000,18.566666666666666,"mature","[
+  ""26.2.1-v10"",
+  ""26.5.2-v01""
+]","fixed","495 N State St","La Verkin","84745","UT","(435) 635-0774",3,"RORC V7",,"BRData",,
+"davis",962470,"davis",962471,"prod-davis-1","Roosevelt",983678,"11932","2697","164172",44,49,2024-11-07 00:00:00.000,19.9,"mature",,"fixed","750 E 200 N","Roosevelt","84066","UT","(435) 722-2296",1,"RORC V7",,"BRData",,
+"geisslers",691332,"geisslers",691333,"prod-geisslers-4","Bloomfield",693553,"2207","2698","164173",18,19,2024-10-09 00:00:00.000,20.866666666666667,"mature","[
+  ""26.6.1-v02""
+]","fixed","40 Tunxis Avenue","Bloomfield","06002","CT","860-242-4444",4,"RORC","DUMAC","AppCard","N/A",
+"geisslers",691332,"geisslers",691333,"prod-geisslers-5","East Windsor",693564,"2201","2698","164174",19,20,2024-09-26 00:00:00.000,21.3,"mature",,"mobile","100 Bridge Street","East Windsor","06088","CT","860-623-6336",5,"RORC","DUMAC","AppCard","N/A",
+"geisslers",691332,"geisslers",691333,"prod-geisslers-1","Agawam",691334,"2206","2698","164175",18,20,2024-07-25 00:00:00.000,23.4,"mature","[
+  ""26.6.1-v02""
+]","fixed","830 Suffield Street","Agawam","01001","MA","413-821-8904",1,"RORC","DUMAC","AppCard","N/A",
+"geisslers",691332,"geisslers",691333,"prod-geisslers-3","Somers",693542,"2208","2698","164176",5,19,2024-10-03 00:00:00.000,21.066666666666666,"mature","[
+  ""26.6.1-v02""
+]","fixed","95 South Road","Somers","06071","CT","860-749-7339",3,"RORC","DUMAC","AppCard","N/A",
+"geisslers",691332,"geisslers",691333,"prod-geisslers-2","Granby",693531,"2204","2698","164178",26,29,2024-10-17 00:00:00.000,20.6,"mature","[
+  ""26.6.1-v02""
+]","fixed","9J Bank Street Granby","Granby","06035","CT","860-653-3990",2,"RORC","DUMAC","AppCard","N/A",
+"geisslers",691332,"geisslers",691333,"prod-geisslers-6","Windsor",693575,"2203","2698","164179",3,9,2024-10-10 00:00:00.000,20.833333333333332,"mature",,"mobile","318 Broad Street","Windsor","06095","CT","860-688-8867",6,"RORC","DUMAC","AppCard","N/A",
+"AFS",3000007,"Stewarts",3000012,"prod-stewarts-2","Castle Dale",3000061,"011522","2823","167245",10,10,2025-07-10 00:00:00.000,11.733333333333333,"mature","[
+  ""26.5.2-v01""
+]","fixed","590 E Main St","Castle Dale","84513","Utah","n/a",2,"RORC","AFS/Dumac","BRData",,"quotient via BRData"
+"bigbunny",3000005,"bigbunny",3000008,"prod-bigbunny-1","Big Bunny",3000019,"big_bunny_market","2833","169274",8,10,2025-06-04 00:00:00.000,12.933333333333334,"mature","[
+  ""26.5.2-v01""
+]","fixed","Main St","Southbridge","01550","MA","508-765-9824",1,"RORC V7","DUMAC","AppCard",,
+"mckeevers",631616,"mckeevers-price-chopper",631619,"prod-mckeevers-10","Price Chopper 600",983231,"600","275","17397",14,15,2024-09-26 00:00:00.000,21.3,"mature","[
+  ""26.6.1-v02""
+]","fixed","11700 W. 135th Street","Overland Park","66221","KS","913-685-8666",10,"Queens POS: Toshiba IBM Ace","N/A","GiveEx","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-52","Elmwood Park",3000110,"154","205","174202",19,20,2025-09-09 00:00:00.000,9.7,"mature","[
+  ""26.4.1-v05"",
+  ""26.4.1-v06""
+]","fixed","180 Broadway","Elmwood Park","07407","NJ","201-421-2025",52,"Toshiba","N/A","Home-grown","QVS",
+"coles",963623,"coles",963624,"prod-coles-1","Richmond Traders",978485,"7719","3344","184499",18,19,2025-02-11 00:00:00.000,16.7,"mature","[
+  ""26.2.2-v13""
+]","fixed","Corner Church And, 261 Bridge Rd","Richmond","3121","Victoria","+61390560400",1,,,,,
+"kroger",1,"kroger",1,"kroger-8","Harper's Point",266251,"014-00353","58","20333",19,20,2024-05-09 00:00:00.000,25.966666666666665,"mature","[
+  ""26.5.2-v03""
+]","fixed","11390 Montgomery Rd","Cincinnati","45249","OH","(513) 247–7740",8,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-7","Monroe",8,"014-00336","58","20338",10,10,2024-02-06 00:00:00.000,29.066666666666666,"mature","[
+  ""26.5.2-v03""
+]","fixed","3033 Heritage Green Dr","Monroe","45050","OH","(513) 727–7422",7,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-9","Mason Montgomery",450755,"014-00448","58","20341",10,10,2024-05-07 00:00:00.000,26.033333333333335,"mature","[
+  ""26.5.2-v03""
+]","fixed","5100 Terra Firma Dr","Mason","45040","OH","(513) 229–5900",9,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"prod-kroger-13","Miami Township",557442,"014-00435","58","20345",18,19,2024-06-05 00:00:00.000,25.066666666666666,"mature","[
+  ""26.5.2-v03""
+]","fixed","6388 Branch Hill Guinea Pike","Loveland","45140","OH","(513) 697–4800",13,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-1","Madeira",2,"014-00402","58","20363",10,10,2024-03-15 00:00:00.000,27.8,"mature","[
+  ""26.5.2-v03""
+]","fixed","6950 Miami Ave","Madeira","45243","OH","(513) 271-1260",1,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-12","Mariemont",466113,"014-00421","58","20364",9,9,2024-05-08 00:00:00.000,26,"mature","[
+  ""26.5.2-v03""
+]","fixed","7385 Wooster Pike","Cincinnati","45227","OH","(513) 271-9444",12,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"wakefern",41255,"shoprite",2,"prod-wakefern-46","Chester",3000102,"242","205","22878",19,20,2025-09-16 00:00:00.000,9.466666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","78 Brookside Ave Suite 122","Chester","10918","NY ","18454697400",46,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-18","Oakland",824159,"256","205","22889",5,10,2024-08-01 00:00:00.000,23.166666666666668,"mature","[
+  ""26.4.1-v06""
+]","mobile","14 Post Road","Oakland","07436","NJ","+12013373900",18,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-28","Milford",960205,"327","205","26356",4,6,2024-09-25 00:00:00.000,21.333333333333332,"mature","[
+  ""26.4.1-v06""
+]","mobile","935 Boston Post Rd","Milford","06460","CT","+12038767868",28,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"The Fresh Grocer",528758,"prod-wakefern-13","Gray's Ferry",528759,"459","562","33085",7,10,2024-06-27 00:00:00.000,24.333333333333332,"mature","[
+  ""26.4.1-v06""
+]","mobile","3021 Grays Ferry Ave","Philadelphia","19146","PA","+12154681550",13,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-42","Greenwich",3000105,"437","205","33733",50,51,2025-09-10 00:00:00.000,9.666666666666666,"mature","[
+  ""26.4.1-v06"",
+  ""25.10.1-v04""
+]","fixed","1207 US-22","Phillipsburg","08865","NJ","908-454-8086",42,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-44","Clinton",3000108,"497","205","33747",47,49,2025-09-16 00:00:00.000,9.466666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","50 Wal-Mart Plaza","Clinton","08809","NJ","000000",44,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"qvs-wakefern-1","Spotswood",25,"106","205","33864",17,17,2023-04-01 00:00:00.000,39.43333333333333,"mature","[
+  ""26.1.1-v09"",
+  ""26.4.1-v06"",
+  ""26.1.2-v12"",
+  ""26.4.1-v05""
+]","fixed","380 Summerhill Road","Spotswood","08884","NJ","(732) 251-5202",1,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-50","Lyndhurst",3000104,"113","205","33867",19,20,2025-11-06 00:00:00.000,7.766666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","540 New York Ave","Lyndhurst","07071","NJ","12013726181",50,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-9","Hoboken",245430,"118","205","33869",26,30,2024-03-26 00:00:00.000,27.433333333333334,"mature","[
+  ""26.4.1-v06""
+]","fixed","900 Madison St","Hoboken","07030","NJ","+12017926070",9,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-62","Lodi",3000126,"122","205","33873",20,20,2025-10-09 00:00:00.000,8.7,"mature","[
+  ""26.4.1-v06""
+]","fixed","175 Main St","Lodi","07644","NJ","+1973-365-2287",62,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-69","Hackensack",3000141,"134","205","33878",20,20,2025-10-30 00:00:00.000,8,"mature","[
+  ""26.4.1-v06""
+]","fixed","500 S River St","Hackensack","07601","NJ","201-329-7470",69,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-21","Wallington",905793,"136","205","33879",12,16,2024-09-19 00:00:00.000,21.533333333333335,"mature","[
+  ""26.4.1-v06"",
+  ""25.10.1-v07""
+]","mobile","375 Paterson Ave, Wallington","Wallington","07057","NJ","+12015088000",21,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-22","Wyckoff",904743,"140","205","33881",10,11,2024-09-24 00:00:00.000,21.366666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","430 Greenwood Ave","Wyckoff","07481","NJ","+12015600490",22,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-51","Hillsdale",3000109,"151","205","33883",19,20,2025-09-11 00:00:00.000,9.633333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","372 Broadway","Hillsdale","07642","NJ","201-666-7821",51,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-23","Northvale",903694,"153","205","33884",19,21,2024-09-23 00:00:00.000,21.4,"mature","[
+  ""26.4.1-v06""
+]","fixed","246 Livingston St","Northvale","07647","NJ","+2017840173",23,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-31","Clark",3000002,"163","205","33889",29,29,2025-02-06 00:00:00.000,16.866666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","76 Central Ave.","Clark","07066","New Jersey","TBA",31,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-8","Brookdale",58199,"176","205","33900",18,20,2024-01-31 00:00:00.000,29.266666666666666,"mature","[
+  ""26.4.1-v06""
+]","mobile","1409 Broad St","Bloomfield","07003","NJ","(973) 338-4141",8,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-65","Livingston",3000136,"247","205","33906",33,40,2025-12-10 00:00:00.000,6.633333333333334,"mature","[
+  ""26.4.1-v06""
+]","fixed","483 S Livingston Ave","Livingston","07039","NJ","+1 973-740-2004",65,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-49","West Milford",3000106,"257","205","33907",20,20,2025-09-18 00:00:00.000,9.4,"mature","[
+  ""26.4.1-v06""
+]","fixed","23 Marshall Hill Rd","West Milford","07480","NJ","19737284754",49,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-63","Lincoln Park",3000129,"297","205","33919",27,30,2025-09-25 00:00:00.000,9.166666666666666,"mature","[
+  ""26.4.1-v06""
+]","fixed","60 Beaverbrook Rd","Lincoln Park","07035","NJ","+1 973-694-1080",63,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-66","Stirling",3000133,"443","205","33923",40,40,2025-11-14 00:00:00.000,7.5,"mature","[
+  ""26.4.1-v06""
+]","fixed","1153 Valley Road","Stirling","07980","NJ","+1 908-604-2129",66,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-43","Flemington",3000112,"457","205","33927",48,51,2025-09-24 00:00:00.000,9.2,"mature","[
+  ""26.4.1-v06""
+]","fixed","272 Highway","Flemington","08822","NJ","908-782-2553",43,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-26","Yardley",847344,"407","205","33957",13,21,2024-08-22 00:00:00.000,22.466666666666665,"mature","[
+  ""26.4.1-v06""
+]","mobile","1603 Big Oak Rd","Yardley","19067","PA","+12155950078",26,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-27","Broadheadsville",955503,"422","205","33958",9,10,2024-09-17 00:00:00.000,21.6,"mature","[
+  ""26.4.1-v06""
+]","fixed","107 Kinsley Dr, Brodheadsville","Brodheadsville","18322","PA","+15709922666",27,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-36","Bethlehem",3000063,"449","205","33962",38,41,2025-06-25 00:00:00.000,12.233333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","4701 Freemansburg Ave","Bethlehem","18045","PA","(610) 865-2439",36,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-37","Marlton",3000089,"523","205","33977",20,20,2025-08-07 00:00:00.000,10.8,"mature","[
+  ""26.4.1-v06""
+]","fixed","307 Rte 70 W, Marlton, NJ 08053","Marlton","08053","NJ"," (856) 983-7370",37,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-70","Evesham",3000143,"529","205","33980",20,20,2025-11-05 00:00:00.000,7.8,"mature","[
+  ""26.4.1-v06""
+]","fixed","400 E Evesham Rd","Cherry Hill Township","08003","NJ","(856) 216-1400",70,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-76","Medford",3000166,"540","205","33985",19,20,2026-06-03 00:00:00.000,0.8,"ramping","[
+  ""26.4.1-v06""
+]","fixed","208 Route 70","Medford","08055","NJ","(609) 953-7700",76,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-10","Mullica Hill",247805,"496","205","33986",10,10,2024-03-20 00:00:00.000,27.633333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","143 Bridgeton Pike","Mullica Hill","08062","NJ","+18563579301",10,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-67","Somers Point",3000134,"612","205","33999",39,39,2025-12-11 00:00:00.000,6.6,"mature","[
+  ""26.4.1-v06"",
+  ""26.1.1-v09""
+]","fixed","23 Bethel Rd","Somers Point","08244","NJ","+1 609-927-8133",67,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-17","Croton",825138,"202","205","34006",17,19,2024-07-22 00:00:00.000,23.5,"mature","[
+  ""26.4.1-v06""
+]","fixed","460 S Riverside Ave","Croton-On-Hudson","10520","NY","+19142716400",17,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-48","West Poughkeepsie",3000111,"206","205","34007",20,20,2025-09-25 00:00:00.000,9.166666666666666,"mature","[
+  ""26.4.1-v06""
+]","fixed","1895 South Road","Poughkeepsie","12601","NY","8452980024",48,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-57","Carmel",3000124,"235","205","34010",18,20,2025-10-01 00:00:00.000,8.966666666666667,"mature","[
+  ""26.4.1-v06"",
+  ""26.3.1-v11""
+]","fixed","184 NY-52","Carmel","10512","NY","+1 845-225-1011",57,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-47","Kingston",3000103,"241","205","34012",25,25,2025-09-24 00:00:00.000,9.2,"mature","[
+  ""26.4.1-v06""
+]","fixed","801 Miron Ln","Kingston","12401","NY","18453367800",47,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-32","Lagrangeville",3000006,"244","205","34013",9,10,2025-02-06 00:00:00.000,16.866666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","1643 Route 82, Suite 1","Langrangeville","12540","NY","1111111111",32,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-45","Vails Gate",3000101,"260","205","34016",28,29,2025-08-06 00:00:00.000,10.833333333333334,"mature","[
+  ""26.4.1-v06""
+]","fixed","384 Windsor Hwy"," Vails Gate","12584","NY","845 863 1051",45,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-19","Warwick",824160,"267","205","34018",22,25,2024-08-07 00:00:00.000,22.966666666666665,"mature","[
+  ""26.4.1-v06"",
+  ""25.10.1-v04""
+]","mobile","153 State Route 94S","Warwick","10990","NY","+18459871200",19,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-56","Fishkill",3000123,"269","205","34019",20,20,2025-10-01 00:00:00.000,8.966666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","738 US-9 Suite 2","Fishkill","12524","NY","+1 845-897-2211",56,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-34","Thornwood",3000004,"276","205","34020",8,10,2025-02-05 00:00:00.000,16.9,"mature","[
+  ""26.4.1-v06""
+]","fixed","960 Broadway","Thornwood","10594","NY","TBA",34,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-61","Hudson",3000128,"277","205","34021",19,22,2025-10-07 00:00:00.000,8.766666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","351 Fairview Ave","Hudson","12534","NY","+1 518-828-0192",61,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-33","Cortlandt",3000003,"278","205","34022",18,21,2025-03-04 00:00:00.000,16,"mature","[
+  ""26.4.1-v06""
+]","fixed","3140 E. Main Street, Suite 300","Mohegan Lake","10547","NY","TBA",33,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-58","Scarsdale",3000130,"290","205","34025",28,32,2025-10-02 00:00:00.000,8.933333333333334,"mature","[
+  ""25.10.1-v07"",
+  ""26.4.1-v06""
+]","fixed","955 Central Avenue","Scarsdale","10583","NY","+1914 874-2973",58,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-64","New Rochelle",3000127,"293","205","34026",28,30,2025-09-30 00:00:00.000,9,"mature","[
+  ""26.4.1-v06""
+]","fixed","8 Joyce Rd. & Palmer Ave","New Rochelle","10801","NY","+1914-740-9764",64,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-7","Veterans",43773,"112","205","34029",19,21,2024-02-05 00:00:00.000,29.1,"mature","[
+  ""26.4.1-v06""
+]","fixed","3010 Veterans Road W","Staten Island","10309","NY","(718) 948-4945",7,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-14","Drexeline",517063,"431","205","34049",9,25,2024-06-06 00:00:00.000,25.033333333333335,"mature","[
+  ""26.4.1-v06""
+]","mobile","5000 State Road","Drexel Hill","19026","PA","+16106221100",14,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-12","Brookhaven",512048,"452","205","34050",4,10,2024-06-04 00:00:00.000,25.1,"mature","[
+  ""26.4.1-v06""
+]","mobile","5075 Edgmont Ave","Brookhaven","19015","PA","+16104993030",12,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-72","Forest Hill",3000145,"545","205","34058",20,20,2025-11-13 00:00:00.000,7.533333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","2101 Rockspring Rd","Forest Hill","21050","MD","410-420-8220",72,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-81","Main Street",3000164,"547","205","34059",14,15,2026-05-14 00:00:00.000,1.4666666666666666,"ramping","[
+  ""26.4.1-v06""
+]","fixed","223 N Main St.","Bel Air","21014","MD","(410) 838-4130",81,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-71","Festival",3000144,"549","205","34060",17,20,2025-11-06 00:00:00.000,7.766666666666667,"mature","[
+  ""26.4.1-v06""
+]","fixed","5 Bel Air S Pkwy Bel Air","Bel Air","21015","MD","410-569-0939",71,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-79","Riverside",3000162,"551","205","34061",20,20,2026-04-30 00:00:00.000,1.9333333333333333,"ramping","[
+  ""26.4.1-v06""
+]","fixed","1321 Riverside Pkwy","Belcamp","21017","MD","(410) 272-3900",79,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-80","Cardiff",3000163,"555","205","34062",15,15,2026-05-20 00:00:00.000,1.2666666666666666,"ramping","[
+  ""26.4.1-v06""
+]","fixed","606 Dooley Road","Cardiff","21160","MD","(410) 452-5980",80,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-82","Jacksonville",3000165,"563","205","34063",13,13,2026-04-29 00:00:00.000,1.9666666666666666,"ramping","[
+  ""26.1.1-v09"",
+  ""26.4.1-v06""
+]","fixed","14330 Jarrettsville Pike","Phoenix","21131","MD","(410) 666-3500",82,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-16","Harbison",857546,"495","205","34077",9,10,2024-09-18 00:00:00.000,21.566666666666666,"mature","[
+  ""26.4.1-v06""
+]","mobile","5597 Tulip St","Harbison","19124","PA","+2152881260",16,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-15","Morrell Plaza",632112,"450","205","34078",9,10,2024-06-11 00:00:00.000,24.866666666666667,"mature","[
+  ""26.4.1-v06""
+]","mobile","9910 Frankford Ave","Philadelphia","19114","PA","+12156371555",15,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-77","Roxborough",3000159,"519","205","34080",18,18,2026-02-27 00:00:00.000,4,"mature","[
+  ""26.4.1-v06""
+]","fixed","6901 Ridge Ave","Roxborough","19128","PA","(215) 482-9570",77,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-60","Wallkill",3000131,"211","205","34083",25,26,2025-10-08 00:00:00.000,8.733333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","20 Lloyds Lane","Middletown","10940","NY","+1 845-341-2104",60,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-59","Montgomer",3000125,"239","205","34103",25,26,2025-10-02 00:00:00.000,8.933333333333334,"mature","[
+  ""26.4.1-v06""
+]","fixed","99 Hawkins Dr","Montgomery","12549","NY","+1 845 457-4114",59,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-75","Middletown",3000158,"272","205","34104",15,15,2026-02-20 00:00:00.000,4.233333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","125 Dolson Ave","Middletown","10940","NY","732-671-9444",75,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-78","Aberdeen",3000161,"548","205","34106",29,30,2026-05-13 00:00:00.000,1.5,"ramping","[
+  ""26.4.1-v06""
+]","fixed","949 Beards Hill Road","Aberdeen","21001","MD","(410) 272-3100",78,"Toshiba","N/A","Home-grown","QVS",
+"mckeevers",631616,"mckeevers-market",631617,"prod-mckeevers-7","McKeever's 350",983227,"350","621","34323",9,10,2024-09-25 00:00:00.000,21.333333333333332,"mature",,"fixed","8800 Maurer Blvd","Lenexa","66219","KS","913-766-1012",7,"Toshiba ACE","TRUNO",,"QVS",
+"wakefern",41255,"shoprite",2,"prod-wakefern-24","New Milford",824162,"141","205","35689",15,16,2024-08-05 00:00:00.000,23.033333333333335,"mature","[
+  ""26.4.1-v06""
+]","fixed","250 River Road","New Milford","07646","NJ","+12012628834",24,"Toshiba","N/A","Home-grown","QVS",
+"AFS",3000007,"Stewarts",3000012,"prod-stewarts-1","Roosevelt",3000060,"011528","2823","392210",19,20,2025-07-08 00:00:00.000,11.8,"mature",,"fixed","245 U.S. Hwy 40","Roosevelt","84066","Utah","n/a",1,"RORC","AFS/Dumac","BRData",,"quotient via BRData"
+"wakefern",41255,"shoprite",2,"prod-wakefern-29","Mount Kisco",983824,"198","205","392315",20,30,2024-11-10 00:00:00.000,19.8,"mature","[
+  ""26.4.1-v06""
+]","fixed","333 N Bedford Rd","Mount Kisco","10549","NY","+190912312345",29,"Toshiba","N/A","Home-grown","QVS",
+"wegmans",3000003,"wegmans",3000005,"prod-wegmans-1","DeWitt #30",3000010,"30C","4911","400785",29,29,2025-04-21 00:00:00.000,14.4,"mature","[
+  ""26.5.2-v03""
+]","fixed","6789 East Genesee Street","Fayetteville","13066","NY","(315) 446-1180",1,"Toshiba Elera",,"Inmar (Coupons)",,
+"schnucks",27423,"schnucks",13,"prod-schnucks-7","Butler Hill",3000015,"105","216","4165",10,10,2025-03-20 00:00:00.000,15.466666666666667,"mature","[
+  ""26.5.2-v03""
+]","fixed","4333 Butler Hill","St. Louis","63128","MO","(314) 894-1227",7,"ACR",,"N/A",,
+"schnucks",27423,"schnucks",13,"prod-schnucks-4","Arsenal",3000017,"149","216","4170",10,10,2025-03-24 00:00:00.000,15.333333333333334,"mature","[
+  ""26.5.2-v03""
+]","fixed","5055 Arsenal St","St. Louis","63139","MO","(314) 771-5008",4,"ACR",,"N/A",,
+"gfh",41256,"bristol-farms",59798,"qvs-gfh-2","Santa Monica",8781,"000021","1296","44602",10,10,2023-08-20 00:00:00.000,34.733333333333334,"mature",,"mobile","3105 Wilshire Blvd","Santa Monica","90403","CA","",2,,,,,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-1","Scottsdale - 29",3000000,"29C","8009","471813",10,10,2025-04-09 00:00:00.000,14.8,"mature","[
+  ""26.4.2-v09""
+]","fixed","23269 N. Scottsdale Rd","Scottsdale","85255","AZ","(480) 295-4789",1,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-4","Store #503",3000035,"503C","8009","472928",9,10,2025-05-29 00:00:00.000,13.133333333333333,"mature","[
+  ""26.4.2-v09""
+]","fixed","635 S Green Valley Pkwy","Henderson","89052","NV","702-322-2229",4,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-9","Store #509",3000040,"509C","8009","472929",9,9,2025-06-03 00:00:00.000,12.966666666666667,"mature",,"fixed","1140 E Silverado Ranch Blvd","Las Vegas","89183","NV","702-750-3570",9,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-14","Store #562",3000046,"562C","8009","472930",10,10,2025-06-12 00:00:00.000,12.666666666666666,"mature","[
+  ""26.4.2-v09""
+]","fixed","280 W Lake Mead Parkway","Henderson","89015","NV","725-286-2723",14,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-18","Store #918",3000050,"918C","8009","472931",10,10,2025-06-26 00:00:00.000,12.2,"mature","[
+  ""26.4.2-v09""
+]","fixed","680 Marketplace Drive","Bel Air","21014","MD","443-567-7788",18,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-19","Store #919",3000051,"919C","8009","472932",8,10,2025-06-25 00:00:00.000,12.233333333333333,"mature","[
+  ""26.4.2-v09""
+]","fixed","8048 Ritchie Hwy","Pasadena","21122","MD","443-960-8484",19,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-2","Store #501",3000033,"501C","8009","472933",9,10,2025-06-11 00:00:00.000,12.7,"mature","[
+  ""26.4.2-v09""
+]","fixed","3365 E Tropicana Ave","Las Vegas","89121","NV","702-777-0650",2,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-3","Store #502",3000034,"502C","8009","472934",10,10,2025-06-04 00:00:00.000,12.933333333333334,"mature","[
+  ""26.4.2-v09""
+]","fixed","4020 S Rainbow Blvd","Las Vegas","89103","NV","702-876-4888",3,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-15","Store #886",3000047,"886C","8009","472935",10,10,2025-06-12 00:00:00.000,12.666666666666666,"mature","[
+  ""26.4.2-v09""
+]","fixed","494 Elden Street Suite 110","Herndon","20170","VA","703-480-7930",15,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-12","Store #559",3000044,"559C","8009","472936",9,10,2025-06-12 00:00:00.000,12.666666666666666,"mature",,"fixed","771 S Rainbow Blvd","Las Vegas","89145","NV","702-984-4330",12,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-5","Store #504",3000036,"504C","8009","472937",10,10,2025-06-11 00:00:00.000,12.7,"mature",,"fixed","515 N Stephanie St","Henderson","89014","NV","702-777-7095",5,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-11","Store #558",3000042,"558C","8009","472938",9,11,2025-06-05 00:00:00.000,12.9,"mature","[
+  ""26.4.2-v09""
+]","fixed","6150 N. Decatur Blvd","Las Vegas","89130","NV","702-273-3490",11,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-8","Store #507",3000039,"507C","8009","472939",8,9,2025-05-29 00:00:00.000,13.133333333333333,"mature",,"fixed","7530 W Lake Mead Blvd","Las Vegas","89128","NV","702-216-3556",8,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-10","Store #510",3000041,"510C","8009","472940",9,10,2025-06-03 00:00:00.000,12.966666666666667,"mature",,"fixed","7375 S. Rainbow Blvd.","Las Vegas","89139","NV","702-670-4450",10,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-13","Store #561",3000045,"561C","8009","472941",10,10,2025-06-05 00:00:00.000,12.9,"mature","[
+  ""26.4.2-v09""
+]","fixed","6506 N. Losee Road","North Las Vegas","89086","NV","702-857-6362",13,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-17","Store #917",3000049,"917C","8009","472942",9,10,2025-06-25 00:00:00.000,12.233333333333333,"mature","[
+  ""26.4.2-v09""
+]","fixed","803 Goucher Commons","Towson","21286","MD","410-842-6010",17,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-6","Store #505",3000037,"505C","8009","472943",8,11,2025-06-04 00:00:00.000,12.933333333333334,"mature",,"fixed","10000 W Sahara Ave","Las Vegas","89117","NV","702-216-5060",6,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-20","Store #920",3000052,"920C","8009","472944",7,10,2025-06-26 00:00:00.000,12.2,"mature","[
+  ""26.4.2-v09""
+]","fixed","3800 Boston Street","Baltimore","21224","MD","443-836-5882",20,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-7","Store #506",3000038,"506C","8009","472945",10,10,2025-06-10 00:00:00.000,12.733333333333333,"mature","[
+  ""26.4.2-v09""
+]","fixed","8441 Farm Rd","Las Vegas","89131","NV","702-583-3830",7,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-21","Store #921",3000053,"921C","8009","472946",9,10,2025-06-11 00:00:00.000,12.7,"mature","[
+  ""26.4.2-v09""
+]","fixed","15793 Old Columbia Pike","Burtonsville","20866","MD","240-883-9223",21,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"sprouts",3000002,"sprouts",3000003,"prod-sprouts-16","Store #916",3000048,"916C","8009","472947",10,10,2025-06-24 00:00:00.000,12.266666666666667,"mature","[
+  ""26.4.2-v09""
+]","fixed","9150 Baltimore National Pike","Ellicott City","21042","MD","410-696-3160",16,"NCR Encor w/ Truno",,"NCR (Pilot w phased rollout in Sept/Oct)",,
+"allegiance",3000001,"foodtown",3000009,"prod-allegiance-1","Allegiance-562",3000021,"562C","8010","472949",10,10,2025-05-13 00:00:00.000,13.666666666666666,"mature",,"fixed","31 E Prospect Ave","Mt Vernon","10550","NY","914-667-6100",1,"NCR ENCOR","TRUNO","AppCard","Truno TruCommerce",
+"wakefern",41255,"shoprite",2,"prod-wakefern-73","Watchung",3000146,"472","205","475864",39,41,2025-11-13 00:00:00.000,7.533333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","1701 US-22","Watchung","07069","NJ","908-322-6410",73,"Toshiba","N/A","Home-grown","QVS",
+"wakefern",41255,"fairway",12,"qvs-wakefern-4","Kips Bay",6518,"185","1339","48363",9,10,2023-07-31 00:00:00.000,35.4,"mature","[
+  ""26.4.1-v06""
+]","fixed","550 2nd Ave","New York","10016","NY","(718) 569-4522",4,"Toshiba","N/A","Home-grown","QVS",
+"allegiance",3000001,"Miggy's Corp Five ",3000017,"prod-allegiance-04","Allegiance-701",3000085,"701C","8930","495729",10,10,2025-09-24 00:00:00.000,9.2,"mature","[
+  ""26.5.2-v01""
+]","fixed","232 Fox Run Lane Suite 102","East Stroudsburg","18302","PA","570-223-1350",4,"NCR ENCOR","TRUNO","AppCard","Truno TruCommerce",
+"wegmans",3000003,"wegmans",3000005,"prod-wegmans-2","Fairmount - 39",3000083,"39C","4911","495856",20,20,2025-09-15 00:00:00.000,9.5,"mature","[
+  ""26.5.2-v03""
+]","fixed","3325 West Genesee Street","Syracuse","13219","NY","315-487-1581",2,"Toshiba Elera",,"Inmar (Coupons)",,
+"allegiance",3000001,"Foodtown of Hastings",3000021,"prod-allegiance-5","Hastings on Hudson",3000091,"530C","8987","497373",15,15,2026-04-15 00:00:00.000,2.433333333333333,"ramping","[
+  ""26.5.2-v01""
+]","fixed","87 Main Street","Hasting-On-Hudson","10706","NY","(914) 274-8787",5,"NCR ENCOR","TRUNO","AppCard","Truno TruCommerce",
+"wakefern",41255,"shoprite",2,"prod-wakefern-54","Evergreen Plaza",3000122,"172","205","498527",19,20,2025-09-14 00:00:00.000,9.533333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","365 Convery Blvd","Perth Amboy","08861","NJ","732-442-1717",54,"Toshiba","N/A","Home-grown","QVS",
+"schnucks",27423,"schnucks",13,"prod-schnucks-1","Twin Oaks",47685,"173","216","5042",8,9,2024-02-21 00:00:00.000,28.566666666666666,"mature",,"fixed","1393 Big Bend","Ballwin","63021","MO","(636) 225-3777",1,"ACR",,"N/A",,
+"wakefern",41255,"PriceRite",3000010,"prod-wakefern-35","Seekonk",3000023,"358","163","5885",8,11,2025-04-29 00:00:00.000,14.133333333333333,"mature","[
+  ""26.4.1-v06""
+]","fixed","140 Taunton Ave","Seekonk","02771","MA","774-644-1513",35,"Toshiba","N/A","Home-grown","QVS",
+"kroger",1,"kroger",1,"kroger-10","Crown Plaza",468728,"016-00818","58","7048",9,10,2024-05-14 00:00:00.000,25.8,"mature","[
+  ""26.5.2-v03""
+]","fixed","2090 Crown Plaza Dr","Columbus","43235","OH","(614) 326–5645",10,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-3","Pickerington",4,"016-00538","58","7064",10,10,2024-03-13 00:00:00.000,27.866666666666667,"mature","[
+  ""26.5.2-v03""
+]","fixed","1045 Hill Rd N, Pickerington","Pickerington","43147","OH","(614) 565-6931",3,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"prod-kroger-14","Polaris",574234,"016-00839","58","7084",9,10,2024-06-11 00:00:00.000,24.866666666666667,"mature","[
+  ""26.5.2-v03""
+]","fixed","1177 Polaris Pkwy","Columbus","43240","OH","(614) 430–2440",14,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-5","Westerville",6,"016-00847","58","7097",8,10,2024-03-13 00:00:00.000,27.866666666666667,"mature","[
+  ""26.5.2-v03""
+]","fixed","7345 S.R. 3","Westerville","43082","OH","(614) 794-5555",5,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"kroger",1,"kroger",1,"kroger-11","Worthington Mall",477668,"016-00273","58","7098",10,10,2024-05-15 00:00:00.000,25.766666666666666,"mature","[
+  ""26.5.2-v03""
+]","fixed","60 Worthington Mall","Worthington","43085","OH","(614) 885–3889",11,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"wakefern",41255,"shoprite",2,"prod-wakefern-55","Canton",3000107,"367","205","7358",17,20,2025-09-18 00:00:00.000,9.4,"mature","[
+  ""26.4.1-v06""
+]","fixed","110 Albany Turnpike","Canton","06019","CT","18606933666",55,"Toshiba","N/A","Home-grown","QVS",
+"kroger",1,"kroger",1,"prod-kroger-15","Pataskala",631477,"016-00591","58","7412",10,10,2024-06-12 00:00:00.000,24.833333333333332,"mature","[
+  ""26.5.2-v03""
+]","fixed","350 E Broad St","Pataskala","43062","OH","(740) 964–5100",15,"Toshiba","N/A","Inmar Coupons / Custom Loyalty","N/A","Example"
+"mckeevers",631616,"mckeevers-market",631617,"prod-mckeevers-1","McKeever's 950",631618,"950","621","91673",10,10,2024-06-18 00:00:00.000,24.633333333333333,"mature",,"fixed","840 NW Pryor","Lee's Summit","64081","MO","816-600-5950",1,"Toshiba ACE","TRUNO",,"QVS",

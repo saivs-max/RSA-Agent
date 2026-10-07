@@ -1,0 +1,50 @@
+Truno IC name,Truno code,Truno address,chain,banner,store #,Caper name,Caper address,RSA store(s),match basis,status
+Davis #2,ISC0050-DAV-11931,"575 W Main St. Vernal, UT 84078",DAV,,11931,Davis Food & Drug 11931 Store Hours,"575 W Main St, Vernal, UT 84078, United States",Davis-2 - Vernal UT,address,matched
+Kroger #11,ISC0050-KRO-0011,"60 Worthington Mall Worthington, OH 43085",KRO,,11,WORTHIN GTON MALL,"60 Worthingto n Mall, Worthingto n, OH, 43085",Kroger 11 - Worthington | Kroger-11,address,rsa_ambiguous
+Kroger #8,ISC0050-KRO-0008,"11390 Montgomery Rd. Cincinnati, OH 45249",KRO,,8,HARPER'S POINT,"11390 Montgome ry Rd, Cincinnati, OH, 45249",,address,matched_no_rsa
+Sprouts 505,ISC0050-SFM-0505,"10000 W Sahara Ave Las Vegas, NV 89117",SFM,Sprouts,505,,,,,no_caper_match
+Sprouts 507,ISC0050-SFM-0507,"7530 W. Lake Mead Blvd. Las Vegas, NV 89128",SFM,Sprouts,507,,,,,no_caper_match
+Sprouts 509,ISC0050-SFM-0509,"1140 E. Silverado Ranch Blvd. Las Vegas, NV 89183",SFM,Sprouts,509,,,,,no_caper_match
+Sprouts 558,ISC0050-SFM-0558,"6150 N. Decatur Blvd. Las Vegas, NV 89130",SFM,Sprouts,558,,,,,no_caper_match
+Sprouts 561,ISC0050-SFM-0561,"6506 N. Losee Road North Las Vegas, NV 89086",SFM,Sprouts,561,,,,,no_caper_match
+Sprouts 562,ISC0050-SFM-0562,"280 W. Lake Mead Parkway Henderson, NV 89015",SFM,Sprouts,562,,,,,no_caper_match
+Sprouts 917,ISC0050-SFM-0917,"803 Goucher Blvd. Towson, MD 21286",SFM,Sprouts,917,,,,,no_caper_match
+Sprouts 029,ISC0050-SFM-0029,"23269 N Scottsdale Rd. Scottsdale, AZ 85255",SFM,Sprouts,29,Rosauers 29th Ave,"2610 E 29th Ave, Spokane, WA 99223",,number,matched_no_rsa
+South Windsor Store 2205,ISC0050-GEI-2205,"965 Sullivan Avenue South Windsor, CT 06074",GEI,,2205,South Windsor Store 2205,"965 Sullivan Avenue South Windsor, CT 06074",,address,matched_no_rsa
+Wakefern Aberdeen,ISC0050-WKF-9490,"949 Beards Hill Rd. Aberdeen, MD 21001",WKF,ShopRite (Wakefern),9490,Aberdeen,"949 Beards Hill Rd, Aberdeen, MD 21001",,address,matched_no_rsa
+Wakefern 82,ISC0050-WKF-0082,"14330 Jarresttsville Pike Jacksonville, MD 21131",WKF,ShopRite (Wakefern),82,Jacksonville,"14330 Jarrettsville Pike, Jacksonville, MD 21131",WF 82 - ShopRite 563 | WF-82,address,rsa_ambiguous
+GFH2 - Santa Monica,ISC0050-GFH-0021,"3105 Wilshire Blvd Santa Monica, CA 90403",GFH,Gelson's,21,Santa Monica Store 21,"3105 Wilshire Blvd Santa Monica, CA 90403",GFH2 - Santa Monica | WF 21 - ShopRite 136,address,rsa_ambiguous
+WF 77 - Roxborough,ISC0050-WKF-0077,"6901 Ridge Ave Philadelphia, PA 19128",WKF,ShopRite (Wakefern),77,Roxborough,"6901 Ridge Ave, Roxborough, PA 19128, United States",WF 77 - Roxborough,address,matched
+WF 80 - Cardiff MD,ISC0050-WKF-0080,"1606 Dooley Rd Cardiff, MD 21160",WKF,ShopRite (Wakefern),80,Cardiff,"1606 Dooley Rd, Cardiff, MD 21160",WF 80 - Cardiff MD,address,matched
+WF 9 - Hoboken,ISC0050-WKF-0009,"900 Madison St Hoboken, NJ 07030",WKF,ShopRite (Wakefern),9,Hoboken Store 118,"900 Madison St Hoboken, NJ 07030",WF 9 - Hoboken | WF 9 - ShopRite 118 | WF-9,address,rsa_ambiguous
+Clarks,ISC0050-CLA-0001,"100 Verde Valley School Rd. Village of Oak Creek, AZ 86351",CLA,,1,Clarkʼs Market IC ID: 2168,"100 Verde Valley School Rd., Village of Oak Creek, AZ 86351 (928) 284- 1144",,address,matched_no_rsa
+KRO- Kro 421,ISC0050-KRO-0421,"7385 Wooster Pike, Cincinnati, OH 45227",KRO,,421,MARIEMO NT,"7385 Wooster Pike, Cincinnati, OH, 45227",,address,matched_no_rsa
+WF54- Shoprite 113,ISC0050-WKF-0113,"540 New York Ave, Lyndhurst, NJ 07071",WKF,ShopRite (Wakefern),113,Lyndhurst 113,"540 New York Ave, Lyndhurst, NJ 07071",WF 50 - ShopRite 113,address,matched
+WF- Shoprite 116,ISC0050-WKF-0116,"22-00 Maple Ave, Fair Lawn, NJ 07410",WKF,ShopRite (Wakefern),116,Fairlawn Store 116,"22-00 Maple Ave, Fair Lawn, NJ 07410, United States",,address,matched_no_rsa
+WF- Shoprite 153,ISC0050-WKF-0153,"246 Livingston Ave, Northvale, NJ 07647",WKF,ShopRite (Wakefern),153,Northvale Store 153,"246 Livingston St, Northvale, NJ 07647",,address,matched_no_rsa
+DAVIS- Dfd 11934,ISC0050-DAV-11934,"495 N State St La Verkin, UT 84745",DAV,,11934,Davis Food & Drug 11934 Store Hours Mon-Sat: 6 AM to 11 PM Sunday: 7 AM to 10 PM,"495 N State St, La Verkin, UT 84745, United States",,address,matched_no_rsa
+MCKEEVERS- Mkt 350,ISC0050-MCK-0350,"8800 Maurer Rd, Lenexa, KS 66219",MCK,McKeevers,350,Market & Eatery 350,"8800 Maurer Blvd Lenexa, KS 66219",,address,matched_no_rsa
+WF-Shoprite 452,ISC0050-WKF-0452,"5075 Edgmont Ave, Brookhaven, PA 19015",WKF,ShopRite (Wakefern),452,Brookhaven Store 452,"5075 Edgmont Ave Brookhaven, PA 19015",,address,matched_no_rsa
+WF- Shoprite 519,ISC0050-WKF-0463,"111 Hulst Drive, Matamoras, PA 18336",WKF,ShopRite (Wakefern),463,Matamoras Store 463,"111 Hulst Dr Suite 724, Matamoras, PA 18336",,address,matched_no_rsa
+Sprouts 029,ISC0050-SFM-0029,"23269 N. Scottsdale Rd, Scottsdale, AZ 85255",SFM,Sprouts,29,Rosauers 29th Ave,"2610 E 29th Ave, Spokane, WA 99223",,number,matched_no_rsa
+WF- Shoprite 272,ISC0050-WKF-0457,"272 Highway 202/31 N, Flemington, NJ 08822",WKF,ShopRite (Wakefern),457,Flemington 457,"272 Highway 202/31 North, Flemington, NJ 08822",WF 43 - ShopRite 457,address,matched
+SCHNUCKS 129,ISC0050-MO-0129,"8660 Veterans Memorial Pkwy, O'Fallon, MO 63366",MO,,129,"March 17, 2025","8660 Veterans Memorial Pkwy, O'Fallon, MO 63366",,address,matched_no_rsa
+WF- Shoprite 422,ISC0050-WKF-0422,"107 Kinsley Drive, Brodheadsville, PA 18322",WKF,ShopRite (Wakefern),422,Brodheadsvill e Store 422,"107 Kinsley Dr, Brodheadsville, PA 18322, United States",,address,matched_no_rsa
+WF- Shoprite 446,ISC0050-WKF-0446,"5597 Tulip St, Philadelphia, PA 19124",WKF,ShopRite (Wakefern),446,Harbison Store 446,"5597 Tulip St, Philadelphia, PA 19124",,address,matched_no_rsa
+WF- Shoprite 549,ISC0050-WKF-0549,"5 Bel Air South Pkwy, Bel Air, MD 21015",WKF,ShopRite (Wakefern),549,Festival 549,"5 Bel Air S Pkwy, Bel Air, MD 21015",,address,matched_no_rsa
+SOELBERGS- Sm 10864,ISC0050-SOE-10864,"213 E. Main St., Grantsville, UT 84029",SOE,,10864,Soelbergs Market 10864 Mon-Sat: 7am - 10 PM Sun: Closed,"213 E Main St, Grantsville, UT 84029, United States",,address,matched_no_rsa
+SOELBERGS- Sm 10884,ISC0050-SOE-10884,"6727 N. Hwy 36, Stansbury Park, UT 84074",SOE,,10884,Soelbergs Market 10884,"6727 UT- 36, Stansbury Park, UT 84074,",,address,matched_no_rsa
+ALG- Food Circus 267,ISC0050-NJ-0362,"362 Broad St., Red Bank, NJ 07701",NJ,,362,Foodtow n,"362 Broad Street, Red Bank, NJ 07701",,address,matched_no_rsa
+GEISSLERS- Geisslers 2203,ISC0050-GEI-2203,"318 Broad St., Windsor, CT 06095",GEI,,2203,Windsor Store 2203,"318 Broad Street Windsor, CT 06095",,address,matched_no_rsa
+GEISSLERS- Geisslers 2207,ISC0050-GEI-2207,"40 Tunxis Ave, Bloomfield, CT 06002",GEI,,2207,Bloomfield Store 2207,"40 Tunxis Avenue Bloomfield, CT 06002",,address,matched_no_rsa
+WF- Shoprite 523,ISC0050-WKF-0523,"307 W. Route 70, Marlton, NJ 08053",WKF,ShopRite (Wakefern),523,Marlton Store 523,"307 Rte 70 W, Marlton, NJ 08053",WF 37 - ShopRite 523,address,matched
+GEISSLERS- Geisslers 2201,ISC0050-GEI-2201,"100 Bridge St., East Windsor, CT 06088",GEI,,2201,Store 2201,06088,,number,matched_no_rsa
+WF- Shoprite 151,ISC0050-WKF-0151,"372 Broadway, Hillsdale, NJ 07642",WKF,ShopRite (Wakefern),151,Hillsdale 151,"372 Broadway, Hillsdale, NJ 07642",WF 51 - ShopRite 151,address,matched
+WF- Shoprite 163,ISC0050-WKF-0163,"76 Central Ave, Clark, NJ 07066",WKF,ShopRite (Wakefern),163,Clark Store 163,"76 Central Ave., Clark, NJ 07066",WF 31 - ShopRite 163,address,matched
+GFH- Bristol 0021,ISC0050-GFH-0021,"3105 Wilshire Blvd Santa Monica, CA",GFH,Gelson's,21,Santa Monica Store 21,"3105 Wilshire Blvd Santa Monica, CA 90403",GFH2 - Santa Monica | WF 21 - ShopRite 136,number,rsa_ambiguous
+WF- Shoprite 463,ISC0050-WKF-0463,"111 Hulst Dr Suite 724, Matamoras, PA 18336",WKF,ShopRite (Wakefern),463,Matamoras Store 463,"111 Hulst Dr Suite 724, Matamoras, PA 18336",,address,matched_no_rsa
+WF- Shoprite 176,ISC0050-WKF-0176,"1409 Broad St, Bloomfield, NJ 07003",WKF,ShopRite (Wakefern),176,Brookdale Store 215 176,"1409 Broad St. Bloomfield, NJ 07003",WF 8 - Brookdale ShopRite | WF 8 - ShopRite 176,address,rsa_ambiguous
+WF- Shoprite 464,ISC0050-WKF-0464,"5000 State Rd, Drexel Hill, PA 19026",WKF,ShopRite (Wakefern),464,Drexeline Store 464,"5000 State Rd Drexel Hill, PA 19026",WF-14,address,matched
+Weis Markets Selinsgrove,ISC0050-WEI-0226,"719 Route 522, Selinsgrove, PA 17870",WEI,Weis,226,Weis Markets Selinsgro ve,719 Route 522 Selinsgrove PA 17870 +1 570 374 8552,Weis 226,address,matched
+WF - ShopRite 241,ISC0050-WKF-0241,"801 Miron Ln, Kingston, NY 12401",WKF,ShopRite (Wakefern),241,Kingston 241,"801 Miron Ln, Kingston, NY 12401",WF-47,address,matched
+WF - ShopRite 464,ISC0050-WKF-0464,"5000 State Rd, Drexel Hill, PA 19026",WKF,ShopRite (Wakefern),464,Drexeline Store 464,"5000 State Rd Drexel Hill, PA 19026",WF-14,address,matched
